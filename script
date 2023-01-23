@@ -82,7 +82,6 @@ echo "0" > $kgsl
 done
 
 #Task Scheduler
-echo "0" > /proc/sys/kernel/sched_tunable_scaling
 for sched in /sys/kernel/debug/sched_features; do
 echo "NO_GENTLE_FAIR_SLEEPERS" > $sched
 echo "NO_HRTICK" > $sched

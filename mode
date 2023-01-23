@@ -1,6 +1,6 @@
 #Daily
 [[ $(resetprop tweak.detect.mode) = daily ]] && [[ ! $(resetprop tweak.apply.mode) = daily ]] && (
-sleep2
+sleep 2
 for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
     cat "$cpu"/cpuinfo_min_freq > "$cpu"/scaling_min_freq
 done
@@ -12,10 +12,9 @@ echo "1" > /sys/devices/system/cpu/cpu3/online
 echo "1" > /sys/devices/system/cpu/cpu6/online
 echo "1" > /sys/devices/system/cpu/cpu7/online
 chmod 444 /sys/devices/system/cpu/cpu*/online
-su -lp 2000 -c "cmd notification post -S bigtext -t 'Android Tweak Rebase: ( Daily Mode )' 'Tag' ''"
+[ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'Android Tweak Rebase: ( Daily Mode )' 'Tag' ''")
 sleep 2
 )
-
 
 #Game Mode
 [[ $(resetprop tweak.detect.mode) = game ]] && [[ ! $(resetprop tweak.apply.mode) = game ]] && (
@@ -31,7 +30,7 @@ echo "1" > /sys/devices/system/cpu/cpu3/online
 echo "1" > /sys/devices/system/cpu/cpu6/online
 echo "1" > /sys/devices/system/cpu/cpu7/online
 chmod 444 /sys/devices/system/cpu/cpu*/online
-su -lp 2000 -c "cmd notification post -S bigtext -t 'Android Tweak Rebase: ( Game Mode )' 'Tag' ''"
+[ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'Android Tweak Rebase: ( Game Mode )' 'Tag' ''")
 echo game
 sleep 2
 )
@@ -43,14 +42,14 @@ for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
     cat "$cpu"/cpuinfo_max_freq > "$cpu"/scaling_min_freq
 done
 echo "2560,5120,11520,25600,35840,38400" > /sys/module/lowmemorykiller/parameters/minfree
-resetprop -n tweak.apply.mode game
+resetprop -n tweak.apply.mode gametest
 chmod 666 /sys/devices/system/cpu/cpu*/online
 echo "1" > /sys/devices/system/cpu/cpu2/online
 echo "1" > /sys/devices/system/cpu/cpu3/online
 echo "1" > /sys/devices/system/cpu/cpu6/online
 echo "1" > /sys/devices/system/cpu/cpu7/online
 chmod 444 /sys/devices/system/cpu/cpu*/online
-su -lp 2000 -c "cmd notification post -S bigtext -t 'Android Tweak Rebase: ( Game Mode  Test)' 'Tag' ''"
+[ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'Android Tweak Rebase: ( Game Mode)(Test)' 'Tag' ''")
 echo game
 sleep 2
 )
@@ -69,9 +68,6 @@ echo "0" > /sys/devices/system/cpu/cpu6/online
 echo "0" > /sys/devices/system/cpu/cpu7/online
 chmod 444 /sys/devices/system/cpu/cpu*/online
 resetprop tweak.apply.mode sleep
-su -lp 2000 -c "cmd notification post -S bigtext -t 'Android Tweak Rebase: ( Sleep Mode )' 'Tag' ''"
+[ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'Android Tweak Rebase: ( Sleep Mode )' 'Tag' ''")
 sleep 2
 )
-
-nohup /data/adb/modules/RiProG/script&
-exit

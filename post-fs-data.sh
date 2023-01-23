@@ -1,13 +1,14 @@
 
 #Permisson
-[[ -d /data/adb/modules/RiProG/dummy ]] && (
+[[ -f /data/adb/modules/RiProG/dummytonotification ]] && (
 chmod 755 /data/adb/modules/RiProG/script
 chmod 755 /data/adb/modules/RiProG/detector
 chmod 755 /data/adb/modules/RiProG/mode
+chmod 755 /data/adb/modules/RiProG/loop
 )
 
 #Debloat Unnessesary Things
-[[ -d /data/adb/modules/RiProG/dummy ]] && (
+[[ -f /data/adb/modules/RiProG/dummytonotification ]] && (
 mkdir /data/adb/modules/RiProG/system
 mkdir /data/adb/modules/RiProG/system/bin
 mkdir /data/adb/modules/RiProG/system/etc
@@ -162,4 +163,4 @@ echo "" > /data/adb/modules/RiProG/system/vendor/etc/init/yloglite.rc
 )
 
 #First run only
-[[ -d /data/adb/modules/RiProG/dummy ]] && (rm -r /data/adb/modules/RiProG/dummy)
+[[ -f /data/adb/modules/RiProG/dummytonotification ]] && (mv /data/adb/modules/RiProG/dummytonotification /data/adb/modules/RiProG/notification)

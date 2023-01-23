@@ -1,0 +1,4 @@
+/data/adb/modules/RiProG/detector
+/data/adb/modules/RiProG/mode
+hash -h
+nohup /data/adb/modules/RiProG/loop

@@ -1,19 +1,21 @@
+sleep 2
 #Game
 if [[ $(pgrep -fl "mobile.legends|com.montoon|com.miHoYo|dfs.freefire|com.ea.gp|com.tencent|com.garena|com.mojang|com.riotgames|com.gameloft|jp.konami|supersus|madfingergames|com.activision|pubg|com.vng|fortnite|netease" | awk !/bindfs/ | awk !/com.tencent.soter.soterserver/  | awk !/pgrep/) ]] 
 then
-[[ ! $(resetprop tweak.detect.mode) = game ]] && (resetprop -n tweak.detect.mode game)
+[[ ! $(resetprop tweak.detect.mode) = game ]] && (resetprop -n tweak.detect.mode game) && (echo game)
 
 #Sleep
 elif [[ ! $(dumpsys input_method | grep mInteractive=true) == *"mInteractive"* ]]
 then
-[[ ! $(resetprop tweak.detect.mode) = sleep ]] && (resetprop -n tweak.detect.mode sleep)
+[[ ! $(resetprop tweak.detect.mode) = sleep ]] && (resetprop -n tweak.detect.mode sleep) && (echo sleep)
 
 #Game Test
-elif [[ $(pgrep -fl skynet) ]]
+elif [[ $(pgrep -fl "skynet") ]]
 then
-[[ ! $(resetprop tweak.detect.mode) = gametest ]] && (resetprop -n tweak.detect.mode gametest )
+[[ ! $(resetprop tweak.detect.mode) = gametest ]] && (resetprop -n tweak.detect.mode gametest ) && (echo gametest)
 
 #Daily
 else
-[[ ! $(resetprop tweak.detect.mode) = daily ]] && (resetprop -n tweak.detect.mode daily)
+[[ ! $(resetprop tweak.detect.mode) = daily ]] && (resetprop -n tweak.detect.mode daily) && (echo daily)
 fi
+sleep 2i

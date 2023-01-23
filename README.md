@@ -19,6 +19,7 @@ Disable Panic <br />
 Disable Printk <br />
 Task Scheduler <br />
 Drop Cache <br />
+Adaptive Mode <br />
 
 # Mode
 Daily <br />

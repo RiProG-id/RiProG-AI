@@ -43,7 +43,6 @@ Brovanova | XDA <br />
 mrfrost475  | Telegram <br />
 rikmeyzter | Telegram <br />
 iGlitch | Github <br />
-tytydraco | Github <br />
 onfiretweaks | Telegram <br />
 mohd_syahrul | Telegram <br />
 

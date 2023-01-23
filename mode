@@ -12,7 +12,7 @@ echo "1" > /sys/devices/system/cpu/cpu3/online
 echo "1" > /sys/devices/system/cpu/cpu6/online
 echo "1" > /sys/devices/system/cpu/cpu7/online
 chmod 444 /sys/devices/system/cpu/cpu*/online
-[ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'Android Tweak Rebase: ( Daily Mode )' 'Tag' ''")
+[ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'RiProG AI: ( Daily Mode )' 'Tag' ''")
 sleep 2
 )
 
@@ -30,7 +30,7 @@ echo "1" > /sys/devices/system/cpu/cpu3/online
 echo "1" > /sys/devices/system/cpu/cpu6/online
 echo "1" > /sys/devices/system/cpu/cpu7/online
 chmod 444 /sys/devices/system/cpu/cpu*/online
-[ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'Android Tweak Rebase: ( Game Mode )' 'Tag' ''")
+[ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'RiProG AI: ( Game Mode )' 'Tag' ''")
 echo game
 sleep 2
 )
@@ -49,7 +49,7 @@ echo "1" > /sys/devices/system/cpu/cpu3/online
 echo "1" > /sys/devices/system/cpu/cpu6/online
 echo "1" > /sys/devices/system/cpu/cpu7/online
 chmod 444 /sys/devices/system/cpu/cpu*/online
-[ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'Android Tweak Rebase: ( Game Mode) (Test)' 'Tag' ''")
+[ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'RiProG AI: ( Game Mode) (Test)' 'Tag' ''")
 echo game
 sleep 2
 )
@@ -68,6 +68,6 @@ echo "0" > /sys/devices/system/cpu/cpu6/online
 echo "0" > /sys/devices/system/cpu/cpu7/online
 chmod 444 /sys/devices/system/cpu/cpu*/online
 resetprop tweak.apply.mode sleep
-[ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'Android Tweak Rebase: ( Sleep Mode )' 'Tag' ''")
+[ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'RiProG AI: ( Sleep Mode )' 'Tag' ''")
 sleep 2
 )

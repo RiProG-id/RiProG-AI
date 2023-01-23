@@ -1,6 +1,7 @@
 # RiProG-AI
 Improve the android experience with some tweaks combined <br />
 Automaticaly adapt  mode <br />
+RiProG Open Source @RiOpSo | Telegram  <br />
 
 # Feature
 Dalvik Execution Mode <br />
@@ -36,6 +37,13 @@ LMK Light <br />
 Normal CPU Frequency <br />
 Normal Core <br />
 
-
-
+# Source Code
+RiProG | Telegram <br />
+Brovanova | XDA <br />
+mrfrost475  | Telegram <br />
+rikmeyzter | Telegram <br />
+iGlitch | Github <br />
+tytydraco | Github <br />
+onfiretweaks | Telegram <br />
+syahrul_tweak | Telegram <br />
 

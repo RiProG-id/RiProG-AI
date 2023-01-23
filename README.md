@@ -45,5 +45,5 @@ rikmeyzter | Telegram <br />
 iGlitch | Github <br />
 tytydraco | Github <br />
 onfiretweaks | Telegram <br />
-syahrul_tweak | Telegram <br />
+mohd_syahrul | Telegram <br />
 

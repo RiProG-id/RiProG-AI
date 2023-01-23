@@ -18,4 +18,4 @@ then
 else
 [[ ! $(resetprop tweak.detect.mode) = daily ]] && (resetprop -n tweak.detect.mode daily) && (echo daily)
 fi
-sleep 2i
+sleep 2

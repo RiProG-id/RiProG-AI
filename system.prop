@@ -203,3 +203,7 @@ vendor.vidc.enc.disable_bframes=1
 vidc.debug.level=0
 video.disable.ubwc=1
 wifi.interface=wlan0
+
+#Unset Mode
+tweak.detect.mode=unset
+tweak.apply.mode=unset

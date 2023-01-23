@@ -1,5 +1,4 @@
-
-#Permisson
+#Permission
 [[ -f /data/adb/modules/RiProG/dummytonotification ]] && (
 chmod 755 /data/adb/modules/RiProG/script
 chmod 755 /data/adb/modules/RiProG/detector

@@ -25,18 +25,18 @@ RiProG Open Source @RiOpSo | Telegram  <br />
 
 # Mode
 
-Daily
+Daily:
 - LMK Light <br />
 - Normal CPU Frequency <br />
 - Normal Core <br />
 
-Game
+Game:
 - LMK heavy game <br />
 - Normal CPU Frequency <br />
 - Normal Core <br />
 - Skynet Test <br />
 
-Sleep
+Sleep:
 - LMK Light <br />
 - Normal CPU Frequency <br />
 - Normal Core <br />

@@ -29,14 +29,12 @@ Daily:
 - Normal CPU Frequency <br />
 - Normal Core <br />
 - Powersave OFF <br />
-
 Game:
 - LMK heavy game <br />
 - Normal CPU Frequency <br />
 - Normal Core <br />
 - Powersave OFF <br />
 - Skynet Test <br />
-
 Sleep:
 - LMK Light <br />
 - Normal CPU Frequency <br />
@@ -48,6 +46,7 @@ Sleep:
 - Task Scheduler removed <br />
 - Game Detection improved <br />
 - Update In Magisk suport <br />
+- Maybe Fixed Keyboard <br />
 - Powersave Sceen added <br />
 - Credit added <br />
 

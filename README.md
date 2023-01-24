@@ -45,7 +45,8 @@ Sleep <br />
 
 (Removed) Task Scheduler <br />
 (Improved) Game Detection <br />
-(Added) Update.json <br />
+(Added) Update In Magisk <br />
+(Added) Credit <br />
 
 # Source Code
 

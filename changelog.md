@@ -19,7 +19,6 @@ RiProG Open Source @RiOpSo | Telegram  <br />
 - Disable Logger And Debugger <br />
 - Disable Panic <br />
 - Disable Printk <br />
-- Task Scheduler <br />
 - Drop Cache <br />
 - Adaptive Mode <br />
 
@@ -29,22 +28,25 @@ Daily:
 - LMK Light <br />
 - Normal CPU Frequency <br />
 - Normal Core <br />
+- Powersave OFF <br />
 
 Game:
 - LMK heavy game <br />
 - Normal CPU Frequency <br />
 - Normal Core <br />
+- Powersave OFF <br />
 - Skynet Test <br />
 
 Sleep:
 - LMK Light <br />
 - Normal CPU Frequency <br />
 - Normal Core <br />
+- Powersave ON <br />
 
 # Latest Changelog
 
-(Removed) Task Scheduler <br />
-(Improved) Game Detection <br />
-(Added) Update In Magisk <br />
-(Added) Credit <br />
-
+- Task Scheduler removed <br />
+- Game Detection improved <br />
+- Update In Magisk suport <br />
+- Powersave Sceen added <br />
+- Credit added <br />

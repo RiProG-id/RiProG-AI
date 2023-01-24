@@ -2,5 +2,5 @@
     "version": "1.2 Beta",
     "versionCode": "12",
     "zipUrl": "https://github.com/RiProG-id/RiProG-AI/releases/download/11/RiProG.AI.1.1.Beta.zip",
-    "changelog": "changelog.md"
+    "changelog": "https://github.com/RiProG-id/RiProG-AI/raw/main/changelog.md"
 }

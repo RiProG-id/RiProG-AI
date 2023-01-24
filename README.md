@@ -38,7 +38,12 @@ Sleep: <br />
 - Normal CPU Frequency <br />
 - Normal Core <br />
 
-# Latest m
+# Latest
+
+-=removed
++=added
+~=changed
+
 (-) Task Scheduler <br />
 (~) Game Detection <br />
 (+) Update.json <br />

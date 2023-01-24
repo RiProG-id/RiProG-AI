@@ -40,9 +40,9 @@ Sleep: <br />
 
 # Latest Changelog
 
-(-)=removed
-(+)=added
-(~)=changed
+(-) removed <br />
+(+) added <br />
+(~) changed <br />
 
 (-) Task Scheduler <br />
 (~) Game Detection <br />

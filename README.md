@@ -29,14 +29,14 @@ Daily <br />
 - LMK Light <br />
 - Normal CPU Frequency <br />
 - Normal Core <br />
-Game <br />
 
+Game <br />
 - LMK heavy game <br />
 - Normal CPU Frequency <br />
 - Normal Core <br />
 - Skynet Test <br />
-Sleep <br />
 
+Sleep <br />
 - LMK Light <br />
 - Normal CPU Frequency <br />
 - Normal Core <br />

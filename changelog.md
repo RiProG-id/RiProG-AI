@@ -49,4 +49,5 @@ Sleep:
 - Update In Magisk suport
 - Maybe Fixed Keyboard
 - Powersave System added
+- Incerase Mode Delay
 - Credit added

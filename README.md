@@ -38,11 +38,11 @@ Sleep: <br />
 - Normal CPU Frequency <br />
 - Normal Core <br />
 
-# Latest
+# Latest Changelog
 
--=removed
-+=added
-~=changed
+(-)=removed
+(+)=added
+(~)=changed
 
 (-) Task Scheduler <br />
 (~) Game Detection <br />

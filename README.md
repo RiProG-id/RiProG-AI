@@ -5,58 +5,59 @@ Automaticaly adapt  mode <br />
 RiProG Open Source @RiOpSo | Telegram  <br />
 
 # Feature
-
-- Dalvik Execution Mode <br />
-- Purgeable Assets <br />
-- Zygote Preforking <br />
-- Fuse PassTrough <br />
-- Fast Streaming <br />
-- Media Codex <br />
-- Smooth GUI <br />
-- Network Tweak <br />
-- Efficient Battery <br />
-- Clear Audio <br />
-- Disable Logger And Debugger <br />
-- Disable Panic <br />
-- Disable Printk <br />
-- Drop Cache <br />
-- Adaptive Mode <br />
+- Dalvik Execution Mode
+- Purgeable Assets
+- Zygote Preforking
+- Fuse PassTrough
+- Fast Streaming
+- Media Codex
+- Smooth GUI
+- Network Tweak
+- Efficient Battery
+- Clear Audio
+- Disable Logger And Debugger
+- Disable Panic
+- Disable Printk
+- Drop Cache
+- Adaptive Mode
 
 # Mode
 
 Daily:
-- LMK Light <br />
-- Normal CPU Frequency <br />
-- Normal Core <br />
-- Powersave OFF <br />
+- LMK Light
+- Normal CPU Frequency
+- Normal Core
+- Powersave OFF
+
 Game:
-- LMK heavy game <br />
-- Normal CPU Frequency <br />
-- Normal Core <br />
-- Powersave OFF <br />
-- Skynet Test <br />
+- LMK heavy game
+- Normal CPU Frequency
+- Normal Core
+- Powersave OFF
+- Skynet Test
+
 Sleep:
-- LMK Light <br />
-- Normal CPU Frequency <br />
-- Normal Core <br />
-- Powersave ON <br />
+- LMK Light
+- Normal CPU Frequency
+- Normal Core
+- Powersave ON
 
 # Latest Changelog
 
-- Task Scheduler removed <br />
-- Game Detection improved <br />
-- Update In Magisk suport <br />
-- Maybe Fixed Keyboard <br />
-- Powersave Sceen added <br />
-- Credit added <br />
+- Task Scheduler removed
+- Game Detection improved
+- Update In Magisk suport
+- Maybe Fixed Keyboard
+- Powersave System added
+- Incerase Mode Delay
+- Credit added
 
 # Source Code
 
-- RiProG | Telegram <br />
-- Brovanova | XDA <br />
-- mrfrost475  | Telegram <br />
-- rikmeyzter | Telegram <br />
-- iGlitch | Github <br />
-- onfiretweaks | Telegram <br />
-- mohd_syahrul | Telegram <br />
-
+- RiProG | Telegram
+- Brovanova | XDA
+- mrfrost475  | Telegram
+- rikmeyzter | Telegram
+- iGlitch | Github
+- onfiretweaks | Telegram
+- mohd_syahrul | Telegram

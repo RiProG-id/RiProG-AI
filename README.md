@@ -3,7 +3,7 @@ Improve the android experience with some tweaks combined <br />
 Automaticaly adapt  mode <br />
 RiProG Open Source @RiOpSo | Telegram  <br />
 
-# Feature:
+# Feature
 - Dalvik Execution Mode <br />
 - Purgeable Assets <br />
 - Zygote Preforking <br />
@@ -38,6 +38,12 @@ Sleep: <br />
 - Normal CPU Frequency <br />
 - Normal Core <br />
 
+# Latest Changelog
+(-) Task Scheduler <br />
+(~) Game Detection <br />
+(+) Update.json <br />
+
+
 # Source Code
 - RiProG | Telegram <br />
 - Brovanova | XDA <br />
@@ -46,8 +52,3 @@ Sleep: <br />
 - iGlitch | Github <br />
 - onfiretweaks | Telegram <br />
 - mohd_syahrul | Telegram <br />
-
-# Latest Changelog
-(-) Task Scheduler <br />
-(~) Game Detection <br />
-(+) Update.json <br />

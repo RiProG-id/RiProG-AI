@@ -77,20 +77,6 @@ for kgsl in $(find /sys/kernel/debug/kgsl/kgsl-3d0/ -name *log*); do
 echo "0" > $kgsl
 done
 
-#Task Scheduler
-for sched in /sys/kernel/debug/sched_features; do
-echo "NO_GENTLE_FAIR_SLEEPERS" > $sched
-echo "NO_HRTICK" > $sched
-echo "NO_DOUBLE_TICK" > $sched
-echo "NO_RT_RUNTIME_SHARE" > $sched
-echo "NEXT_BUDDY" > $sched
-echo "NO_TTWU_QUEUE" > $sched
-echo "UTIL_EST" > $sched
-echo "ARCH_CAPACITY" > $sched
-echo "ARCH_POWER" > $sched
-echo "ENERGY_AWARE" > $sched
-done
-
 #Network Tweak
 echo "404480" > "/proc/sys/net/core/wmem_max"
 echo "404480" > "/proc/sys/net/core/rmem_max"

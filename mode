@@ -1,24 +1,22 @@
 #Daily
 [[ $(resetprop tweak.detect.mode) = daily ]] && [[ ! $(resetprop tweak.apply.mode) = daily ]] && (
-sleep 2
 for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
     cat "$cpu"/cpuinfo_min_freq > "$cpu"/scaling_min_freq
 done
 echo "2560,5120,7680,8960,10240,12800" > /sys/module/lowmemorykiller/parameters/minfree
-resetprop -n tweak.apply.mode daily
 chmod 666 /sys/devices/system/cpu/cpu*/online
 echo "1" > /sys/devices/system/cpu/cpu2/online
 echo "1" > /sys/devices/system/cpu/cpu3/online
 echo "1" > /sys/devices/system/cpu/cpu6/online
 echo "1" > /sys/devices/system/cpu/cpu7/online
 chmod 444 /sys/devices/system/cpu/cpu*/online
+settings put global low_power 0
 [ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'RiProG AI: ( Daily Mode )' 'Tag' ''")
-sleep 2
+resetprop -n tweak.apply.mode daily
 )
 
 #Game Mode
 [[ $(resetprop tweak.detect.mode) = game ]] && [[ ! $(resetprop tweak.apply.mode) = game ]] && (
-sleep 2
 for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
     cat "$cpu"/cpuinfo_max_freq > "$cpu"/scaling_min_freq
 done
@@ -30,33 +28,30 @@ echo "1" > /sys/devices/system/cpu/cpu3/online
 echo "1" > /sys/devices/system/cpu/cpu6/online
 echo "1" > /sys/devices/system/cpu/cpu7/online
 chmod 444 /sys/devices/system/cpu/cpu*/online
+settings put global low_power 0
 [ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'RiProG AI: ( Game Mode )' 'Tag' ''")
-echo game
-sleep 2
+resetprop -n tweak.apply.mode game
 )
 
 #Game Mode Test
 [[ $(resetprop tweak.detect.mode) = gametest ]] && [[ ! $(resetprop tweak.apply.mode) = gametest ]] && (
-sleep 2
 for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
     cat "$cpu"/cpuinfo_max_freq > "$cpu"/scaling_min_freq
 done
 echo "2560,5120,11520,25600,35840,38400" > /sys/module/lowmemorykiller/parameters/minfree
-resetprop -n tweak.apply.mode gametest
 chmod 666 /sys/devices/system/cpu/cpu*/online
 echo "1" > /sys/devices/system/cpu/cpu2/online
 echo "1" > /sys/devices/system/cpu/cpu3/online
 echo "1" > /sys/devices/system/cpu/cpu6/online
 echo "1" > /sys/devices/system/cpu/cpu7/online
 chmod 444 /sys/devices/system/cpu/cpu*/online
+settings put global low_power 0
 [ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'RiProG AI: ( Game Mode) (Test)' 'Tag' ''")
-echo game
-sleep 2
+resetprop -n tweak.apply.mode gametest
 )
 
 #Sleep Mode
 [[ $(resetprop tweak.detect.mode) = sleep ]] && [[ ! $(resetprop tweak.apply.mode) = sleep ]] && (
-sleep 2
 for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
     cat "$cpu"/cpuinfo_min_freq > "$cpu"/scaling_min_freq
 done
@@ -67,7 +62,7 @@ echo "0" > /sys/devices/system/cpu/cpu3/online
 echo "0" > /sys/devices/system/cpu/cpu6/online
 echo "0" > /sys/devices/system/cpu/cpu7/online
 chmod 444 /sys/devices/system/cpu/cpu*/online
-resetprop tweak.apply.mode sleep
+settings put global low_power 1
 [ -f /data/adb/modules/RiProG/notification ] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'RiProG AI: ( Sleep Mode )' 'Tag' ''")
-sleep 2
+resetprop tweak.apply.mode sleep
 )

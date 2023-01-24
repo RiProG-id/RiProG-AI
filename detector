@@ -1,6 +1,5 @@
-sleep 2
 #Game
-if [[ $(pgrep -fl "mobile.legends|com.montoon|com.miHoYo|dfs.freefire|com.ea.gp|com.tencent|com.garena|com.mojang|com.riotgames|com.gameloft|jp.konami|supersus|madfingergames|com.activision|pubg|com.vng|fortnite|netease" | awk !/bindfs/ | awk !/com.tencent.soter.soterserver/  | awk !/pgrep/) ]] 
+if [[ $(pgrep -fl "mobile.legends|com.montoon|com.miHoYo|dfs.freefire|com.ea.gp|com.tencent|com.garena|com.mojang|com.riotgames|com.gameloft|jp.konami|supersus|madfingergames|com.activision|pubg|com.vng|fortnite|netease|com.pearlabyss|com.gameark" | awk !/bindfs/ | awk !/com.tencent.soter.soterserver/  | awk !/pgrep/) ]] 
 then
 [[ ! $(resetprop tweak.detect.mode) = game ]] && (resetprop -n tweak.detect.mode game) && (echo game)
 
@@ -18,4 +17,3 @@ then
 else
 [[ ! $(resetprop tweak.detect.mode) = daily ]] && (resetprop -n tweak.detect.mode daily) && (echo daily)
 fi
-sleep 2

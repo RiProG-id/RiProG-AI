@@ -3,8 +3,9 @@ Improve the android experience with some tweaks combined <br />
 Automaticaly adapt  mode <br />
 RiProG Open Source @RiOpSo | Telegram  <br />
 
-# List
-Feature: <br />
+
+#Feature
+
 - Dalvik Execution Mode <br />
 - Purgeable Assets <br />
 - Zygote Preforking <br />
@@ -22,7 +23,7 @@ Feature: <br />
 - Drop Cache <br />
 - Adaptive Mode <br />
 
-Mode: <br />
+# Mode
 
 Daily <br />
 - LMK Light <br />

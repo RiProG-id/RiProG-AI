@@ -47,5 +47,6 @@ Sleep:
 - Remove unnecessary
 
 1.6 Stable
--Several error code fixed
--Several feature fixed
+- Recode script
+- Several code fixed
+- Several feature fixed

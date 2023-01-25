@@ -38,7 +38,7 @@ Game:
 Sleep:
 - LMK Light
 - Normal CPU Frequency
-- Normal Core
+- Half Core
 - Powersave ON
 
 # Changelog

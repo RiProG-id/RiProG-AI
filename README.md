@@ -41,8 +41,9 @@ Sleep:
 - Normal Core
 - Powersave ON
 
-# Changelog 1.3 Beta
+# Changelog
 
+1.3 Beta
 - Battery Eficiency removed
 - Drop Cache removed
 - Maybe Fixed download interrupt
@@ -52,6 +53,9 @@ Sleep:
 - Fstrim added
 - Recode script
 - Remove useless code
+
+1.4 Beta
+- Fixed Tweak not work
 
 # Source Code
 

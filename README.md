@@ -43,20 +43,6 @@ Sleep:
 
 # Changelog
 
-1.3 Beta
-- Battery Eficiency removed
-- Drop Cache removed
-- Maybe Fixed download interrupt
-- Game Detection improved
-- Gamelist editable
-- Feature rename to disable/enable
-- Fstrim added
-- Recode script
-- Remove useless code
-
-1.4 Beta
-- Fixed Tweak not work
-
 1.5 Stable
 - Remove unnecessary
 

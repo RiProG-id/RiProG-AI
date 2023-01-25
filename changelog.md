@@ -56,3 +56,6 @@ Sleep:
 
 1.4 Beta
 - Fixed Tweak not work
+
+1.5 Stable
+- Remove unnecessary

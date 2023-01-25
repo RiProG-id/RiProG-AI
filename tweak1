@@ -170,8 +170,6 @@ resetprop -n media.stagefright.enable-http true
 resetprop -n media.stagefright.enable-rtsp true
 resetprop -n media.stagefright.enable-record false
 )
-
-#Media Codex
 [[ -f /data/adb/modules/RiProG/feature/tweak/mediacodex ]] && (
 resetprop -n ro.media.dec.aud.flac.enabled 1
 resetprop -n ro.media.dec.aud.wma.enabled 1
@@ -189,8 +187,6 @@ resetprop -n ro.media.enc.vid.wmv.enabled 1
 resetprop -n ro.media.enc.aud.mp3.enabled 1
 resetprop -n ro.media.enc.vid.mp4.enabled 1
 )
-
-#Smooth GUI
 [[ -f /data/adb/modules/RiProG/feature/tweak/smoothgui ]] && (
 resetprop -n sys.use_fifo_ui 1
 resetprop -n windows.mgr.max_event_per_sec 180
@@ -201,8 +197,6 @@ resetprop -n persist.sys.lgospd.enable 0
 resetprop -n persist.sys.pcsync.enable 0
 resetprop -n persist.sys.scrollingcache 3
 )
-
-#Network Tweak
 [[ -f /data/adb/modules/RiProG/feature/tweak/networktweak ]] && (
 resetprop -n net.tcp.buffersize.default "6144,87380,110208,6144,16384,110208"
 resetprop -n net.tcp.buffersize.wifi 262144,524288,1048576,262144,524288,1048576"
@@ -241,7 +235,6 @@ resetprop -n persist.audio.handset.mic digital
 resetprop -n af.resampler.quality 255
 resetprop -n mpq.audio.decode true
 )
-#Disable logger and debugger
 [[ -d /data/adb/modules/RiProG/feature/tweak/disableloganddebug ]] && (
 resetprop -n log.resolves 0
 resetprop -n log.pm4 0

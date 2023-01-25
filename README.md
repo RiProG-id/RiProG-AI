@@ -60,6 +60,10 @@ Sleep:
 1.5 Stable
 - Remove unnecessary
 
+1.6 Stable
+-Several error code fixed
+-Several feature fixed
+
 # Source Code
 
 - RiProG | Telegram

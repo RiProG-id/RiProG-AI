@@ -199,7 +199,7 @@ resetprop -n persist.sys.scrollingcache 3
 )
 [[ -f /data/adb/modules/RiProG/feature/tweak/networktweak ]] && (
 resetprop -n net.tcp.buffersize.default "6144,87380,110208,6144,16384,110208"
-resetprop -n net.tcp.buffersize.wifi 262144,524288,1048576,262144,524288,1048576"
+resetprop -n net.tcp.buffersize.wifi "262144,524288,1048576,262144,524288,1048576"
 resetprop -n net.tcp.buffersize.lte "262144,524288,3145728,262144,524288,3145728"
 resetprop -n net.tcp.buffersize.hsdpa "6144,262144,1048576,6144,262144,1048576"
 resetprop -n net.tcp.buffersize.evdo_b "6144,262144,1048576,6144,262144,1048576"

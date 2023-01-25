@@ -24,7 +24,7 @@ echo "" > /data/adb/modules/RiProG/feature/tweak/smoothgui
 echo "" > /data/adb/modules/RiProG/feature/tweak/networktweak
 echo "" > /data/adb/modules/RiProG/feature/tweak/clearaudio
 echo "" > /data/adb/modules/RiProG/feature/tweak/disableloganddebug
-echo "" > /data/adb/modules/RiProG/feature/tweak/disableprink
+echo "" > /data/adb/modules/RiProG/feature/tweak/disableprintk
 echo "" > /data/adb/modules/RiProG/feature/tweak/disablepanic
 echo "" > /data/adb/modules/RiProG/feature/tweak/fstrim
 )

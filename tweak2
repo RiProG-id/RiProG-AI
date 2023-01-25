@@ -1,4 +1,4 @@
-[ -f /data/adb/modules/RiProG/feature/tweak/disablepanic ]] && (
+[[ -f /data/adb/modules/RiProG/feature/tweak/disablepanic ]] && (
 echo "0 0 0 0" > /proc/sys/kernel/printk
 echo "0" > /proc/sys/kernel/panic
 echo "0" > /proc/sys/kernel/panic_on_oops
@@ -8,9 +8,10 @@ echo "0" > /sys/module/kernel/parameters/panic
 echo "0" > /sys/module/kernel/parameters/panic_on_warn
 echo "0" > /sys/module/kernel/parameters/panic_on_oops
 echo "0" > /sys/vm/panic_on_oom
-[ -f /data/adb/modules/RiProG/feature/tweak/disableprink ]] && (
+)
+[[ -f /data/adb/modules/RiProG/feature/tweak/disableprintk ]] && (
 echo "0 0 0 0" > /proc/sys/kernel/printk 
-echo off > /proc/sys/kernel/printk_devkmsg
+echo "off" > /proc/sys/kernel/printk_devkmsg
 echo "Y" > /sys/module/printk/parameters/console_suspend
 echo "N" > /sys/module/printk/parameters/cpu
 echo "Y" > /sys/module/printk/parameters/ignore_loglevel
@@ -52,50 +53,54 @@ echo "N" > /sys/module/printk/parameters/pid
 echo "N" > /sys/module/printk/parameters/time
 echo "0" > /sys/module/service_locator/parameters/enable
 echo "1" > /sys/module/subsystem_restart/parameters/disable_restart_work
-for mask in $(find /sys/ -name debug_mask); do
-echo "0" > $mask
+find /sys/ -name debug_mask -print0 | while IFS= read -r -d '' mask
+do
+echo "0" > "$mask"
 done
-for level in $(find /sys/ -name debug_level); do
-echo "0" > $level
+find /sys/ -name edac_mc_log_ce -print0 | while IFS= read -r -d '' ce
+do
+echo "0" > "$ce"
 done
-for ce in $(find /sys/ -name edac_mc_log_ce); do
-echo "0" > $ce
+find /sys/ -name edac_mc_log_ue -print0 | while IFS= read -r -d '' ue
+do
+echo "0" > "$ue"
 done
-for ue in $(find /sys/ -name edac_mc_log_ue); do
-echo "0" > $ue
+find /sys/ -name enable_event_log -print0 | while IFS= read -r -d '' event
+do
+echo "0" > "$event"
 done
-for event in $(find /sys/ -name enable_event_log); do
-echo "0" > $event
+find /sys/ -name log_ecn_error -print0 | while IFS= read -r -d '' ecn
+do
+echo "0" > "$ecn"
 done
-for ecn in $(find /sys/ -name log_ecn_error); do
-echo "0" > $ecn
+find /sys/ -name snapshot_crashdumper -print0 | while IFS= read -r -d '' crashd
+do
+echo "0" > "$crashd"
 done
-for crashd in $(find /sys/ -name snapshot_crashdumper); do
-echo "0" > $crashd
-done
-for kgsl in $(find /sys/kernel/debug/kgsl/kgsl-3d0/ -name *log*); do
-echo "0" > $kgsl
+find /sys/kernel/debug/kgsl/kgsl-3d0/ -name '*log*' -print0 | while IFS= read -r -d '' kgsl
+do
+echo "0" > "$kgsl"
 done
 )
 [[ -f /data/adb/modules/RiProG/feature/tweak/networktweak ]] && (
-echo "404480" > "/proc/sys/net/core/wmem_max"
-echo "404480" > "/proc/sys/net/core/rmem_max"
-echo "256960" > "/proc/sys/net/core/rmem_default"
-echo "256960" > "/proc/sys/net/core/wmem_default"
-echo "0" > "/proc/sys/net/ipv4/tcp_timestamps"
-echo "1" > "/proc/sys/net/ipv4/tcp_tw_reuse"
-echo "1" > "/proc/sys/net/ipv4/tcp_sack"
-echo "1" > "/proc/sys/net/ipv4/tcp_tw_recycle"
-echo "1" > "/proc/sys/net/ipv4/tcp_window_scaling"
-echo "5" > "/proc/sys/net/ipv4/tcp_keepalive_probes"
-echo "30" > "/proc/sys/net/ipv4/tcp_keepalive_intvl"
-echo "30" > "/proc/sys/net/ipv4/tcp_fin_timeout"
-echo "4096,16384,404480" > "/proc/sys/net/ipv4/tcp_wmem"
-echo "4096,87380,404480" > "/proc/sys/net/ipv4/tcp_rmem"
-echo "westwood" > "/proc/sys/net/ipv4/tcp_congestion_control
+echo "404480" > /proc/sys/net/core/wmem_max
+echo "404480" > /proc/sys/net/core/rmem_max
+echo "256960" > /proc/sys/net/core/rmem_default
+echo "256960" > /proc/sys/net/core/wmem_default
+echo "0" > /proc/sys/net/ipv4/tcp_timestamps
+echo "1" > /proc/sys/net/ipv4/tcp_tw_reuse
+echo "1" > /proc/sys/net/ipv4/tcp_sack
+echo "1" > /proc/sys/net/ipv4/tcp_tw_recycle
+echo "1" > /proc/sys/net/ipv4/tcp_window_scaling
+echo "5" > /proc/sys/net/ipv4/tcp_keepalive_probes
+echo "30" > /proc/sys/net/ipv4/tcp_keepalive_intvl
+echo "30" > /proc/sys/net/ipv4/tcp_fin_timeout
+echo "4096,16384,404480" > /proc/sys/net/ipv4/tcp_wmem
+echo "4096,87380,404480" > /proc/sys/net/ipv4/tcp_rmem
+echo "westwood" > /proc/sys/net/ipv4/tcp_congestion_control
 )
 [[ -f /data/adb/modules/RiProG/feature/tweak/fstrim ]] && (
-busybox
+busybox=/data/adb/magisk/busybox
 $busybox fstrim /system
 $busybox fstrim /vendor
 $busybox fstrim /data

@@ -1,0 +1,103 @@
+[ -f /data/adb/modules/RiProG/feature/tweak/disablepanic ]] && (
+echo "0 0 0 0" > /proc/sys/kernel/printk
+echo "0" > /proc/sys/kernel/panic
+echo "0" > /proc/sys/kernel/panic_on_oops
+echo "0" > /proc/sys/kernel/panic_on_rcu_stall
+echo "0" > /proc/sys/kernel/panic_on_warn
+echo "0" > /sys/module/kernel/parameters/panic
+echo "0" > /sys/module/kernel/parameters/panic_on_warn
+echo "0" > /sys/module/kernel/parameters/panic_on_oops
+echo "0" > /sys/vm/panic_on_oom
+[ -f /data/adb/modules/RiProG/feature/tweak/disableprink ]] && (
+echo "0 0 0 0" > /proc/sys/kernel/printk 
+echo off > /proc/sys/kernel/printk_devkmsg
+echo "Y" > /sys/module/printk/parameters/console_suspend
+echo "N" > /sys/module/printk/parameters/cpu
+echo "Y" > /sys/module/printk/parameters/ignore_loglevel
+echo "N" > /sys/module/printk/parameters/pid
+echo "N" > /sys/module/printk/parameters/time
+echo "0" > /sys/kernel/printk_mode/printk_mode
+)
+[[ -f /data/adb/modules/RiProG/feature/tweak/disableloganddebug ]] && (
+echo "0" > /proc/sys/kernel/nmi_watchdog
+echo "0" > /proc/sys/kernel/compat-log
+echo "Y" > /sys/module/bluetooth/parameters/disable_ertm
+echo "Y" > /sys/module/bluetooth/parameters/disable_esco
+echo "0" > /sys/module/dwc3/parameters/ep_addr_rxdbg_mask
+echo "0" > /sys/module/dwc3/parameters/ep_addr_txdbg_mask
+echo "0" > /sys/module/dwc3_msm/parameters/disable_host_mode
+echo "0" > /sys/module/hid_apple/parameters/fnmode
+echo "0" > /sys/module/hid/parameters/ignore_special_drivers
+echo "N" > /sys/module/hid_magicmouse/parameters/emulate_3button
+echo "N" > /sys/module/hid_magicmouse/parameters/emulate_scroll_wheel
+echo "0" > /sys/module/hid_magicmouse/parameters/scroll_speed
+echo "Y" > /sys/module/mdss_fb/parameters/backlight_dimmer
+echo "Y" > /sys/module/workqueue/parameters/power_efficient
+echo "N" > /sys/module/sync/parameters/fsync_enabled
+echo "0" > /sys/module/binder/parameters/debug_mask
+echo "0" > /sys/module/debug/parameters/enable_event_log
+echo "0" > /sys/module/glink/parameters/debug_mask
+echo "N" > /sys/module/ip6_tunnel/parameters/log_ecn_error
+echo "0" /sys/module/subsystem_restart/parameters/enable_ramdumps
+echo "0" > /sys/module/lowmemorykiller/parameters/debug_level
+echo "0" > /sys/module/msm_show_resume_irq/parameters/debug_mask
+echo "0" > /sys/module/msm_smd_pkt/parameters/debug_mask
+echo "N" > /sys/module/sit/parameters/log_ecn_error
+echo "0" > /sys/module/smp2p/parameters/debug_mask
+echo "0" > /sys/module/usb_bam/parameters/enable_event_log
+echo "Y" > /sys/module/printk/parameters/console_suspend
+echo "N" > /sys/module/printk/parameters/cpu
+echo "Y" > /sys/module/printk/parameters/ignore_loglevel
+echo "N" > /sys/module/printk/parameters/pid
+echo "N" > /sys/module/printk/parameters/time
+echo "0" > /sys/module/service_locator/parameters/enable
+echo "1" > /sys/module/subsystem_restart/parameters/disable_restart_work
+for mask in $(find /sys/ -name debug_mask); do
+echo "0" > $mask
+done
+for level in $(find /sys/ -name debug_level); do
+echo "0" > $level
+done
+for ce in $(find /sys/ -name edac_mc_log_ce); do
+echo "0" > $ce
+done
+for ue in $(find /sys/ -name edac_mc_log_ue); do
+echo "0" > $ue
+done
+for event in $(find /sys/ -name enable_event_log); do
+echo "0" > $event
+done
+for ecn in $(find /sys/ -name log_ecn_error); do
+echo "0" > $ecn
+done
+for crashd in $(find /sys/ -name snapshot_crashdumper); do
+echo "0" > $crashd
+done
+for kgsl in $(find /sys/kernel/debug/kgsl/kgsl-3d0/ -name *log*); do
+echo "0" > $kgsl
+done
+)
+[[ -f /data/adb/modules/RiProG/feature/tweak/networktweak ]] && (
+echo "404480" > "/proc/sys/net/core/wmem_max"
+echo "404480" > "/proc/sys/net/core/rmem_max"
+echo "256960" > "/proc/sys/net/core/rmem_default"
+echo "256960" > "/proc/sys/net/core/wmem_default"
+echo "0" > "/proc/sys/net/ipv4/tcp_timestamps"
+echo "1" > "/proc/sys/net/ipv4/tcp_tw_reuse"
+echo "1" > "/proc/sys/net/ipv4/tcp_sack"
+echo "1" > "/proc/sys/net/ipv4/tcp_tw_recycle"
+echo "1" > "/proc/sys/net/ipv4/tcp_window_scaling"
+echo "5" > "/proc/sys/net/ipv4/tcp_keepalive_probes"
+echo "30" > "/proc/sys/net/ipv4/tcp_keepalive_intvl"
+echo "30" > "/proc/sys/net/ipv4/tcp_fin_timeout"
+echo "4096,16384,404480" > "/proc/sys/net/ipv4/tcp_wmem"
+echo "4096,87380,404480" > "/proc/sys/net/ipv4/tcp_rmem"
+echo "westwood" > "/proc/sys/net/ipv4/tcp_congestion_control
+)
+[[ -f /data/adb/modules/RiProG/feature/tweak/fstrim ]] && (
+busybox
+$busybox fstrim /system
+$busybox fstrim /vendor
+$busybox fstrim /data
+$busybox fstrim /cache
+)

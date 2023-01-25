@@ -13,12 +13,10 @@ RiProG Open Source @RiOpSo | Telegram  <br />
 - Media Codex
 - Smooth GUI
 - Network Tweak
-- Efficient Battery
 - Clear Audio
 - Disable Logger And Debugger
 - Disable Panic
 - Disable Printk
-- Drop Cache
 - Adaptive Mode
 
 # Mode
@@ -42,15 +40,16 @@ Sleep:
 - Normal Core
 - Powersave ON
 
-# Latest Changelog
+# Changelog 1.3 Beta
 
-- Task Scheduler removed
+- Battery Eficiency removed
+- Drop Cache Remove
+- Maybe Fixed download interrupt
 - Game Detection improved
-- Update In Magisk suport
-- Maybe Fixed Keyboard
+- Gamelist Editable
+- Feature rename to on/off
 - Powersave System added
-- Incerase Mode Delay
-- Credit added
+- Recode script
 
 # Source Code
 

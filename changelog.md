@@ -48,7 +48,7 @@ Sleep:
 - Maybe Fixed download interrupt
 - Game Detection improved
 - Gamelist Editable
-- Feature rename to on/off
+- Feature rename to disable/enable
 - Fstrim added
 - Recode script
 - Remove useless code

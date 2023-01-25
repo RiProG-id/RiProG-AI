@@ -18,6 +18,7 @@ RiProG Open Source @RiOpSo | Telegram  <br />
 - Disable Panic
 - Disable Printk
 - Adaptive Mode
+- Fstrim
 
 # Mode
 
@@ -48,8 +49,9 @@ Sleep:
 - Game Detection improved
 - Gamelist Editable
 - Feature rename to on/off
-- Powersave System added
+- Fstrim added
 - Recode script
+- Remove useless code
 
 # Source Code
 

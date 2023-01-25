@@ -30,7 +30,7 @@ Daily:
 
 Game:
 - LMK heavy game
-- Normal CPU Frequency
+- MAX CPU Frequency
 - Normal Core
 - Powersave OFF
 - Skynet Test

@@ -44,7 +44,7 @@ Sleep:
 # Changelog 1.3 Beta
 
 - Battery Eficiency removed
-- Drop Cache Remove
+- Drop Cache removed
 - Maybe Fixed download interrupt
 - Game Detection improved
 - Gamelist Editable

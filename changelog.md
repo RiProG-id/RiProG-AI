@@ -31,7 +31,7 @@ Daily:
 Game:
 - LMK heavy game
 - Normal CPU Frequency
-- Normal Core
+- Half Core
 - Powersave OFF
 - Skynet Test
 

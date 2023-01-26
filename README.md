@@ -52,6 +52,10 @@ Sleep:
 - Fixed game detection issue
 - Module installer new algorithm
 
+1.9 Beta
+- High ram usage fixed
+- Freeze fixed
+
 # Source Code
 
 - RiProG | Telegram

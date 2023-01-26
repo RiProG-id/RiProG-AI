@@ -67,5 +67,5 @@ echo "0" > /sys/devices/system/cpu/cpu7/online
 resetprop tweak.apply.mode sleep
 )
 sleep 10
-nohup /data/adb/modules/RiProG/ai
+nohup /data/adb/modules/RiProG/ai&
 exit

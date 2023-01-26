@@ -25,31 +25,26 @@ RiProG Open Source @RiOpSo | Telegram  <br />
 Daily:
 - LMK Light
 - Normal CPU Frequency
-- Normal Core
+- Normal CPU Core
 - Powersave OFF
 
 Game:
 - LMK heavy game
 - MAX CPU Frequency
-- Normal Core
+- Normal CPU Core
 - Powersave OFF
 - Skynet Test
 
 Sleep:
 - LMK Light
 - Normal CPU Frequency
-- Half Core
+- Half CPU Core
 - Powersave ON
 
 # Changelog
 
-1.5 Stable
-- Remove unnecessary
-
-1.6 Stable
-- Recode script
-- Several code fixed
-- Several feature fixed
+1.7 Stable
+- Feature Disabler Fixed
 
 # Source Code
 

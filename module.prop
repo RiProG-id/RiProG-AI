@@ -1,7 +1,7 @@
 id=RiProG
 name=RiProG AI
-version=1.6 Stable
-versionCode=16
+version=1.7 Stable
+versionCode=17
 author=RiProG
 description=Improve the android experience with some tweaks combined | Automaticaly adapt mode
 updateJson=https://raw.githubusercontent.com/RiProG-id/RiProG-AI/main/update.json

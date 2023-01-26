@@ -3,6 +3,7 @@
 Improve the android experience with some tweaks combined <br />
 Automaticaly adapt  mode <br />
 RiProG Open Source @RiOpSo | Telegram  <br />
+MIUI have issue <br />
 
 # Feature
 - Dalvik Execution Mode

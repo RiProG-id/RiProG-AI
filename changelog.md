@@ -44,5 +44,4 @@ Sleep:
 # Changelog
 
 1.7 Stable
-
-- Feature Disabler Fixed
+- Feature disabler fixed

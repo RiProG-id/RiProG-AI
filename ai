@@ -1,5 +1,5 @@
 . /data/adb/modules/RiProG/gamelist.prop
-if [[ $(pgrep -fl "$game1|$game2|$game3|$game4|$game5|$game6|$game7|$game8|$game9|$game10|$game11|$game12|$game13|$game14|$game15|$game16|$game17|$game18|$game19|$game20|$game21|$game22|$game23|$game24|$game25|skynet" | awk !/bindfs/ | awk !/com.tencent.soter.soterserver/  | awk !/pgrep/) ]] 
+if [[ $(for game in $game1 $game2 $game3 $game4 $game5 $game6 $game7 $game8 $game9 $game10 $game11 $game12 $game13 $game14 $game15 $game16 $game17 $game18 $game19 $game20 $game21 $game22 $game23 $game24 $game25 skynet; do dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' | grep "$game"; done) ]] 
 then
 [[ ! $(resetprop tweak.detect.mode) = game ]] && (resetprop -n tweak.detect.mode game)
 elif [[ ! $(dumpsys input_method | grep mInteractive=true) == *"mInteractive"* ]]
@@ -67,5 +67,5 @@ echo "0" > /sys/devices/system/cpu/cpu7/online
 resetprop tweak.apply.mode sleep
 )
 sleep 10
-nohup /data/adb/modules/RiProG/ai&
+nohup /data/adb/modules/RiProG/ai
 exit

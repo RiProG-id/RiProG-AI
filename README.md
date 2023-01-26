@@ -47,6 +47,11 @@ Sleep:
 1.7 Stable
 - Feature disabler fixed
 
+1.8 Beta
+- Game detection new algorithm
+- Fixed game detection issue
+- Module installer new algorithm
+
 # Source Code
 
 - RiProG | Telegram

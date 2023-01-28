@@ -1,5 +1,5 @@
 . /data/adb/modules/RiProG/gamelist.prop
-if [[ $(for game in $game1 $game2 $game3 $game4 $game5 $game6 $game7 $game8 $game9 $game10 $game11 $game12 $game13 $game14 $game15 $game16 $game17 $game18 $game19 $game20 $game21 $game22 $game23 $game24 $game25 skynet; do dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' | grep "$game"; done) ]] 
+if [[ $(dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' | grep -e $game1 -e $game2 -e $game3 -e $game4 -e $game5 -e $game6 -e $game7 -e $game8 -e $game9 -e $game10 -e $game11 -e $game12 -e $game13 -e $game14 -e $game15 -e $game16 -e $game17 -e $game18 -e $game19 -e $game20 -e $game21 -e $game22 $game23 -e $game24 -e $game25 -e skynet) ]] 
 then
 [[ ! $(resetprop tweak.detect.mode) = game ]] && (resetprop -n tweak.detect.mode game)
 elif [[ ! $(dumpsys input_method | grep mInteractive=true) == *"mInteractive"* ]]

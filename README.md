@@ -44,17 +44,11 @@ Sleep:
 
 # Changelog
 
-1.7 Stable
-- Feature disabler fixed
-
-1.8 Beta
-- Game detection new algorithm
-- Fixed game detection issue
-- Module installer new algorithm
-
-1.9 Beta
-- High ram usage fixed
-- Freeze fixed
+2.0 Beta
+- More eficiency
+- Eliminating wastage of ai
+- Fix battery drain
+- Fix device heating
 
 # Source Code
 

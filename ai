@@ -1,5 +1,5 @@
 . /data/adb/modules/RiProG/gamelist.prop
-if [[ $(dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' | grep -e $game1 -e $game2 -e $game3 -e $game4 -e $game5 -e $game6 -e $game7 -e $game8 -e $game9 -e $game10 -e $game11 -e $game12 -e $game13 -e $game14 -e $game15 -e $game16 -e $game17 -e $game18 -e $game19 -e $game20 -e $game21 -e $game22 $game23 -e $game24 -e $game25 -e skynet) ]] 
+if dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' | grep -o -e $game1 -e $game2 -e $game3 -e $game4 -e $game5 -e $game6 -e $game7 -e $game8 -e $game9 -e $game10 -e $game11 -e $game12 -e $game13 -e $game14 -e $game15 -e $game16 -e $game17 -e $game18 -e $game19 -e $game20 -e $game21 -e $game22 -e $game23 -e $game24 -e $game25 -e skynet
 then
 [[ ! $(resetprop tweak.detect.mode) = game ]] && (resetprop -n tweak.detect.mode game)
 elif [[ ! $(dumpsys input_method | grep mInteractive=true) == *"mInteractive"* ]]
@@ -41,7 +41,7 @@ echo "1" > /sys/devices/system/cpu/cpu6/online
 echo "1" > /sys/devices/system/cpu/cpu7/online
 )
 [[ -f /data/adb/modules/RiProG/feature/ai/powersave ]] && (settings put global low_power 0)
-if [[ $(pgrep -fl "skynet") ]]
+if dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' | grep -o skynet
 then
 [[ -f /data/adb/modules/RiProG/feature/ai/notification ]] && (su -lp 2000 -c "cmd notification post -S bigtext -t 'RiProG AI: ( Game Mode ) (Test)' 'Tag' ''")
 else

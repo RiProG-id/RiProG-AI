@@ -49,3 +49,10 @@ Sleep:
 - Eliminating wastage of ai
 - Fix battery drain
 - Fix device heating
+
+2.1 Stable
+- Fix inactive game mode
+- New game detection algorithm full applied
+- Shortened detection output
+- Remove useless
+- Warning shell fixed

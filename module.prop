@@ -1,7 +1,7 @@
 id=RiProG
 name=RiProG AI
-version=2.0 Beta
-versionCode=20
+version=2.1 Beta
+versionCode=21
 author=RiProG
 description=Improve the android experience with some tweaks combined | Automaticaly adapt mode
 updateJson=https://raw.githubusercontent.com/RiProG-id/RiProG-AI/main/update.json

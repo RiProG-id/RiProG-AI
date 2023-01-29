@@ -9,5 +9,5 @@ else
 [[ ! $(resetprop tweak.detect.mode) = daily ]] && (resetprop -n tweak.detect.mode daily)
 fi
 sleep 5
-nohup /data/adb/modules/RiProG/script/sienceai&
+nohup /data/adb/modules/RiProG/script/sinceai&
 exit

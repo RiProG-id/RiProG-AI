@@ -1,1 +1,1 @@
-[[ -d /data/adb/modules/RiProG/feature/tweak ]] && (su -c /data/adb/modules/RiProG/tweak1)
+[[ -d /data/adb/modules/RiProG/feature/tweak ]] && (su -c /data/adb/modules/RiProG/pretweak)

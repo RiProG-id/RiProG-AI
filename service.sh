@@ -1,7 +1,3 @@
-sleep 30
+while [[ -z $(getprop sys.boot_completed) ]]; do sleep 5; done 
 [[ -d /data/adb/modules/RiProG/feature/tweak ]] && (su -c /data/adb/modules/RiProG/tweak2)
-[[ -d /data/adb/modules/RiProG/feature/ai ]] && (
-resetprop -n tweak.detect.mode unset
-resetprop -n tweak.apply.mode unset
-su -c /data/adb/modules/RiProG/ai
-)
+[[ -d /data/adb/modules/RiProG/feature/ai ]] && (su -c /data/adb/modules/RiProG/script/preai)

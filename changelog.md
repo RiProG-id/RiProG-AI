@@ -19,26 +19,9 @@ RiProG Open Source @RiOpSo | Telegram  <br />
 - Disable Printk
 - Adaptive Mode
 - Fstrim
+- Mode  Daily/Game/Sleep
 
-# Mode
-
-Daily:
-- LMK Light
-- Normal CPU Frequency
-- Normal CPU Core
-- Powersave OFF
-
-Game:
-- LMK heavy game
-- MAX CPU Frequency
-- Normal CPU Core
-- Powersave OFF
-
-Sleep:
-- LMK Light
-- Normal CPU Frequency
-- Half CPU Core
-- Powersave ON
+More info in GITHUB
 
 # Changelog
 

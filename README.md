@@ -53,6 +53,10 @@ Sleep:
 - Alternating ai method
 - Boot detection added
 
+2.3 Stable
+- New installer algorithm
+- Fixed file missing after install in some device
+
 # Source Code
 
 - RiProG | Telegram

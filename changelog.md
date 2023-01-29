@@ -39,3 +39,7 @@ More info in GITHUB
 2.3 Stable
 - New installer algorithm
 - Fixed file missing after install in some device
+
+2.4 Stable
+- New installation method
+- Fixed file missing after install in some device 

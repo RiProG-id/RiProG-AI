@@ -33,7 +33,6 @@ Game:
 - MAX CPU Frequency
 - Normal CPU Core
 - Powersave OFF
-- Skynet Test
 
 Sleep:
 - LMK Light
@@ -43,15 +42,13 @@ Sleep:
 
 # Changelog
 
-2.0 Beta
-- More eficiency
-- Eliminating wastage of ai
-- Fix battery drain
-- Fix device heating
-
-2.1 Stable
-- Fix inactive game mode
-- New game detection algorithm full applied
-- Shortened detection output
-- Remove useless
-- Warning shell fixed
+2.2 Stable
+- Misinstallation fix in the previously applied hotfix
+- Recode debloat unnecessary things
+- Remove unnecessary
+- Files and folders tidied up
+- Delete credit.txt file
+- Additional module descriptions
+- Remove skynet test in game mode
+- Alternating ai method
+- Boot detection added

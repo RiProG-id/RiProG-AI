@@ -43,3 +43,6 @@ More info in GITHUB
 2.4 Stable
 - New installation method
 - Fixed file missing after install in some device 
+
+2.5 Stable
+- Fixed some tweaks not working

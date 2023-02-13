@@ -5,7 +5,7 @@ Automaticaly adapt  mode <br />
 RiProG Open Source @RiOpSo | Telegram  <br />
 
 # Feature
-- Dalvik Execution Mode
+- Dalvik AS JIT
 - Purgeable Assets
 - Zygote Preforking
 - Fuse PassTrough
@@ -42,9 +42,17 @@ Sleep:
 
 # Changelog
 
-2.6 Stable
-- Enable kernel debugging
-- Keyboard problem fixed
+2.7 Beta
+- Recode script
+- Manage module files
+- Some changes
+- Several fixes
+- Change notification
+- Change sleep mode method
+- Battery eficiency
+- Change cpufreq method
+- Control feature.txt
+- Infinite gamelist.txtk
 
 # Source Code
 
@@ -53,5 +61,5 @@ Sleep:
 - mrfrost475  | Telegram
 - rikmeyzter | Telegram
 - iGlitch | Github
-- onfiretweaks | Telegram
 - mohd_syahrul | Telegram
+- King-Projects | Github

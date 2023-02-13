@@ -25,6 +25,14 @@ More info in GITHUB
 
 # Changelog
 
-2.6 Stable
-- Enable kernel debugging
-- Keyboard problem fixed
+2.7 Beta
+- Recode script
+- Manage module files
+- Some changes
+- Several fixes
+- Change notification
+- Change sleep mode method
+- Battery eficiency
+- Change cpufreq method
+- Control feature.txt
+- Infinite gamelist.txt

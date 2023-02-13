@@ -1,0 +1,77 @@
+# Reboot Required
+# True & False
+
+###################
+
+#AI Toggler
+AI=true
+
+#Notification
+notification=true
+
+#Power Save System
+powersave=true
+
+#Low memory killer
+lmk=true
+
+#Frequency Control
+freq=true
+
+#Core Control
+core=true
+
+###################
+
+
+###################
+
+#Tweak Toggler
+Tweak=true
+
+#Debloat Unessesary Thing
+debloat=true
+
+#Dalvik as JIT
+dalvikjit=true
+
+#Purgeable Assets
+purgeassets=true
+
+#SkiaGL
+skiagl=true
+
+#Zygote preforking
+zygotepreforking=true
+
+#Fuse Passtrough
+fusepasstrough=true
+
+#Fast Streaming
+faststreaming=true
+
+#Media Codex
+mediacodex=false
+
+#Smooth GUI
+smoothgui=true
+
+#Network Tweak
+networktweak=true
+
+#Clear Audio
+clearaudio=true
+
+#Disable Logger & Debugger
+disableloganddebug=true
+
+#Disable Printk
+disableprintk=true
+
+#Disable Panic
+disablepanic=true
+
+#Fstrim
+fstrim=true
+
+###################

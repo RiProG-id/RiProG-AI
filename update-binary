@@ -36,5 +36,6 @@ ui_print "**************************************"
 ui_print ""
 
 install_module
+chmod 755 $MODPATH/RiProG
 exit 0
 

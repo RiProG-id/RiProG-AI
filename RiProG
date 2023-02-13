@@ -1,0 +1,541 @@
+postfsdata() {
+tweak() {
+if [[ $debloat == "true" ]]
+then
+[[ ! -d "$DIR"/system ]] && (
+zd "$DIR"/system
+zd "$DIR"/system/bin
+zd "$DIR"/system/etc
+zd "$DIR"/system/etc/init
+zd "$DIR"/system/vendor
+zd "$DIR"/system/vendor/bin
+zd "$DIR"/system/vendor/bin/hw
+zd "$DIR"/system/vendor/bin/power
+zd "$DIR"/system/vendor/bin/power/ddr
+zd "$DIR"/system/vendor/bin/power/ddr/bm
+zd "$DIR"/system/vendor/bin/power/ddr/bm/tool
+zd "$DIR"/system/vendor/etc
+zd "$DIR"/system/vendor/etc/init
+zf "$DIR"/system/bin/aee_dumpstate
+zf "$DIR"/system/bin/atrace
+zf "$DIR"/system/bin/bugreport
+zf "$DIR"/system/bin/bugreportz
+zf "$DIR"/system/bin/cplog
+zf "$DIR"/system/bin/crash_dump32
+zf "$DIR"/system/bin/crash_dump64
+zf "$DIR"/system/bin/dataLogDaemon
+zf "$DIR"/system/bin/debuggerd
+zf "$DIR"/system/bin/debuggerd64
+zf "$DIR"/system/bin/dexdump
+zf "$DIR"/system/bin/dexoptanalzyer
+zf "$DIR"/system/bin/diag_socket_log
+zf "$DIR"/system/bin/dmesg
+zf "$DIR"/system/bin/dmlog
+zf "$DIR"/system/bin/dumpakmap
+zf "$DIR"/system/bin/dumpreleases
+zf "$DIR"/system/bin/dumpstate
+zf "$DIR"/system/bin/DumpSystemInfo
+zf "$DIR"/system/bin/emdlogger1
+zf "$DIR"/system/bin/emdlogger2
+zf "$DIR"/system/bin/emdlogger3
+zf "$DIR"/system/bin/emdlogger4
+zf "$DIR"/system/bin/emdlogger5
+zf "$DIR"/system/bin/hcidump
+zf "$DIR"/system/bin/dexdump
+zf "$DIR"/system/bin/i2cdump
+zf "$DIR"/system/bin/klogd
+zf "$DIR"/system/bin/log
+zf "$DIR"/system/bin/log_ctr
+zf "$DIR"/system/bin/log_service
+zf "$DIR"/system/bin/logcat
+zf "$DIR"/system/bin/logd
+zf "$DIR"/system/bin/logger
+zf "$DIR"/system/bin/loggerlauncher
+zf "$DIR"/system/bin/logname
+zf "$DIR"/system/bin/logread
+zf "$DIR"/system/bin/logwrapper
+zf "$DIR"/system/bin/ipdump
+zf "$DIR"/system/bin/lpdumpd
+zf "$DIR"/system/bin/mdlogger
+zf "$DIR"/system/bin/memorydumper
+zf "$DIR"/system/bin/munidumpd
+zf "$DIR"/system/bin/mobile_log_d
+zf "$DIR"/system/bin/nandump
+zf "$DIR"/system/bin/oatdump
+zf "$DIR"/system/bin/outdump
+zf "$DIR"/system/bin/setlogcons
+zf "$DIR"/system/bin/subsystem_ramdump
+zf "$DIR"/system/bin/svlogd
+zf "$DIR"/system/bin/tcpdump
+zf "$DIR"/system/bin/tombstoned
+zf "$DIR"/system/bin/traced
+zf "$DIR"/system/bin/traced_probes
+zf "$DIR"/system/bin/traceroute
+zf "$DIR"/system/bin/traceroute6
+zf "$DIR"/system/bin/wpdiagd
+zf "$DIR"/system/bin/xlog
+zf "$DIR"/system/bin/ylog
+zf "$DIR"/system/bin/ylogbox
+zf "$DIR"/system/bin/ylogctl
+zf "$DIR"/system/bin/ylogkat
+zf "$DIR"/system/bin/lastlog.sh
+zf "$DIR"/system/bin/notify_traceur.sh
+zf "$DIR"/system/bin/trace.sh
+zf "$DIR"/system/bin/ylogdebug.sh
+zf "$DIR"/system/etc/init/atrace.rc
+zf "$DIR"/system/etc/init/atrace.userdebug.rc
+zf "$DIR"/system/etc/init/bugreport.rc
+zf "$DIR"/system/etc/init/dataLogDaemon.rc
+zf "$DIR"/system/etc/init/debuggerd.rc
+zf "$DIR"/system/etc/init/debuggerd64.rc
+zf "$DIR"/system/etc/init/dumpstate.rc
+zf "$DIR"/system/etc/init/emdlogger1.rc
+zf "$DIR"/system/etc/init/emdlogger2.rc
+zf "$DIR"/system/etc/init/emdlogger3.rc
+zf "$DIR"/system/etc/init/emdlogger4.rc
+zf "$DIR"/system/etc/init/emdlogger5.rc
+zf "$DIR"/system/etc/init/log_service.rc
+zf "$DIR"/system/etc/init/logd.rc
+zf "$DIR"/system/etc/init/ipdump.rc
+zf "$DIR"/system/etc/init/mdlogger.rc
+zf "$DIR"/system/etc/init/mdlogger_log_d.rc
+zf "$DIR"/system/etc/init/modemlog_conmgr_service.rc
+zf "$DIR"/system/etc/init/slogmodem.rc
+zf "$DIR"/system/etc/init/tombstoned.rc
+zf "$DIR"/system/etc/init/traceur.rc
+zf "$DIR"/system/etc/init/ylog.rc
+zf "$DIR"/system/vendor/bin/aee_dumpstate
+zf "$DIR"/system/vendor/bin/aee_dumpstatev
+zf "$DIR"/system/vendor/bin/cplogctl
+zf "$DIR"/system/vendor/bin/dmlog
+zf "$DIR"/system/vendor/bin/dumpsys
+zf "$DIR"/system/vendor/bin/emdlogger1
+zf "$DIR"/system/vendor/bin/emdlogger2
+zf "$DIR"/system/vendor/bin/emdlogger5
+zf "$DIR"/system/vendor/bin/flush_slog_modem
+zf "$DIR"/system/vendor/bin/i2cdump
+zf "$DIR"/system/vendor/bin/idd-logreader
+zf "$DIR"/system/vendor/bin/idd-logreader_main
+zf "$DIR"/system/vendor/bin/idd
+zf "$DIR"/system/vendor/bin/log
+zf "$DIR"/system/vendor/bin/logname
+zf "$DIR"/system/vendor/bin/logwrapper
+zf "$DIR"/system/vendor/bin/mdlogger
+zf "$DIR"/system/vendor/bin/memorydumper
+zf "$DIR"/system/vendor/bin/mlogservice
+zf "$DIR"/system/vendor/bin/mobile_log_d
+zf "$DIR"/system/vendor/bin/mrdump_tool
+zf "$DIR"/system/vendor/bin/muxreport
+zf "$DIR"/system/vendor/bin/slogmodem_vendor
+zf "$DIR"/system/vendor/bin/stp_dump3
+zf "$DIR"/system/vendor/bin/systemDebuggerD
+zf "$DIR"/system/vendor/bin/yloglite
+zf "$DIR"/system/vendor/bin/yloglitectl
+zf "$DIR"/system/vendor/bin/yloglitekat
+zf "$DIR"/system/vendor/bin/hw/vendor.sprd.hardware.cplog_connmgr@1.0-service
+zf "$DIR"/system/vendor/bin/hw/vendor.sprd.hardware.log@1.0-service
+zf "$DIR"/system/vendor/bin/power/ddr/bm/tool/ddr_bm_log
+zf "$DIR"/system/vendor/bin/power/ddr/bm/tool/log_to_csv.sh
+zf "$DIR"/system/vendor/etc/mlogservice.conf
+zf "$DIR"/system/vendor/etc/slog_modem.conf
+zf "$DIR"/system/vendor/etc/slog_modem_autotest.conf
+zf "$DIR"/system/vendor/etc/slog_modem_cali.conf
+zf "$DIR"/system/vendor/etc/slog_modem_factory.conf
+zf "$DIR"/system/vendor/etc/yloglite.conf
+zf "$DIR"/system/vendor/etc/yloglitesource.conf
+zf "$DIR"/system/vendor/etc/ylogsource.conf
+zf "$DIR"/system/vendor/etc/ylog.conf.debug
+zf "$DIR"/system/vendor/etc/analyzer.py
+zf "$DIR"/system/vendor/etc/ylog.conf.user
+zf "$DIR"/system/vendor/etc/init/mlogservice.rc
+zf "$DIR"/system/vendor/etc/init/muxreport.rc
+zf "$DIR"/system/vendor/etc/init/slogmodem_vendor.rc
+zf "$DIR"/system/vendor/etc/init/systemDebuggerD.rc
+zf "$DIR"/system/vendor/etc/init/vendor.sprd.hardware.cplog_connmgr@1.0-service.rc
+zf "$DIR"/system/vendor/etc/init/vendor.sprd.hardware.log@1.0-service.rc
+zf "$DIR"/system/vendor/etc/init/yloglite.rc
+)
+else
+[[ -d "$DIR"/system ]] && (rm -r "$DIR"/system)
+fi
+[[ $dalvikasjit == "true" ]] && (cpr dalvik.vm.execution-mode int:jit)
+[[ $purgeassets == "true" ]] && (cpr persist.sys.purgeable_assets 1)
+[[ $skiagl == "true" ]] && (cpr debug.hwui.renderer skiagl)
+[[ $zygotepeforking == "true" ]] && (cpr persist.device_config.runtime_native.usap_pool_enabled true)
+[[ $fusepasstrough == "true" ]] && (cpr persist.sys.fuse.passthrough.enable true)
+[[ $faststreaming == "true" ]] && (
+cpr media.stagefright.enable-player true
+cpr media.stagefright.enable-meta true
+cpr media.stagefright.enable-scan true
+cpr media.stagefright.enable-http true
+cpr media.stagefright.enable-rtsp true
+cpr media.stagefright.enable-record false
+)
+[[ $mediacodex == "true" ]] && (
+cpr ro.media.dec.aud.flac.enabled 1
+cpr ro.media.dec.aud.wma.enabled 1
+cpr ro.media.dec.vid.avi.enabled 1
+cpr ro.media.dec.vid.wmv.enabled 1
+cpr ro.media.dec.aud.wma.enabled 1
+cpr ro.media.dec.aud.mp3.enabled 1
+cpr ro.media.dec.vid.mp4.enabled 1
+cpr ro.media.dec.aud.flac.enabled 1
+cpr ro.media.dec.vid.H.264.enabled 1
+cpr ro.media.enc.aud.flac.enabled 1
+cpr ro.media.enc.vid.H.264.enabled 1
+cpr ro.media.enc.aud.wma.enabled 1
+cpr ro.media.enc.vid.wmv.enabled 1
+cpr ro.media.enc.aud.mp3.enabled 1
+cpr ro.media.enc.vid.mp4.enabled 1
+)
+[[ $smoothgui == "true" ]] && (
+cpr sys.use_fifo_ui 1
+cpr windows.mgr.max_event_per_sec 180
+cpr ro.min_pointer_dur 8
+cpr ro.min.fling_velocity 8000
+cpr ro.max.fling_velocity 12000
+cpr persist.sys.lgospd.enable 0
+cpr persist.sys.pcsync.enable 0
+cpr persist.sys.scrollingcache 3
+)
+[[ $networktweak == "true" ]] && (
+cpr net.tcp.buffersize.default "6144,87380,110208,6144,16384,110208"
+cpr net.tcp.buffersize.wifi "262144,524288,1048576,262144,524288,1048576"
+cpr net.tcp.buffersize.lte "262144,524288,3145728,262144,524288,3145728"
+cpr net.tcp.buffersize.hsdpa "6144,262144,1048576,6144,262144,1048576"
+cpr net.tcp.buffersize.evdo_b "6144,262144,1048576,6144,262144,1048576"
+cpr net.tcp.buffersize.umts "6144,87380,110208,6144,16384,110208"
+cpr net.tcp.buffersize.hspa "6144,87380,262144,6144,16384,262144"
+cpr net.tcp.buffersize.gprs "6144,8760,11680,6144,8760,11680"
+cpr net.tcp.buffersize.edge "6144,26280,35040,6144,16384,35040"
+cpr net.tcp.default_init_rwnd 60
+cpr net.ipv4.tcp_ecn 0
+cpr net.ipv4.route.flush 1
+cpr net.ipv4.tcp_rfc1337 1
+cpr net.ipv4.ip_no_pmtu_disc 0
+cpr net.ipv4.tcp_sack 1
+cpr net.ipv4.tcp_fack 1
+cpr net.ipv4.tcp_window_scaling 1
+cpr net.ipv4.tcp_timestamps 0
+cpr net.ipv4.tcp_rmem "6144 87380 1048576"
+cpr net.ipv4.tcp_wmem "6144 87380 1048576"
+cpr net.ipv4.tcp_mem "187000 187000 187000"
+cpr net.ipv4.tcp_no_metrics_save 1
+cpr net.ipv4.icmp_echo_ignore_all 1
+cpr net.ipv4.tcp_moderate_rcvbuf 1
+cpr net.ipv4.conf.all.accept_redirects 0
+cpr net.ipv4.conf.default.accept_redirects 0
+cpr net.ipv4.conf.all.rp_filter 1
+cpr persist.cust.tel.eons 1
+cpr persist.cust.tel.adapt 1
+)
+[[ $clearaudio == "true" ]] && (
+cpr persist.audio.fluence.mode endfire
+cpr persist.audio.vr.enable true
+cpr persist.audio.handset.mic digital
+cpr af.resampler.quality 255
+cpr mpq.audio.decode true
+)
+[[ $disableloganddebug == "true" ]] && (
+cpr log.resolves 0
+cpr log.pm4 0
+cpr log.pm4mem 0
+cpr log.shaders 0
+cpr log.sc_dev 0
+cpr log.cffdump 0
+cpr log.cffdump_with_ifh 0
+cpr log.cffdump_no_memzero 0
+cpr log.dumpx 0 
+cpr log.primitives 0
+cpr log_frame_info 0
+cpr log_mp4dectime 0
+cpr log_posttime 0
+cpr log_profile 0
+cpr log_playerdriver 0
+cpr log_metadatadriver 0
+cpr log_playerengine 0
+cpr log_datapath 0
+cpr log_mp4parsernode 0
+cpr log_basedecnode 0
+cpr log_audiodecnode 0
+cpr log_videodecnode 0
+cpr log_outputnode 0
+cpr log_outputnodeinputport 0
+cpr log_audiooutput 0
+cpr log_surfaceoutput 0
+cpr log_omxmp4 0
+cpr log_ao 0
+cpr log_fps_interval 0
+cpr debug_test 0
+cpr profiler.debugmonitor false
+cpr profiler.hung.dumpdobugreport false
+cpr persist.android.strictmode 0
+cpr dalvik.vm.verify-bytecode false
+cpr libc.debug.malloc 0
+cpr av.debug.disable.pers.cache true
+cpr persist.vendor.ssr.enable_ramdumps 0
+cpr config.disable_rtt true
+cpr dalvik.vm.checkjni false
+cpr db.log.slow_query_threshold 0
+cpr debug.qualcomm.sns.hal 0 
+cpr debug.qualcomm.sns.daemon 0 
+cpr debug.qualcomm.sns.libsensor1 0
+cpr debug.egl.profiler 0
+cpr debug.enable.gamed 0
+cpr debug.enable.wl_log 0
+cpr debug.hwc.otf 0
+cpr debug.hwc_dump_en 0
+cpr debug.sf.dump 0
+cpr debug.sf.ddms 0
+cpr debug.sf.gpu_comp_tiling 0
+cpr debug.sf.disable_backpressure 1
+cpr debug.sf.recomputecrop 0
+cpr debugtool.anrhistory 0
+cpr hwui.use_gpu_pixel_buffers false
+cpr logcat.live disable
+cpr logcast.live disable
+cpr live.logcat disable
+cpr net.ipv4.tcp_no_metrics_save 1
+cpr media.stagefright.log-uri 0
+cpr profiler.debugmonitor false
+cpr profiler.launch false
+cpr profiler.hung.dumpdobugreport false
+cpr persist.android.strictmode 0
+cpr ro.egl.destroy_after_detach false
+cpr ro.config.ksm.support false
+cpr ro.config.nocheckin 1
+cpr ro.debuggable 0
+cpr ro.logd.size 0
+cpr ro.compcache.default 0
+cpr ro.kernel.android.checkjni 0
+cpr ro.kernel.qemu.gles 0
+cpr ro.kernel.checkjni 0
+cpr ro.sf.battery_log 0
+cpr ro.sf.battery.log.enabled 0
+cpr ro.telephony.call_ring.multiple false
+cpr rw.logger 0
+cpr persist.ims.disableDebugLogs 1
+cpr persist.debug.wfd.enable 0
+cpr persist.bt.a2dp.aac_disable true
+cpr persist.data.qmi.adb_logmask 0
+cpr persist.debug.sensors.hal 0 
+cpr persist.data.qmi.adb_logmask 0
+cpr persist.brcm.log none 
+cpr persist.brcm.cp_crash none 
+cpr persist.brcm.ap_crash none
+cpr persist.sys.dun.override 0
+cpr persist.radio.oem_socket false
+cpr persist.sys.wfd.virtual 0
+cpr persist.ims.enableADBLogs 0
+cpr persist.ims.enableDebugLogs 0
+cpr persist.ims.disabled 1
+cpr persist.ims.disableQXDMLogs 0
+cpr persist.ims.disableIMSLogs 0
+cpr persist.sys.offlinelog.kernel 1
+cpr persist.sys.offlinelog.logcat 1
+cpr persist.oem.dump 0
+cpr profiler.forse_disable_err_rpt 1
+cpr profiler.forse_disable_ulog 1
+cpr sdm.debug.disable_inline_rotator 1
+cpr sdm.debug.disable_skip_validate 1
+cpr sys.games.gt.prof 1
+cpr sys.hwc.gpu_perf_mode 0
+cpr vendor.fm.a2dp.conc.disabled true
+cpr vendor.vidc.enc.disable_bframes 1
+cpr vidc.debug.level 0
+cpr video.disable.ubwc 1
+cpr wifi.interface wlan0
+)
+}
+cpr() {
+resetprop -n "$1" "$2"
+}
+zd() {
+[[ ! -d "$1" ]] && (
+mkdir "$1"
+)
+}
+zf() {
+[[ ! -f "$1" ]] && (
+touch "$1"
+)
+}
+run() {
+DIR="${0%/*}"
+. "$DIR"/feature.txt
+[[ $Tweak == "true" ]] && tweak
+}
+if [[ $debug == true ]]
+then
+set -x
+run 
+else
+run > /dev/null 2>&1 
+fi
+}
+service() {
+tweak() {
+[[ $disablepanic = true ]] && (
+chw "/proc/sys/kernel/printk" "0 0 0 0"
+chw "/proc/sys/kernel/panic" "0"
+chw "/proc/sys/kernel/panic_on_oops" "0"
+chw "/proc/sys/kernel/panic_on_rcu_stall" "0"
+chw "/proc/sys/kernel/panic_on_warn" "0"
+chw "/sys/module/kernel/parameters/panic" "0"
+chw "/sys/module/kernel/parameters/panic_on_warn" "0"
+chw "/sys/module/kernel/parameters/panic_on_oops" "0"
+chw "/sys/vm/panic_on_oom" "0"
+)
+[[ $disableprintk == "true" ]] && (
+chw "/proc/sys/kernel/printk" "0 0 0 0"
+chw "/proc/sys/kernel/printk_devkmsg" "off"
+chw "/sys/module/printk/parameters/console_suspend" "Y"
+chw "/sys/module/printk/parameters/cpu" "Y"
+chw "/sys/module/printk/parameters/ignore_loglevel" "Y"
+chw "/sys/module/printk/parameters/pid" "Y"
+chw "/sys/module/printk/parameters/time" "Y"
+chw "/sys/kernel/printk_mode/printk_mode" "Y"
+)
+[[ $networktweak == "true" ]] && (
+chw "/proc/sys/net/core/wmem_max" "404480"
+chw "/proc/sys/net/core/rmem_max" "404480"
+chw "/proc/sys/net/core/rmem_default" "256960"
+chw  "/proc/sys/net/core/wmem_default" "256960"
+chw "/proc/sys/net/ipv4/tcp_timestamps" "0"
+chw "/proc/sys/net/ipv4/tcp_tw_reuse" "1"
+chw "/proc/sys/net/ipv4/tcp_sack" "1"
+chw "/proc/sys/net/ipv4/tcp_tw_recycle" "1"
+chw "/proc/sys/net/ipv4/tcp_window_scaling" "1"
+chw "/proc/sys/net/ipv4/tcp_keepalive_probes" "5"
+chw "/proc/sys/net/ipv4/tcp_keepalive_intvl" "30"
+chw "/proc/sys/net/ipv4/tcp_fin_timeout" "30"
+chw "/proc/sys/net/ipv4/tcp_wmem" "4096,16384,404480"
+chw "/proc/sys/net/ipv4/tcp_rmem" "4096,16384,404480"
+chw "/proc/sys/net/ipv4/tcp_congestion_control" "westwood"
+)
+[[ $fstrim == "true" ]] && (
+$busybox fstrim /system
+$busybox fstrim /vendor
+$busybox fstrim /data
+$busybox fstrim /cache
+)
+}
+dailymode() {
+[[ $lmk == "true" ]] && (chw "/sys/module/lowmemorykiller/parameters/minfree" "2560,5120,7680,8960,10240,12800")
+[[ $freq == "true" ]] && (
+for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
+chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}')"
+done
+)
+[[ $core == "true" ]] && (
+chw "/sys/devices/system/cpu/cpu2/online" "1"
+chw "/sys/devices/system/cpu/cpu3/online" "1"
+chw "/sys/devices/system/cpu/cpu6/online" "1"
+chw "/sys/devices/system/cpu/cpu7/online" "1"
+)
+[[ $powersave == "true" ]] && (settings put global low_power 0)
+[[ $notification == "true" ]] && (notif "RiProG AI: ( Daily Mode )")
+}
+gamemode() {
+[[ $lmk == "true" ]] && (chw "/sys/module/lowmemorykiller/parameters/minfree" "2560,5120,11520,25600,35840,38400")
+[[ $freq == true ]] && (
+for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
+chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $NF}')"
+done
+)
+[[ $core == "true" ]] && (
+chw "/sys/devices/system/cpu/cpu2/online" "1"
+chw "/sys/devices/system/cpu/cpu3/online" "1"
+chw "/sys/devices/system/cpu/cpu6/online" "1"
+chw "/sys/devices/system/cpu/cpu7/online" "1"
+)
+[[ $powersave == "true" ]] && (settings put global low_power 0)
+[[ $notification == "true" ]] && (
+game=$(pm list package | cut -f 2 -d ":" | grep "$window")
+notif "RiProG AI: ( Game Mode )" "$game"
+)
+}
+sleepmode() {
+[[ $lmk == "true" ]] && (chw "/sys/module/lowmemorykiller/parameters/minfree" "2560,5120,7680,8960,10240,12800")
+[[ $freq == "true" ]] && (
+for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
+chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}')"
+done
+)
+[[ $core == "true" ]] && (
+chw "/sys/devices/system/cpu/cpu2/online" "0"
+chw "/sys/devices/system/cpu/cpu3/online" "0"
+chw "/sys/devices/system/cpu/cpu6/online" "0"
+chw "/sys/devices/system/cpu/cpu7/online" "0"
+)
+[[ $powersave == "true" ]] && (settings put global low_power 1)
+[[ $notification == "true" ]] && (notif "RiProG AI: ( Sleep Mode )")
+}
+ai() {
+apply="resetprop -n tweak.apply.mode"
+applied="resetprop tweak.apply.mode"
+game_list_filter="grep -o"
+while IFS= read -r gamelist || [[ -n "$gamelist" ]]; do
+filter=$(echo "$gamelist" | awk '!/ /')
+[[ ! "$filter" == "" ]] && {
+game_list_filter+=" -e "$filter
+}
+done < """$DIR""/gamelist.txt"
+$apply unset
+while true; do
+sleep 5
+window=$($su dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' | $game_list_filter | tail -1)
+interactive=$($su dumpsys input_method | grep mInteractive)
+if [[ "$window" ]]
+then
+[[ ! $($applied) == game ]] && gamemode && $apply game
+elif [[ $interactive == *mInteractive=false* ]]
+then
+[[ ! $($applied) ==  sleep ]] && sleepmode && $apply sleep
+else
+[[ ! $($applied) == daily ]] && dailymode && $apply daily
+fi
+sleep 5
+done
+}
+notif() {
+su -lp 2000 -c "cmd notification post -S bigtext -t '$1' 'Tag' '""$2""'"
+}
+chr() {
+[[ -f $1 ]] && (
+chmod +r "$1"
+cat "$1"
+)
+}
+chw() {
+[[ -f $1 ]] && (
+chmod +w "$1"
+echo "$2" >"$1"
+)
+}
+run() {
+while [[ -z $(getprop sys.boot_completed) ]]; do sleep 5; done 
+DIR="${0%/*}"
+busybox=/data/adb/magisk/busybox
+. "$DIR"/feature.txt
+if [[ $Tweak == "true" ]]
+then
+tweak
+fi
+if [[ $AI == "true" ]]
+then
+ai 
+fi
+}
+if [[ $debug == true ]]
+then
+set -x
+run
+else
+run > /dev/null 2>&1 
+fi
+}
+[[ "$1" == "debug0" ]] && debug=false
+[[ "$1" == "debug1" ]] && debug=true
+[[ "$2" == "postfsdata" ]]  && postfsdata
+[[ "$2" == "service" ]] && service

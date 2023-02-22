@@ -54,7 +54,7 @@ fusepasstrough=true
 faststreaming=true
 
 #Media Codex
-mediacodex=false
+mediacodex=true
 
 #Smooth GUI
 smoothgui=true

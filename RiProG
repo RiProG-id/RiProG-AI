@@ -1,8 +1,8 @@
-postfsdata() {
+before() {
 tweak() {
 if [[ $debloat == "true" ]]
 then
-[[ ! -d "$DIR"/system ]] && (
+[[ ! -f "$DIR"/system/debloat ]] && {
 zd "$DIR"/system
 zd "$DIR"/system/bin
 zd "$DIR"/system/etc
@@ -154,24 +154,24 @@ zf "$DIR"/system/vendor/etc/init/systemDebuggerD.rc
 zf "$DIR"/system/vendor/etc/init/vendor.sprd.hardware.cplog_connmgr@1.0-service.rc
 zf "$DIR"/system/vendor/etc/init/vendor.sprd.hardware.log@1.0-service.rc
 zf "$DIR"/system/vendor/etc/init/yloglite.rc
-)
+}
 else
-[[ -d "$DIR"/system ]] && (rm -r "$DIR"/system)
+[[ -f "$DIR"/system/debloat ]] && rm -r "$DIR"/system
 fi
-[[ $dalvikasjit == "true" ]] && (cpr dalvik.vm.execution-mode int:jit)
-[[ $purgeassets == "true" ]] && (cpr persist.sys.purgeable_assets 1)
-[[ $skiagl == "true" ]] && (cpr debug.hwui.renderer skiagl)
-[[ $zygotepeforking == "true" ]] && (cpr persist.device_config.runtime_native.usap_pool_enabled true)
-[[ $fusepasstrough == "true" ]] && (cpr persist.sys.fuse.passthrough.enable true)
-[[ $faststreaming == "true" ]] && (
+[[ $dalvikasjit == "true" ]] && cpr dalvik.vm.execution-mode int:jit
+[[ $purgeassets == "true" ]] && cpr persist.sys.purgeable_assets 1
+[[ $skiagl == "true" ]] && cpr debug.hwui.renderer skiagl
+[[ $zygotepeforking == "true" ]] && cpr persist.device_config.runtime_native.usap_pool_enabled true
+[[ $fusepasstrough == "true" ]] && cpr persist.sys.fuse.passthrough.enable true
+[[ $faststreaming == "true" ]] && {
 cpr media.stagefright.enable-player true
 cpr media.stagefright.enable-meta true
 cpr media.stagefright.enable-scan true
 cpr media.stagefright.enable-http true
 cpr media.stagefright.enable-rtsp true
 cpr media.stagefright.enable-record false
-)
-[[ $mediacodex == "true" ]] && (
+}
+[[ $mediacodex == "true" ]] && {
 cpr ro.media.dec.aud.flac.enabled 1
 cpr ro.media.dec.aud.wma.enabled 1
 cpr ro.media.dec.vid.avi.enabled 1
@@ -187,8 +187,8 @@ cpr ro.media.enc.aud.wma.enabled 1
 cpr ro.media.enc.vid.wmv.enabled 1
 cpr ro.media.enc.aud.mp3.enabled 1
 cpr ro.media.enc.vid.mp4.enabled 1
-)
-[[ $smoothgui == "true" ]] && (
+}
+[[ $smoothgui == "true" ]] && {
 cpr sys.use_fifo_ui 1
 cpr windows.mgr.max_event_per_sec 180
 cpr ro.min_pointer_dur 8
@@ -197,8 +197,8 @@ cpr ro.max.fling_velocity 12000
 cpr persist.sys.lgospd.enable 0
 cpr persist.sys.pcsync.enable 0
 cpr persist.sys.scrollingcache 3
-)
-[[ $networktweak == "true" ]] && (
+}
+[[ $networktweak == "true" ]] && {
 cpr net.tcp.buffersize.default "6144,87380,110208,6144,16384,110208"
 cpr net.tcp.buffersize.wifi "262144,524288,1048576,262144,524288,1048576"
 cpr net.tcp.buffersize.lte "262144,524288,3145728,262144,524288,3145728"
@@ -228,15 +228,15 @@ cpr net.ipv4.conf.default.accept_redirects 0
 cpr net.ipv4.conf.all.rp_filter 1
 cpr persist.cust.tel.eons 1
 cpr persist.cust.tel.adapt 1
-)
-[[ $clearaudio == "true" ]] && (
+}
+[[ $clearaudio == "true" ]] && {
 cpr persist.audio.fluence.mode endfire
 cpr persist.audio.vr.enable true
 cpr persist.audio.handset.mic digital
 cpr af.resampler.quality 255
 cpr mpq.audio.decode true
-)
-[[ $disableloganddebug == "true" ]] && (
+}
+[[ $disableloganddebug == "true" ]] && {
 cpr log.resolves 0
 cpr log.pm4 0
 cpr log.pm4mem 0
@@ -345,7 +345,7 @@ cpr vendor.vidc.enc.disable_bframes 1
 cpr vidc.debug.level 0
 cpr video.disable.ubwc 1
 cpr wifi.interface wlan0
-)
+}
 }
 cpr() {
 resetprop -n "$1" "$2"
@@ -373,7 +373,7 @@ else
 run > /dev/null 2>&1 
 fi
 }
-service() {
+after() {
 tweak() {
 [[ $disablepanic = true ]] && (
 chw "/proc/sys/kernel/printk" "0 0 0 0"
@@ -422,11 +422,7 @@ $busybox fstrim /cache
 }
 dailymode() {
 [[ $lmk == "true" ]] && (chw "/sys/module/lowmemorykiller/parameters/minfree" "2560,5120,7680,8960,10240,12800")
-[[ $freq == "true" ]] && (
-for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
-chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}')"
-done
-)
+[[ $freq == "true" ]] && cpufreq reset
 [[ $core == "true" ]] && (
 chw "/sys/devices/system/cpu/cpu2/online" "1"
 chw "/sys/devices/system/cpu/cpu3/online" "1"
@@ -438,11 +434,10 @@ chw "/sys/devices/system/cpu/cpu7/online" "1"
 }
 gamemode() {
 [[ $lmk == "true" ]] && (chw "/sys/module/lowmemorykiller/parameters/minfree" "2560,5120,11520,25600,35840,38400")
-[[ $freq == true ]] && (
-for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
-chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $NF}')"
-done
-)
+[[ $freq == true ]] && {
+cpufreq reset
+cpufreq mintomax
+}
 [[ $core == "true" ]] && (
 chw "/sys/devices/system/cpu/cpu2/online" "1"
 chw "/sys/devices/system/cpu/cpu3/online" "1"
@@ -457,11 +452,10 @@ notif "RiProG AI: ( Game Mode )" "$game"
 }
 sleepmode() {
 [[ $lmk == "true" ]] && (chw "/sys/module/lowmemorykiller/parameters/minfree" "2560,5120,7680,8960,10240,12800")
-[[ $freq == "true" ]] && (
-for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
-chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}')"
-done
-)
+[[ $freq == "true" ]] && {
+cpufreq reset
+cpufreq maxtomin
+}
 [[ $core == "true" ]] && (
 chw "/sys/devices/system/cpu/cpu2/online" "0"
 chw "/sys/devices/system/cpu/cpu3/online" "0"
@@ -472,20 +466,39 @@ chw "/sys/devices/system/cpu/cpu7/online" "0"
 [[ $notification == "true" ]] && (notif "RiProG AI: ( Sleep Mode )")
 }
 ai() {
+cpufreq() {
+for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
+if [[ $(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}') < $(chr """$cpu""/scaling_available_frequencies" | awk '{print $NF}') ]]
+then
+[[ "$1" == "reset" ]] && {
+chw """$cpu""/scaling_max_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}')"
+chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $NF}')"
+}
+[[ "$1" == "mintomax" ]] && chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}')"
+[[ "$1" == "maxtomin" ]] && chw """$cpu""/scaling_max_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $NF}')"
+else
+[[ "$1" == "reset" ]] && {
+chw """$cpu""/scaling_max_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $NF}')"
+chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}')"
+}
+[[ "$1" == "mintomax" ]] && chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $NF}')"
+[[ "$1" == "maxtomin" ]] && chw """$cpu""/scaling_max_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}')"
+fi
+done
+}
 apply="resetprop -n tweak.apply.mode"
 applied="resetprop tweak.apply.mode"
-game_list_filter="grep -o"
+$apply unset
+while true; do
+game_list_filter="grep -o -e gamelist.app.add"
 while IFS= read -r gamelist || [[ -n "$gamelist" ]]; do
 filter=$(echo "$gamelist" | awk '!/ /')
 [[ ! "$filter" == "" ]] && {
 game_list_filter+=" -e "$filter
 }
 done < """$DIR""/gamelist.txt"
-$apply unset
-while true; do
-sleep 5
-window=$($su dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' | $game_list_filter | tail -1)
-interactive=$($su dumpsys input_method | grep mInteractive)
+window=$(dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' | $game_list_filter | tail -1)
+interactive=$(dumpsys input_method | grep mInteractive)
 if [[ "$window" ]]
 then
 [[ ! $($applied) == game ]] && gamemode && $apply game
@@ -495,7 +508,7 @@ then
 else
 [[ ! $($applied) == daily ]] && dailymode && $apply daily
 fi
-sleep 5
+sleep "$delay"
 done
 }
 notif() {
@@ -537,5 +550,5 @@ fi
 }
 [[ "$1" == "debug0" ]] && debug=false
 [[ "$1" == "debug1" ]] && debug=true
-[[ "$2" == "postfsdata" ]]  && postfsdata
-[[ "$2" == "service" ]] && service
+[[ "$2" == "before" ]]  && before
+[[ "$2" == "after" ]] && after

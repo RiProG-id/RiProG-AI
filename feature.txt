@@ -21,6 +21,9 @@ freq=true
 #Core Control
 core=true
 
+#Delay
+delay=10
+
 ###################
 
 

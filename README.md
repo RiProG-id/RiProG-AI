@@ -52,7 +52,16 @@ Sleep:
 - Battery eficiency
 - Change cpufreq method
 - Control feature.txt
-- Infinite gamelist.txtk
+- Infinite gamelist.txt
+
+2.8 Beta
+- Permission fixed
+- Minfreq in sleep mode
+- Debloat algorithm change
+- Cpufreq wrong frequency fixer
+- Change AI delay in feature.txt
+- Media Codex Fixed
+- Modify gamelist without reboot
 
 # Source Code
 

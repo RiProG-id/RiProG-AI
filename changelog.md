@@ -3,6 +3,7 @@
 Improve the android experience with some tweaks combined <br />
 Automaticaly adapt  mode <br />
 RiProG Open Source @RiOpSo | Telegram  <br />
+Description based on the latest stable version   <br />
 
 # Feature
 - Dalvik Execution Mode
@@ -25,23 +26,11 @@ More info in GITHUB
 
 # Changelog
 
-2.7 Beta
-- Recode script
-- Manage module files
-- Some changes
-- Several fixes
-- Change notification
-- Change sleep mode method
-- Battery eficiency
-- Change cpufreq method
-- Control feature.txt
-- Infinite gamelist.txt
-
-2.8 Beta
-- Permission fixed
-- Minfreq in sleep mode
-- Debloat algorithm change
-- Cpufreq wrong frequency fixer
-- Change AI delay in feature.txt
-- Media Codex Fixed
-- Modify gamelist without reboot
+2.9 Beta
+- Maybe fixed screen delay
+- New cpu freq method
+- Core control in AI removed
+- Governor control in AI added
+- Schedutil/Ondemand/Interactive (Daily)
+- Powersave (Daily)
+- Performace (Daily)

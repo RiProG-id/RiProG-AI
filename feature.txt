@@ -18,10 +18,10 @@ lmk=true
 #Frequency Control
 freq=true
 
-#Core Control
-core=true
+#Governor Control
+gov=true
 
-#Delay
+#Delay in second
 delay=10
 
 ###################
@@ -54,7 +54,7 @@ fusepasstrough=true
 faststreaming=true
 
 #Media Codex
-mediacodex=true
+mediacodex=false
 
 #Smooth GUI
 smoothgui=true

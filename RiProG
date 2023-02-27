@@ -423,12 +423,7 @@ $busybox fstrim /cache
 dailymode() {
 [[ $lmk == "true" ]] && (chw "/sys/module/lowmemorykiller/parameters/minfree" "2560,5120,7680,8960,10240,12800")
 [[ $freq == "true" ]] && cpufreq reset
-[[ $core == "true" ]] && (
-chw "/sys/devices/system/cpu/cpu2/online" "1"
-chw "/sys/devices/system/cpu/cpu3/online" "1"
-chw "/sys/devices/system/cpu/cpu6/online" "1"
-chw "/sys/devices/system/cpu/cpu7/online" "1"
-)
+[[ $gov == "true" ]] && cpugov "auto"
 [[ $powersave == "true" ]] && (settings put global low_power 0)
 [[ $notification == "true" ]] && (notif "RiProG AI: ( Daily Mode )")
 }
@@ -438,12 +433,7 @@ gamemode() {
 cpufreq reset
 cpufreq mintomax
 }
-[[ $core == "true" ]] && (
-chw "/sys/devices/system/cpu/cpu2/online" "1"
-chw "/sys/devices/system/cpu/cpu3/online" "1"
-chw "/sys/devices/system/cpu/cpu6/online" "1"
-chw "/sys/devices/system/cpu/cpu7/online" "1"
-)
+[[ $gov == "true" ]] && cpugov "performance"
 [[ $powersave == "true" ]] && (settings put global low_power 0)
 [[ $notification == "true" ]] && (
 game=$(pm list package | cut -f 2 -d ":" | grep "$window")
@@ -456,34 +446,39 @@ sleepmode() {
 cpufreq reset
 cpufreq maxtomin
 }
-[[ $core == "true" ]] && (
-chw "/sys/devices/system/cpu/cpu2/online" "0"
-chw "/sys/devices/system/cpu/cpu3/online" "0"
-chw "/sys/devices/system/cpu/cpu6/online" "0"
-chw "/sys/devices/system/cpu/cpu7/online" "0"
-)
+[[ $gov == "true" ]] && cpugov "powersave"
 [[ $powersave == "true" ]] && (settings put global low_power 1)
 [[ $notification == "true" ]] && (notif "RiProG AI: ( Sleep Mode )")
 }
 ai() {
 cpufreq() {
 for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
-if [[ $(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}') < $(chr """$cpu""/scaling_available_frequencies" | awk '{print $NF}') ]]
+min_freq=$(chr "$cpu/scaling_available_frequencies" | tr " " "\n" | sort -n | head -n 1)
+max_freq=$(chr "$cpu/scaling_available_frequencies" | tr " " "\n" | sort -n | tail -n 1) 
+[[ "$1" == "reset" ]] && (
+chw "$cpu/scaling_max_freq" "$max_freq"
+chw "$cpu/scaling_min_freq" "$min_freq"
+)
+[[ "$1" == "mintomax" ]] && chw "$cpu/scaling_min_freq" "$max_freq"
+[[ "$1" == "maxtomin" ]] && chw "$cpu/scaling_max_freq" "$min_freq"
+done
+}
+cpugov() {
+for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
+[[ $1 == "auto" ]] && (
+if [[ $(chr $cpu/scaling_available_governors) == "*schedutil*" ]]
 then
-[[ "$1" == "reset" ]] && {
-chw """$cpu""/scaling_max_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}')"
-chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $NF}')"
-}
-[[ "$1" == "mintomax" ]] && chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}')"
-[[ "$1" == "maxtomin" ]] && chw """$cpu""/scaling_max_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $NF}')"
-else
-[[ "$1" == "reset" ]] && {
-chw """$cpu""/scaling_max_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $NF}')"
-chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}')"
-}
-[[ "$1" == "mintomax" ]] && chw """$cpu""/scaling_min_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $NF}')"
-[[ "$1" == "maxtomin" ]] && chw """$cpu""/scaling_max_freq" "$(chr """$cpu""/scaling_available_frequencies" | awk '{print $1}')"
+echo schedutil > "$cpu"/scaling_governor
+elif [[ $(chr $cpu/scaling_available_governors) == "*ondemand*" ]]
+then
+echo ondemand > $cpu/scaling_governor
+elif [[ $(chr $cpu/scaling_available_governors) == "*interactive*" ]]
+then
+echo interactive > $cpu/scaling_governor
 fi
+)
+[[ $1 == "performance" ]] && echo performance > $cpu/scaling_governor
+[[ $1 == "powersave" ]] && echo powersave > $cpu/scaling_governor
 done
 }
 apply="resetprop -n tweak.apply.mode"

@@ -49,8 +49,8 @@ Sleep:
 - Core control in AI removed
 - Governor control in AI added
 - Schedutil/Ondemand/Interactive (Daily)
-- Powersave (Daily)
-- Performace (Daily)
+- Powersave (Sleep)
+- Performance (Game)
 
 # Source Code
 

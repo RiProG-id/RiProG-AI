@@ -18,6 +18,7 @@ Description based on the latest stable version   <br />
 - Disable Logger And Debugger
 - Disable Panic
 - Disable Printk
+- Debloat Unessesary Things
 - Adaptive Mode
 - Fstrim
 - Mode  Daily/Game/Sleep

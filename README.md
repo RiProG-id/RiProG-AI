@@ -26,19 +26,19 @@ Description based on the latest stable version   <br />
 Daily:
 - LMK Light
 - Normal CPU Frequency
-- Normal CPU Core
+- Schedutil/Ondemand/Interactive CPU Governor
 - Powersave OFF
 
 Game:
 - LMK heavy game
-- MAX CPU Frequency
-- Normal CPU Core
+- Maximum CPU Frequency
+- Performance CPU Governor
 - Powersave OFF
 
 Sleep:
 - LMK Light
-- Normal CPU Frequency
-- Half CPU Core
+- Minimum CPU Frequency
+- Powersave CPU Governor
 - Powersave ON
 
 # Changelog
@@ -51,6 +51,11 @@ Sleep:
 - Schedutil/Ondemand/Interactive (Daily)
 - Powersave (Sleep)
 - Performance (Game)
+
+3.0 Stable
+- Fixed cpu governor
+- Fixed UI lag daily mode
+- Updated github description
 
 # Source Code
 

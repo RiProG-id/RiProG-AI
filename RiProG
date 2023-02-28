@@ -466,15 +466,15 @@ done
 cpugov() {
 for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
 [[ $1 == "auto" ]] && (
-if [[ $(chr $cpu/scaling_available_governors) == "*schedutil*" ]]
+if [[ $(chr $cpu/scaling_available_governors | grep -o schedutil) == "schedutil" ]]
 then
-echo schedutil > "$cpu"/scaling_governor
-elif [[ $(chr $cpu/scaling_available_governors) == "*ondemand*" ]]
+chw "$cpu/scaling_governor" "schedutil"
+elif [[ $(chr $cpu/scaling_available_governors | grep -o ondemand) == "ondemand" ]]
 then
-echo ondemand > $cpu/scaling_governor
-elif [[ $(chr $cpu/scaling_available_governors) == "*interactive*" ]]
+chw "$cpu/scaling_governor" "ondemand"
+elif [[ $(chr $cpu/scaling_available_governors | grep -o interactive) == "interactive" ]]
 then
-echo interactive > $cpu/scaling_governor
+chw "$cpu/scaling_governor" "interactive"
 fi
 )
 [[ $1 == "performance" ]] && echo performance > $cpu/scaling_governor

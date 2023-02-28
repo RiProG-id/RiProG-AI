@@ -34,3 +34,8 @@ More info in GITHUB
 - Schedutil/Ondemand/Interactive (Daily)
 - Powersave (Sleep)
 - Performance (Game)
+
+3.0 Stable
+- Fixed cpu governor
+- Fixed UI lag daily mode
+- Updated github description

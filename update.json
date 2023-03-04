@@ -1,6 +1,6 @@
 {
-    "version": "",
-    "versionCode": "",
-    "zipUrl": "",
+    "version": "3.1 Stable",
+    "versionCode": "31",
+    "zipUrl": "https://github.com/RiProG-id/RiProG-AI/releases/download/31/RiProG.AI.3.1.Stable.zip",
     "changelog": "https://github.com/RiProG-id/RiProG-AI/raw/main/changelog.md"
 }

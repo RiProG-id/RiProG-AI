@@ -55,6 +55,7 @@ Sleep:
 - Schedplus governor support
 - Busybox detector
 - Several changes
+- Several fixed
 
 # Source Code
 

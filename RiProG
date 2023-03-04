@@ -1,12 +1,182 @@
+menu() {
+TARGET="/data/adb/modules/RiProG/system.prop"
+PROP="riprog.ai.mode"
+function check_mode() {
+  resetprop $PROP
+}
+function set_mode() {
+  echo "$PROP=$1" > $TARGET
+  resetprop -n $PROP $1
+}
+while true; do
+  clear
+  echo ""
+  echo " ==========================="
+  echo " # RiProg AI Mode Control #"
+  echo " ==========================="
+  echo ""
+[[ $(check_mode) == auto ]] && echo " 1. auto *" || echo " 1. auto"
+[[ $(check_mode) == daily ]] && echo " 2. daily *" || echo " 2. daily"
+[[ $(check_mode) == sleep ]] && echo " 3. sleep *" || echo " 3. sleep"
+[[ $(check_mode) == game ]] && echo " 4. game *" || echo " 4. game"
+echo " 5. exit"
+  echo ""
+ echo -n " => "
+  read menu
+  case $menu in
+    1)
+      set_mode "auto"
+      ;;
+    2)
+      set_mode "daily"
+      ;;
+    3)
+      set_mode "sleep"
+      ;;
+    4)
+      set_mode "game"
+      ;;
+    5)
+      exit
+      ;;
+    *)
+      echo "Invalid option. Try again."
+      ;;
+  esac
+done
+}
+[[ $1 == menu ]] && menu
 before() {
+MOD=/data/adb/modules/RiProG
+[[ ! -f "$MOD"/system.prop ]] && echo "riprog.ai.mode=auto" > "$MOD"/system.prop
+[[ ! -f "$MOD"/feature.txt ]] && echo "# Reboot Required
+# True & False
+
+###################
+
+#AI Toggler
+AI=true
+
+#Notification
+notification=true
+
+#Low memory killer
+lmk=true
+
+#Frequency Control
+freq=true
+
+#Governor Control
+gov=true
+
+#Delay in second
+delay=10
+
+##########
+#mode=auto#
+##########
+
+###################
+
+
+###################
+
+#Tweak Toggler
+Tweak=true
+
+#Debloat Unessesary Thing
+debloat=true
+
+#Dalvik as JIT
+dalvikjit=true
+
+#Purgeable Assets
+purgeassets=true
+
+#SkiaGL
+skiagl=true
+
+#Zygote preforking
+zygotepreforking=true
+
+#Fuse Passtrough
+fusepasstrough=true
+
+#Fast Streaming
+faststreaming=true
+
+#Media Codex
+mediacodex=false
+
+#Smooth GUI
+smoothgui=true
+
+#Network Tweak
+networktweak=true
+
+#Clear Audio
+clearaudio=true
+
+#Disable Logger & Debugger
+disableloganddebug=true
+
+#Disable Printk
+disableprintk=true
+
+#Disable Panic
+disablepanic=true
+
+#Fstrim
+fstrim=true
+
+###################" > "$MOD"/feature.txt
+[[ ! -f "$MOD"/gamelist.txt ]] && echo "#Reboot Required
+mobile.legends
+com.montoon
+com.miHoYo
+dfs.freefire
+com.ea.gp
+com.tencent
+com.garena
+com.mojang
+com.riotgames
+com.gameloft
+jp.konami
+supersus
+madfingergames
+com.activision
+pubg
+com.vng
+fortnite
+netease
+com.pearlabyss
+com.gameark
+com.rayark
+com.kurogame
+com.lilithgame
+com.PiguinSoft
+com.supercell" > "$MOD"/gamelist.txt
+[[ ! -d "$MOD"/system/bin ]] && mkdir -p "$MOD"/system/bin
+[[ ! -f "$MOD"/system/bin/RiProG ]] && echo "su -c $MOD/RiProG menu" > "$MOD"/system/bin/RiProG
+[[ ! -x "$MOD"/system/bin/RiProG ]] && chmod +x "$MOD"/system/bin/RiProG
 tweak() {
 if [[ $debloat == "true" ]]
 then
-[[ ! -f "$DIR"/system/debloat ]] && {
+[[ ! -f "$DIR"/system/debloated ]] && (
 zd "$DIR"/system
+zd "$DIR"/system/app
+zd "$DIR"/system/app/Traceur
+zd "$DIR"/system/app/Traceur/oat
+zd "$DIR"/system/app/Traceur/oat/arm64
+zd "$DIR"/system/app/Traceur/oat/x86
+zd "$DIR"/system/app/Traceur/oat/arm
 zd "$DIR"/system/bin
 zd "$DIR"/system/etc
 zd "$DIR"/system/etc/init
+zd "$DIR"/system/usr
+zd "$DIR"/system/usr/share
+zd "$DIR"/system/usr/share/vim
+zd "$DIR"/system/usr/share/vim/syntax
 zd "$DIR"/system/vendor
 zd "$DIR"/system/vendor/bin
 zd "$DIR"/system/vendor/bin/hw
@@ -16,147 +186,314 @@ zd "$DIR"/system/vendor/bin/power/ddr/bm
 zd "$DIR"/system/vendor/bin/power/ddr/bm/tool
 zd "$DIR"/system/vendor/etc
 zd "$DIR"/system/vendor/etc/init
-zf "$DIR"/system/bin/aee_dumpstate
-zf "$DIR"/system/bin/atrace
-zf "$DIR"/system/bin/bugreport
-zf "$DIR"/system/bin/bugreportz
-zf "$DIR"/system/bin/cplog
-zf "$DIR"/system/bin/crash_dump32
-zf "$DIR"/system/bin/crash_dump64
-zf "$DIR"/system/bin/dataLogDaemon
-zf "$DIR"/system/bin/debuggerd
-zf "$DIR"/system/bin/debuggerd64
-zf "$DIR"/system/bin/dexdump
-zf "$DIR"/system/bin/dexoptanalzyer
-zf "$DIR"/system/bin/diag_socket_log
-zf "$DIR"/system/bin/dmesg
-zf "$DIR"/system/bin/dmlog
-zf "$DIR"/system/bin/dumpakmap
-zf "$DIR"/system/bin/dumpreleases
-zf "$DIR"/system/bin/dumpstate
-zf "$DIR"/system/bin/DumpSystemInfo
-zf "$DIR"/system/bin/emdlogger1
+zf "$DIR"/system/app/Traceur/Traceur.apk
+zf "$DIR"/system/app/Traceur/oat/arm64/Traceur.odex
+zf "$DIR"/system/app/Traceur/oat/arm64/Traceur.vdex
+zf "$DIR"/system/app/Traceur/oat/x86/Traceur.odex
+zf "$DIR"/system/app/Traceur/oat/x86/Traceur.vdex
+zf "$DIR"/system/app/Traceur/oat/arm/Traceur.odex
+zf "$DIR"/system/app/Traceur/oat/arm/Traceur.vdex
+zf "$DIR"/system/bin/wpdiagd
+zf "$DIR"/system/bin/trace.sh
 zf "$DIR"/system/bin/emdlogger2
-zf "$DIR"/system/bin/emdlogger3
-zf "$DIR"/system/bin/emdlogger4
-zf "$DIR"/system/bin/emdlogger5
+zf "$DIR"/system/bin/DumpSystemInfo
+zf "$DIR"/system/bin/subsystem_ramdump
+zf "$DIR"/system/bin/traced
+zf "$DIR"/system/bin/logwrapper
+zf "$DIR"/system/bin/bugreportz
+zf "$DIR"/system/bin/nanddump
+zf "$DIR"/system/bin/debuggerd64
 zf "$DIR"/system/bin/hcidump
-zf "$DIR"/system/bin/dexdump
+zf "$DIR"/system/bin/ylog
+zf "$DIR"/system/bin/atrace
+zf "$DIR"/system/bin/crash_dump64
+zf "$DIR"/system/bin/lastlog.sh
+zf "$DIR"/system/bin/crash_dump32
+zf "$DIR"/system/bin/outdump
+zf "$DIR"/system/bin/tombstoned
+zf "$DIR"/system/bin/traced_probes
+zf "$DIR"/system/bin/ylogkat
+zf "$DIR"/system/bin/emdlogger3
+zf "$DIR"/system/bin/svlogd
 zf "$DIR"/system/bin/i2cdump
-zf "$DIR"/system/bin/klogd
-zf "$DIR"/system/bin/log
-zf "$DIR"/system/bin/log_ctr
-zf "$DIR"/system/bin/log_service
+zf "$DIR"/system/bin/logname
+zf "$DIR"/system/bin/emdlogger5
+zf "$DIR"/system/bin/cplog
+zf "$DIR"/system/bin/traceroute6
+zf "$DIR"/system/bin/ylogctl
+zf "$DIR"/system/bin/dumpleases
 zf "$DIR"/system/bin/logcat
 zf "$DIR"/system/bin/logd
-zf "$DIR"/system/bin/logger
-zf "$DIR"/system/bin/loggerlauncher
-zf "$DIR"/system/bin/logname
-zf "$DIR"/system/bin/logread
-zf "$DIR"/system/bin/logwrapper
-zf "$DIR"/system/bin/ipdump
-zf "$DIR"/system/bin/lpdumpd
-zf "$DIR"/system/bin/mdlogger
 zf "$DIR"/system/bin/memorydumper
-zf "$DIR"/system/bin/munidumpd
-zf "$DIR"/system/bin/mobile_log_d
-zf "$DIR"/system/bin/nandump
 zf "$DIR"/system/bin/oatdump
-zf "$DIR"/system/bin/outdump
-zf "$DIR"/system/bin/setlogcons
-zf "$DIR"/system/bin/subsystem_ramdump
-zf "$DIR"/system/bin/svlogd
-zf "$DIR"/system/bin/tcpdump
-zf "$DIR"/system/bin/tombstoned
-zf "$DIR"/system/bin/traced
-zf "$DIR"/system/bin/traced_probes
-zf "$DIR"/system/bin/traceroute
-zf "$DIR"/system/bin/traceroute6
-zf "$DIR"/system/bin/wpdiagd
+zf "$DIR"/system/bin/dexoptanalyzer
+zf "$DIR"/system/bin/hexdump
+zf "$DIR"/system/bin/log
+zf "$DIR"/system/bin/log_service
+zf "$DIR"/system/bin/log_ctr
+zf "$DIR"/system/bin/dmesg
+zf "$DIR"/system/bin/dataLogDaemon
+zf "$DIR"/system/bin/minidumpd
+zf "$DIR"/system/bin/dumpstate
+zf "$DIR"/system/bin/dexdump
+zf "$DIR"/system/bin/debuggerd
+zf "$DIR"/system/bin/lpdump
+zf "$DIR"/system/bin/aee_dumpstate
 zf "$DIR"/system/bin/xlog
-zf "$DIR"/system/bin/ylog
+zf "$DIR"/system/bin/traceroute
+zf "$DIR"/system/bin/tcpdump
+zf "$DIR"/system/bin/setlogcons
+zf "$DIR"/system/bin/mobile_log_d
+zf "$DIR"/system/bin/bugreport
 zf "$DIR"/system/bin/ylogbox
-zf "$DIR"/system/bin/ylogctl
-zf "$DIR"/system/bin/ylogkat
-zf "$DIR"/system/bin/lastlog.sh
+zf "$DIR"/system/bin/loggerlauncher
+zf "$DIR"/system/bin/diag_socket_log
 zf "$DIR"/system/bin/notify_traceur.sh
-zf "$DIR"/system/bin/trace.sh
+zf "$DIR"/system/bin/logread
+zf "$DIR"/system/bin/logger
+zf "$DIR"/system/bin/lpdumpd
+zf "$DIR"/system/bin/dmlog
+zf "$DIR"/system/bin/emdlogger1
 zf "$DIR"/system/bin/ylogdebug.sh
-zf "$DIR"/system/etc/init/atrace.rc
-zf "$DIR"/system/etc/init/atrace.userdebug.rc
-zf "$DIR"/system/etc/init/bugreport.rc
-zf "$DIR"/system/etc/init/dataLogDaemon.rc
-zf "$DIR"/system/etc/init/debuggerd.rc
-zf "$DIR"/system/etc/init/debuggerd64.rc
-zf "$DIR"/system/etc/init/dumpstate.rc
-zf "$DIR"/system/etc/init/emdlogger1.rc
-zf "$DIR"/system/etc/init/emdlogger2.rc
-zf "$DIR"/system/etc/init/emdlogger3.rc
-zf "$DIR"/system/etc/init/emdlogger4.rc
-zf "$DIR"/system/etc/init/emdlogger5.rc
-zf "$DIR"/system/etc/init/log_service.rc
+zf "$DIR"/system/bin/klogd
+zf "$DIR"/system/bin/dumpkmap
+zf "$DIR"/system/bin/mdlogge
 zf "$DIR"/system/etc/init/logd.rc
-zf "$DIR"/system/etc/init/ipdump.rc
-zf "$DIR"/system/etc/init/mdlogger.rc
-zf "$DIR"/system/etc/init/mdlogger_log_d.rc
-zf "$DIR"/system/etc/init/modemlog_conmgr_service.rc
+zf "$DIR"/system/etc/init/modemlog_connmgr_service.rc
+zf "$DIR"/system/etc/init/ylog.rc
+zf "$DIR"/system/etc/init/dataLogDaemon.rc
+zf "$DIR"/system/etc/init/lpdumpd.rc
+zf "$DIR"/system/etc/init/atrace.rc
+zf "$DIR"/system/etc/init/bugreport.rc
+zf "$DIR"/system/etc/init/debuggerd64.rc
+zf "$DIR"/system/etc/init/emdlogger5.rc
+zf "$DIR"/system/etc/init/emdlogger1.rc
 zf "$DIR"/system/etc/init/slogmodem.rc
+zf "$DIR"/system/etc/init/dumpstate.rc
 zf "$DIR"/system/etc/init/tombstoned.rc
 zf "$DIR"/system/etc/init/traceur.rc
-zf "$DIR"/system/etc/init/ylog.rc
-zf "$DIR"/system/vendor/bin/aee_dumpstate
-zf "$DIR"/system/vendor/bin/aee_dumpstatev
-zf "$DIR"/system/vendor/bin/cplogctl
-zf "$DIR"/system/vendor/bin/dmlog
-zf "$DIR"/system/vendor/bin/dumpsys
-zf "$DIR"/system/vendor/bin/emdlogger1
+zf "$DIR"/system/etc/init/emdlogger2.rc
+zf "$DIR"/system/etc/init/atrace_userdebug.rc
+zf "$DIR"/system/etc/init/log_service.rc
+zf "$DIR"/system/etc/init/debuggerd.rc
+zf "$DIR"/system/etc/init/mdlogger.rc
+zf "$DIR"/system/etc/init/mobile_log_d.rcr
+zf "$DIR"/system/usr/share/vim/syntax/logcat.vim
 zf "$DIR"/system/vendor/bin/emdlogger2
-zf "$DIR"/system/vendor/bin/emdlogger5
-zf "$DIR"/system/vendor/bin/flush_slog_modem
-zf "$DIR"/system/vendor/bin/i2cdump
-zf "$DIR"/system/vendor/bin/idd-logreader
-zf "$DIR"/system/vendor/bin/idd-logreader_main
-zf "$DIR"/system/vendor/bin/idd
-zf "$DIR"/system/vendor/bin/log
-zf "$DIR"/system/vendor/bin/logname
 zf "$DIR"/system/vendor/bin/logwrapper
-zf "$DIR"/system/vendor/bin/mdlogger
-zf "$DIR"/system/vendor/bin/memorydumper
-zf "$DIR"/system/vendor/bin/mlogservice
-zf "$DIR"/system/vendor/bin/mobile_log_d
-zf "$DIR"/system/vendor/bin/mrdump_tool
-zf "$DIR"/system/vendor/bin/muxreport
 zf "$DIR"/system/vendor/bin/slogmodem_vendor
-zf "$DIR"/system/vendor/bin/stp_dump3
-zf "$DIR"/system/vendor/bin/systemDebuggerD
-zf "$DIR"/system/vendor/bin/yloglite
+zf "$DIR"/system/vendor/bin/mlogservice
+zf "$DIR"/system/vendor/bin/i2cdump
+zf "$DIR"/system/vendor/bin/logname
+zf "$DIR"/system/vendor/bin/emdlogger5
 zf "$DIR"/system/vendor/bin/yloglitectl
+zf "$DIR"/system/vendor/bin/systemDebuggerd
+zf "$DIR"/system/vendor/bin/mrdump_tool
 zf "$DIR"/system/vendor/bin/yloglitekat
+zf "$DIR"/system/vendor/bin/cplogctl
+zf "$DIR"/system/vendor/bin/memorydumper
+zf "$DIR"/system/vendor/bin/log
+zf "$DIR"/system/vendor/bin/aee_dumpstatev
+zf "$DIR"/system/vendor/bin/stp_dump3
 zf "$DIR"/system/vendor/bin/hw/vendor.sprd.hardware.cplog_connmgr@1.0-service
 zf "$DIR"/system/vendor/bin/hw/vendor.sprd.hardware.log@1.0-service
 zf "$DIR"/system/vendor/bin/power/ddr/bm/tool/ddr_bm_log
 zf "$DIR"/system/vendor/bin/power/ddr/bm/tool/log_to_csv.sh
-zf "$DIR"/system/vendor/etc/mlogservice.conf
-zf "$DIR"/system/vendor/etc/slog_modem.conf
-zf "$DIR"/system/vendor/etc/slog_modem_autotest.conf
-zf "$DIR"/system/vendor/etc/slog_modem_cali.conf
-zf "$DIR"/system/vendor/etc/slog_modem_factory.conf
-zf "$DIR"/system/vendor/etc/yloglite.conf
-zf "$DIR"/system/vendor/etc/yloglitesource.conf
-zf "$DIR"/system/vendor/etc/ylogsource.conf
-zf "$DIR"/system/vendor/etc/ylog.conf.debug
-zf "$DIR"/system/vendor/etc/analyzer.py
+zf "$DIR"/system/vendor/bin/aee_dumpstate
+zf "$DIR"/system/vendor/bin/muxreport
+zf "$DIR"/system/vendor/bin/yloglite
+zf "$DIR"/system/vendor/bin/mobile_log_d
+zf "$DIR"/system/vendor/bin/flush_slog_modem
+zf "$DIR"/system/vendor/bin/dmlog
+zf "$DIR"/system/vendor/bin/emdlogger1
+zf "$DIR"/system/vendor/bin/mdlogger
 zf "$DIR"/system/vendor/etc/ylog.conf.user
-zf "$DIR"/system/vendor/etc/init/mlogservice.rc
-zf "$DIR"/system/vendor/etc/init/muxreport.rc
-zf "$DIR"/system/vendor/etc/init/slogmodem_vendor.rc
-zf "$DIR"/system/vendor/etc/init/systemDebuggerD.rc
-zf "$DIR"/system/vendor/etc/init/vendor.sprd.hardware.cplog_connmgr@1.0-service.rc
+zf "$DIR"/system/vendor/etc/ylog.conf.debug
+zf "$DIR"/system/vendor/etc/slog_modem.conf
+zf "$DIR"/system/vendor/etc/mlogservice.conf
+zf "$DIR"/system/vendor/etc/slog_modem_cali.conf
+zf "$DIR"/system/vendor/etc/yloglitesource.conf
+zf "$DIR"/system/vendor/etc/yloglite.conf
 zf "$DIR"/system/vendor/etc/init/vendor.sprd.hardware.log@1.0-service.rc
 zf "$DIR"/system/vendor/etc/init/yloglite.rc
-}
+zf "$DIR"/system/vendor/etc/init/muxreport.rc
+zf "$DIR"/system/vendor/etc/init/mlogservice.rc
+zf "$DIR"/system/vendor/etc/init/vendor.sprd.hardware.cplog_connmgr@1.0-service.rc
+zf "$DIR"/system/vendor/etc/init/slogmodem_vendor.rc
+zf "$DIR"/system/vendor/etc/init/systemDebuggerd.rc
+zf "$DIR"/system/vendor/etc/ylogsource.conf
+zf "$DIR"/system/vendor/etc/analyzer.py
+zf "$DIR"/system/vendor/etc/slog_modem_factory.conf
+zf "$DIR"/system/vendor/etc/slog_modem_autotest.conf
+zf "$DIR"/system/vendor/etc/slog_modem_autotest.conf
+zf "$DIR"/system/debloated
+)
 else
-[[ -f "$DIR"/system/debloat ]] && rm -r "$DIR"/system
+[[ -f "$DIR"/system/debloated ]] && (
+rm "$DIR"/system/vendor/etc/slog_modem_autotest.conf
+rm "$DIR"/system/vendor/etc/slog_modem_factory.conf
+rm "$DIR"/system/vendor/etc/analyzer.py
+rm "$DIR"/system/vendor/etc/ylogsource.conf
+rm "$DIR"/system/vendor/etc/init/systemDebuggerd.rc
+rm "$DIR"/system/vendor/etc/init/slogmodem_vendor.rc
+rm "$DIR"/system/vendor/etc/init/vendor.sprd.hardware.cplog_connmgr@1.0-service.rc
+rm "$DIR"/system/vendor/etc/init/mlogservice.rc
+rm "$DIR"/system/vendor/etc/init/muxreport.rc
+rm "$DIR"/system/vendor/etc/init/yloglite.rc
+rm "$DIR"/system/vendor/etc/init/vendor.sprd.hardware.log@1.0-service.rc
+rm "$DIR"/system/vendor/etc/yloglite.conf
+rm "$DIR"/system/vendor/etc/yloglitesource.conf
+rm "$DIR"/system/vendor/etc/slog_modem_cali.conf
+rm "$DIR"/system/vendor/etc/mlogservice.conf
+rm "$DIR"/system/vendor/etc/slog_modem.conf
+rm "$DIR"/system/vendor/etc/ylog.conf.debug
+rm "$DIR"/system/vendor/etc/ylog.conf.user
+rm "$DIR"/system/vendor/bin/mdlogger
+rm "$DIR"/system/vendor/bin/emdlogger1
+rm "$DIR"/system/vendor/bin/dmlog
+rm "$DIR"/system/vendor/bin/flush_slog_modem
+rm "$DIR"/system/vendor/bin/mobile_log_d
+rm "$DIR"/system/vendor/bin/yloglite
+rm "$DIR"/system/vendor/bin/muxreport
+rm "$DIR"/system/vendor/bin/aee_dumpstate
+rm "$DIR"/system/vendor/bin/power/ddr/bm/tool/log_to_csv.sh
+rm "$DIR"/system/vendor/bin/power/ddr/bm/tool/ddr_bm_log
+rm "$DIR"/system/vendor/bin/hw/vendor.sprd.hardware.log@1.0-service
+rm "$DIR"/system/vendor/bin/hw/vendor.sprd.hardware.cplog_connmgr@1.0-service
+rm "$DIR"/system/vendor/bin/stp_dump3
+rm "$DIR"/system/vendor/bin/aee_dumpstatev
+rm "$DIR"/system/vendor/bin/log
+rm "$DIR"/system/vendor/bin/memorydumper
+rm "$DIR"/system/vendor/bin/cplogctl
+rm "$DIR"/system/vendor/bin/yloglitekat
+rm "$DIR"/system/vendor/bin/mrdump_tool
+rm "$DIR"/system/vendor/bin/systemDebuggerd
+rm "$DIR"/system/vendor/bin/yloglitectl
+rm "$DIR"/system/vendor/bin/emdlogger5
+rm "$DIR"/system/vendor/bin/logname
+rm "$DIR"/system/vendor/bin/i2cdump
+rm "$DIR"/system/vendor/bin/mlogservice
+rm "$DIR"/system/vendor/bin/slogmodem_vendor
+rm "$DIR"/system/vendor/bin/logwrapper
+rm "$DIR"/system/vendor/bin/emdlogger2
+rm "$DIR"/system/usr/share/vim/syntax/logcat.vim
+rm "$DIR"/system/etc/init/mobile_log_d.rcr
+rm "$DIR"/system/etc/init/mdlogger.rc
+rm "$DIR"/system/etc/init/debuggerd.rc
+rm "$DIR"/system/etc/init/log_service.rc
+rm "$DIR"/system/etc/init/atrace_userdebug.rc
+rm "$DIR"/system/etc/init/emdlogger2.rc
+rm "$DIR"/system/etc/init/traceur.rc
+rm "$DIR"/system/etc/init/tombstoned.rc
+rm "$DIR"/system/etc/init/dumpstate.rc
+rm "$DIR"/system/etc/init/slogmodem.rc
+rm "$DIR"/system/etc/init/emdlogger1.rc
+rm "$DIR"/system/etc/init/emdlogger5.rc
+rm "$DIR"/system/etc/init/debuggerd64.rc
+rm "$DIR"/system/etc/init/bugreport.rc
+rm "$DIR"/system/etc/init/atrace.rc
+rm "$DIR"/system/etc/init/lpdumpd.rc
+rm "$DIR"/system/etc/init/dataLogDaemon.rc
+rm "$DIR"/system/etc/init/ylog.rc
+rm "$DIR"/system/etc/init/modemlog_connmgr_service.rc
+rm "$DIR"/system/etc/init/logd.rc
+rm "$DIR"/system/bin/mdlogge
+rm "$DIR"/system/bin/dumpkmap
+rm "$DIR"/system/bin/klogd
+rm "$DIR"/system/bin/ylogdebug.sh
+rm "$DIR"/system/bin/emdlogger1
+rm "$DIR"/system/bin/dmlog
+rm "$DIR"/system/bin/lpdumpd
+rm "$DIR"/system/bin/logger
+rm "$DIR"/system/bin/logread
+rm "$DIR"/system/bin/notify_traceur.sh
+rm "$DIR"/system/bin/diag_socket_log
+rm "$DIR"/system/bin/loggerlauncher
+rm "$DIR"/system/bin/ylogbox
+rm "$DIR"/system/bin/bugreport
+rm "$DIR"/system/bin/mobile_log_d
+rm "$DIR"/system/bin/setlogcons
+rm "$DIR"/system/bin/tcpdump
+rm "$DIR"/system/bin/traceroute
+rm "$DIR"/system/bin/xlog
+rm "$DIR"/system/bin/aee_dumpstate
+rm "$DIR"/system/bin/lpdump
+rm "$DIR"/system/bin/debuggerd
+rm "$DIR"/system/bin/dexdump
+rm "$DIR"/system/bin/dumpstate
+rm "$DIR"/system/bin/minidumpd
+rm "$DIR"/system/bin/dataLogDaemon
+rm "$DIR"/system/bin/dmesg
+rm "$DIR"/system/bin/log_ctr
+rm "$DIR"/system/bin/log_service
+rm "$DIR"/system/bin/log
+rm "$DIR"/system/bin/hexdump
+rm "$DIR"/system/bin/dexoptanalyzer
+rm "$DIR"/system/bin/oatdump
+rm "$DIR"/system/bin/memorydumper
+rm "$DIR"/system/bin/logd
+rm "$DIR"/system/bin/logcat
+rm "$DIR"/system/bin/dumpleases
+rm "$DIR"/system/bin/ylogctl
+rm "$DIR"/system/bin/traceroute6
+rm "$DIR"/system/bin/cplog
+rm "$DIR"/system/bin/emdlogger5
+rm "$DIR"/system/bin/logname
+rm "$DIR"/system/bin/i2cdump
+rm "$DIR"/system/bin/svlogd
+rm "$DIR"/system/bin/emdlogger3
+rm "$DIR"/system/bin/ylogkat
+rm "$DIR"/system/bin/traced_probes
+rm "$DIR"/system/bin/tombstoned
+rm "$DIR"/system/bin/outdump
+rm "$DIR"/system/bin/crash_dump32
+rm "$DIR"/system/bin/lastlog.sh
+rm "$DIR"/system/bin/crash_dump64
+rm "$DIR"/system/bin/atrace
+rm "$DIR"/system/bin/ylog
+rm "$DIR"/system/bin/hcidump
+rm "$DIR"/system/bin/debuggerd64
+rm "$DIR"/system/bin/nanddump
+rm "$DIR"/system/bin/bugreportz
+rm "$DIR"/system/bin/logwrapper
+rm "$DIR"/system/bin/traced
+rm "$DIR"/system/bin/subsystem_ramdump
+rm "$DIR"/system/bin/DumpSystemInfo
+rm "$DIR"/system/bin/emdlogger2
+rm "$DIR"/system/bin/trace.sh
+rm "$DIR"/system/bin/wpdiagd
+rm "$DIR"/system/app/Traceur/oat/arm/Traceur.vdex
+rm "$DIR"/system/app/Traceur/oat/arm/Traceur.odex
+rm "$DIR"/system/app/Traceur/oat/x86/Traceur.vdex
+rm "$DIR"/system/app/Traceur/oat/x86/Traceur.odex
+rm "$DIR"/system/app/Traceur/oat/arm64/Traceur.vdex
+rm "$DIR"/system/app/Traceur/oat/arm64/Traceur.odex
+rm "$DIR"/system/app/Traceur/Traceur.apk
+rm "$DIR"/system/debloated
+rmdir "$DIR"/system/vendor/etc/init
+rmdir "$DIR"/system/vendor/etc
+rmdir "$DIR"/system/vendor/bin/power/ddr/bm/tool
+rmdir "$DIR"/system/vendor/bin/power/ddr/bm
+rmdir "$DIR"/system/vendor/bin/power/ddr
+rmdir "$DIR"/system/vendor/bin/power
+rmdir "$DIR"/system/vendor/bin/hw
+rmdir "$DIR"/system/vendor/bin
+rmdir "$DIR"/system/vendor
+rmdir "$DIR"/system/usr/share/vim/syntax
+rmdir "$DIR"/system/usr/share/vim
+rmdir "$DIR"/system/usr/share
+rmdir "$DIR"/system/usr
+rmdir "$DIR"/system/etc/init
+rmdir "$DIR"/system/etc
+rmdir "$DIR"/system/bin
+rmdir "$DIR"/system/app/Traceur/oat/arm
+rmdir "$DIR"/system/app/Traceur/oat/x86
+rmdir "$DIR"/system/app/Traceur/oat/arm64
+rmdir "$DIR"/system/app/Traceur/oat
+rmdir "$DIR"/system/app/Traceur
+rmdir "$DIR"/system/app
+rmdir "$DIR"/system
+)
 fi
 [[ $dalvikasjit == "true" ]] && cpr dalvik.vm.execution-mode int:jit
 [[ $purgeassets == "true" ]] && cpr persist.sys.purgeable_assets 1
@@ -414,18 +751,19 @@ chw "/proc/sys/net/ipv4/tcp_rmem" "4096,16384,404480"
 chw "/proc/sys/net/ipv4/tcp_congestion_control" "westwood"
 )
 [[ $fstrim == "true" ]] && (
-$busybox fstrim /system
-$busybox fstrim /vendor
-$busybox fstrim /data
-$busybox fstrim /cache
+fstrim /system
+fstrim /vendor
+fstrim /data
+fstrim /cache
 )
 }
 dailymode() {
 [[ $lmk == "true" ]] && (chw "/sys/module/lowmemorykiller/parameters/minfree" "2560,5120,7680,8960,10240,12800")
 [[ $freq == "true" ]] && cpufreq reset
 [[ $gov == "true" ]] && cpugov "auto"
-[[ $powersave == "true" ]] && (settings put global low_power 0)
-[[ $notification == "true" ]] && (notif "RiProG AI: ( Daily Mode )")
+[[ $notification == "true" ]] && (
+[[ $force == "auto" ]] && notif "RiProG AI: ( Daily Mode )" || notif "RiProG AI: ( Daily Mode )" "Manual"
+)
 }
 gamemode() {
 [[ $lmk == "true" ]] && (chw "/sys/module/lowmemorykiller/parameters/minfree" "2560,5120,11520,25600,35840,38400")
@@ -434,10 +772,9 @@ cpufreq reset
 cpufreq mintomax
 }
 [[ $gov == "true" ]] && cpugov "performance"
-[[ $powersave == "true" ]] && (settings put global low_power 0)
 [[ $notification == "true" ]] && (
 game=$(pm list package | cut -f 2 -d ":" | grep "$window")
-notif "RiProG AI: ( Game Mode )" "$game"
+[[ $force == "auto" ]] && notif "RiProG AI: ( Game Mode )" "$game" || notif "RiProG AI: ( Game Mode )" "Manual"
 )
 }
 sleepmode() {
@@ -447,8 +784,9 @@ cpufreq reset
 cpufreq maxtomin
 }
 [[ $gov == "true" ]] && cpugov "powersave"
-[[ $powersave == "true" ]] && (settings put global low_power 1)
-[[ $notification == "true" ]] && (notif "RiProG AI: ( Sleep Mode )")
+[[ $notification == "true" ]] && (
+[[ $force == "auto" ]] && notif "RiProG AI: ( Sleep Mode )" || notif "RiProG AI: ( Sleep Mode )" "Manual"
+)
 }
 ai() {
 cpufreq() {
@@ -466,7 +804,10 @@ done
 cpugov() {
 for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
 [[ $1 == "auto" ]] && (
-if [[ $(chr $cpu/scaling_available_governors | grep -o schedutil) == "schedutil" ]]
+if [[ $(chr $cpu/scaling_available_governors | grep -o schedplus) == "schedplus" ]]
+then
+chw "$cpu/scaling_governor" "schedutil"
+elif [[ $(chr $cpu/scaling_available_governors | grep -o schedutil) == "schedutil" ]]
 then
 chw "$cpu/scaling_governor" "schedutil"
 elif [[ $(chr $cpu/scaling_available_governors | grep -o ondemand) == "ondemand" ]]
@@ -484,40 +825,55 @@ done
 apply="resetprop -n tweak.apply.mode"
 applied="resetprop tweak.apply.mode"
 $apply unset
-while true; do
 game_list_filter="grep -o -e gamelist.app.add"
 while IFS= read -r gamelist || [[ -n "$gamelist" ]]; do
 filter=$(echo "$gamelist" | awk '!/ /')
 [[ ! "$filter" == "" ]] && {
 game_list_filter+=" -e "$filter
 }
-done < """$DIR""/gamelist.txt"
+done < "$DIR/gamelist.txt"
+while true; do
+force=$(resetprop riprog.ai.mode)
+[[ $force == "auto" ]] && {
 window=$(dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' | $game_list_filter | tail -1)
 interactive=$(dumpsys input_method | grep mInteractive)
 if [[ "$window" ]]
 then
-[[ ! $($applied) == game ]] && gamemode && $apply game
+[[ ! $($applied) == "game" ]] && gamemode && $apply game
 elif [[ $interactive == *mInteractive=false* ]]
 then
-[[ ! $($applied) ==  sleep ]] && sleepmode && $apply sleep
+[[ ! $($applied) == "sleep" ]] && sleepmode && $apply sleep
 else
-[[ ! $($applied) == daily ]] && dailymode && $apply daily
+[[ ! $($applied) == "daily" ]] && dailymode && $apply daily
 fi
+}
+[[ ! $force == "auto" ]] && {
+if [[ $force == "game" ]]
+then
+[[ ! $($applied) == "game" ]] && gamemode && $apply game
+elif [[ $force == "sleep" ]]
+then
+[[ ! $($applied) ==  "sleep" ]] && sleepmode && $apply sleep
+elif [[ $force == "daily" ]]
+then
+[[ ! $($applied) == "daily" ]] && dailymode && $apply daily
+fi
+}
 sleep "$delay"
 done
 }
 notif() {
-su -lp 2000 -c "cmd notification post -S bigtext -t '$1' 'Tag' '""$2""'"
+su -lp 2000 -c "cmd notification post -S bigtext -t '$1' 'Tag' '$2'"
 }
 chr() {
 [[ -f $1 ]] && (
-chmod +r "$1"
+[[ ! -r $1 ]] && chmod +r "$1"
 cat "$1"
 )
 }
 chw() {
 [[ -f $1 ]] && (
-chmod +w "$1"
+[[ ! -w $1 ]] && chmod +w "$1"
 echo "$2" >"$1"
 )
 }

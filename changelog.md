@@ -6,7 +6,7 @@ RiProG Open Source @RiOpSo | Telegram  <br />
 Description based on the latest stable version   <br />
 
 # Feature
-- Dalvik Execution Mode
+- Dalvik AS JIT
 - Purgeable Assets
 - Zygote Preforking
 - Fuse PassTrough
@@ -18,25 +18,25 @@ Description based on the latest stable version   <br />
 - Disable Logger And Debugger
 - Disable Panic
 - Disable Printk
-- Debloat Unessesary Things
-- Adaptive Mode
 - Fstrim
+- Debloat unessesary things
+- Database /data/adb/modules/RiProG/gamelist.txt
+- Feature /data/adb/modules/RiProG/gamelist.txt
+- Mode control (su -c RiProG)
 - Mode  Daily/Game/Sleep
 
 More info in GITHUB
 
 # Changelog
 
-2.9 Beta
-- Maybe fixed screen delay
-- New cpu freq method
-- Core control in AI removed
-- Governor control in AI added
-- Schedutil/Ondemand/Interactive (Daily)
-- Powersave (Sleep)
-- Performance (Game)
-
-3.0 Stable
-- Fixed cpu governor
-- Fixed UI lag daily mode
-- Updated github description
+3.1 Stable
+- More debloat
+- Fix debloat cannot disabled
+- Fix battery drain
+- Fix lag after mode change
+- Remove powersave system
+- More game database
+- Manual mode control (su -c RiProG)
+- Schedplus governor support
+- Busybox detector
+- Several changes

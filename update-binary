@@ -35,6 +35,15 @@ ui_print "*   RiProG Open Source @ RiOpSo   *"
 ui_print "**************************************"
 ui_print ""
 
+BX=busybox
+BD1=$(find /system/*bin*/busybox)
+BD2=$(find /data/adb/*modules*/*/system/bin/busybox)
+if [[ ! -x $bx ]] || [[ ! $BD1 ]] || [[ ! $BD2 ]]
+then
+echo "Warning: Busybox not found"
+echo "Install aborted"
+exit 0
+fi
 install_module
 chmod 755 $MODPATH/RiProG
 exit 0

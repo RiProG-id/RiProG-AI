@@ -35,17 +35,16 @@ ui_print "*   RiProG Open Source @ RiOpSo   *"
 ui_print "**************************************"
 ui_print ""
 
-BX1=(which busybox)
-BX2=(command -v busybox)
+BX1=$(which busybox)
+BX2=$(command -v busybox)
 BD1=$(find /system/*bin*/busybox)
 BD2=$(find /data/adb/*modules*/*/system/bin/busybox)
-if [[ ! -x $bx1 ]] || [[ ! -x $bx2 ]] || [[ ! $BD1 ]] || [[ ! $BD2 ]]
-then
-echo ""
-echo "Warning: Busybox not found"
-echo "The module will not work properly"
-echo ""
-echo "Ignore if already installed"
+if [[ ! -x "$BX1" ]] || [[ ! -x "$BX2" ]] || [[ ! "$BD1" ]] || [[ ! "$BD2" ]]; then
+    echo ""
+    echo "Warning: Busybox not found"
+    echo "The module will not work properly"
+    echo ""
+    echo "Ignore if already installed"
 fi
 
 install_module

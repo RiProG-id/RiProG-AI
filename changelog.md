@@ -45,5 +45,8 @@ More info in GITHUB
 3.2 Stable
 - Fixed installer
 - New busybox detector
-- Install is not aborted if busybox is not detected
-- Several Changes
+- install is not aborted if busybox is not detected
+
+3.3 Stable
+- Fixed Busybox detector
+- Fixed installer

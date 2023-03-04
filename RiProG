@@ -12,7 +12,7 @@ while true; do
   clear
   echo ""
   echo " ==========================="
-  echo " # RiProg AI Mode Control #"
+  echo " # RiProG AI Mode Control #"
   echo " ==========================="
   echo ""
 [[ $(check_mode) == auto ]] && echo " 1. auto *" || echo " 1. auto"

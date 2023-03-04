@@ -55,7 +55,11 @@ Sleep:
 - Schedplus governor support
 - Busybox detector
 - Several changes
-- Several fixed
+
+3.2 Stable
+- Fixed installer
+- New busybox detector
+- install is not aborted if busybox is not detected
 
 # Source Code
 

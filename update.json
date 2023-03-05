@@ -1,6 +1,6 @@
 {
-    "version": "",
-    "versionCode": "",
-    "zipUrl": "",
+    "version": "3.4 Beta",
+    "versionCode": "34",
+    "zipUrl": "https://github.com/RiProG-id/RiProG-AI/releases/download/34/RiProG.AI.3.4.Beta.zip",
     "changelog": "https://github.com/RiProG-id/RiProG-AI/raw/main/changelog.md"
 }

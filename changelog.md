@@ -29,24 +29,8 @@ More info in GITHUB
 
 # Changelog
 
-3.1 Stable
-- More debloat
-- Fix debloat cannot disabled
-- Fix battery drain
-- Fix lag after mode change
-- Remove powersave system
-- More game database
-- Manual mode control (su -c RiProG)
-- Schedplus governor support
-- Busybox detector
-- Several changes
-- Several fixed
-
-3.2 Stable
-- Fixed installer
-- New busybox detector
-- install is not aborted if busybox is not detected
-
-3.3 Stable
-- Fixed Busybox detector
-- Fixed installer
+3.4 Beta
+- Major code overhaul
+- Fixed busybox detector
+- Fixed cpu frequency
+- Some bugs may have been fixed

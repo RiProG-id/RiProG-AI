@@ -1,5 +1,5 @@
-chx() {
+function setx() {
 [[ ! -x "${0%/*}/$1" ]] && chmod +x "${0%/*}/$1"
 }
-chx "RiProG"
-su -c ${0%/*}/RiProG debug0 before
+setx "RiProG"
+su -c ${0%/*}/RiProG postfsdata

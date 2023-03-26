@@ -33,7 +33,7 @@ More info in GITHUB
 - Fixed notification
 - Fixed mode changer
 - Added gpuboost unboost
-- Added wall governor support
+- Added walt governor support
 - Added boot wait
 - Added VM Enhancement
 - More eficiency

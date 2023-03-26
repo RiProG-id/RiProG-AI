@@ -20,8 +20,8 @@ Description based on the latest stable version   <br />
 - Disable Printk
 - Fstrim
 - Debloat unessesary things
-- Database /data/adb/modules/RiProG/gamelist.txt
-- Feature /data/adb/modules/RiProG/gamelist.txt
+- VM Enhancement
+- Feature control menu maybe soon
 - Mode control (su -c RiProG)
 - Adaptive Mode
 
@@ -30,24 +30,32 @@ Description based on the latest stable version   <br />
 Daily:
 - LMK Light
 - Normal CPU Frequency
-- Schedplus/Schedutil/Ondemand/Interactive CPU Governor
+- Maybe default CPU Governor
+- Unboost GPU
+
 
 Game:
 - LMK heavy game
 - Maximum CPU Frequency
 - Performance CPU Governor
+- Boost GPU
 
 Sleep:
 - LMK Light
 - Minimum CPU Frequency
 - Powersave CPU Governor
+- UnBoost GPU
 
 # Changelog
 
-3.4 Beta
-- Major code overhaul
-- Fixed busybox detector
-- Fixed cpu frequency
+3.5 Stable
+- Fixed notification
+- Fixed mode changer
+- Added gpuboost unboost
+- Added wall governor support
+- Added boot wait
+- Added VM Enhancement
+- More eficiency
 - Some bugs may have been fixed
 
 # Source Code

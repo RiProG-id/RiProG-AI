@@ -20,8 +20,8 @@ Description based on the latest stable version   <br />
 - Disable Printk
 - Fstrim
 - Debloat unessesary things
-- Database /data/adb/modules/RiProG/gamelist.txt
-- Feature /data/adb/modules/RiProG/gamelist.txt
+- VM Enhancement
+- Feature control menu maybe soon
 - Mode control (su -c RiProG)
 - Mode  Daily/Game/Sleep
 
@@ -29,8 +29,12 @@ More info in GITHUB
 
 # Changelog
 
-3.4 Beta
-- Major code overhaul
-- Fixed busybox detector
-- Fixed cpu frequency
+3.5 Stable
+- Fixed notification
+- Fixed mode changer
+- Added gpuboost unboost
+- Added wall governor support
+- Added boot wait
+- Added VM Enhancement
+- More eficiency
 - Some bugs may have been fixed

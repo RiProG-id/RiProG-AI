@@ -17,7 +17,11 @@ OUTFD=$2; ZIPFILE=$3; mount /data 2>/dev/null
 . /data/adb/magisk/util_functions.sh; [ $MAGISK_VER_CODE -lt 20400 ] && require_new_magisk
 
 ui_print ""
-ui_print "   RiProG Open Source @ RiOpSo   "
+ui_print "**************************************"
+ui_print "*   RiProG Open Source @ RiOpSo   *"
+ui_print "**************************************"
+ui_print "*      Muhammad Rizki @ RiProG      *"
+ui_print "**************************************"
 ui_print ""
 
 BX1=$(which busybox)
@@ -34,4 +38,13 @@ echo ""
 fi
 
 install_module
+ui_print ""
+ui_print "Other credit: "
+ui_print "@ Brovanova"
+ui_print "@ mrfrost475"
+ui_print "@ rikmeyzter"
+ui_print "@ iGlitch"
+ui_print "@ mohd_syahrul"
+ui_print "@ @pedro3z0"
+ui_print ""
 exit 0

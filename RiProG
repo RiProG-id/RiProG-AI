@@ -1,9 +1,4 @@
-#######
-#tools#
-#######
-
 MOD=/data/adb/modules/RiProG
-
 function read_file(){
   if [[ -f $1 ]]; then
     if [[ ! -r $1 ]]; then
@@ -14,7 +9,6 @@ function read_file(){
     echo "File $1 not found"
   fi
 }
-
 function write_file(){
   if [[ -f $1 ]]; then
     if [[ ! -w $1 ]]; then
@@ -29,54 +23,55 @@ function write_file(){
 function get_prop() {
   resetprop "$1"
 }
-
 function set_prop() {
   resetprop -n "$1" "$2"
 }
-
 function check_mode() {
   resetprop -n riprog.ai.mode
 }
 function set_mode() {
-  echo "riprog.ai.mode=$1" > $TARGET
+  echo "riprog.ai.mode=$1" > $MOD/system.prop
   resetprop -n riprog.ai.mode $1
 }
-
-######
-#Menu#
-######
-
-
-
+function boot_wait() {
+while [[ -z $(getprop sys.boot_completed) ]]; do sleep 5; done
+}
 function menu() {
   while true; do
     clear
     echo ""
-    echo " ==========================="
-    echo " # RiProG AI Mode Control #"
-    echo " ==========================="
+    echo " =============="
+    echo " # RiProG AI  #"
+    echo " =============="
     echo ""
     if [[ $(check_mode) == auto ]]; then 
-        echo " 1. auto *"
+      echo " 1. auto *"
     else 
-        echo " 1. auto"
+      echo " 1. auto"
     fi
     if [[ $(check_mode) == daily ]]; then 
-        echo " 2. daily *"
+      echo " 2. daily *"
     else 
-        echo " 2. daily"
+      echo " 2. daily"
     fi
     if [[ $(check_mode) == sleep ]]; then 
-        echo " 3. sleep *"
+      echo " 3. sleep *"
     else 
-        echo " 3. sleep"
+      echo " 3. sleep"
     fi
     if [[ $(check_mode) == game ]]; then 
-        echo " 4. game *"
+      echo " 4. game *"
     else 
-        echo " 4. game"
+      echo " 4. game"
     fi
-    echo " 5. exit"
+    if [[ $soon == 1 ]]; then 
+      echo " 5. feature control "
+      echo "    maybe soon "
+      echo "    manual edit : /data/adb/modules/RiProG/feature.txt "
+    else 
+      echo " 5. feature control "
+    fi
+    echo " 6. exit"
     echo ""
     echo -n " => "
     read menu
@@ -94,6 +89,9 @@ function menu() {
         set_mode "game"
         ;;
       5)
+        soon=1
+        ;;
+      6)
         exit
         ;;
       *)
@@ -102,33 +100,23 @@ function menu() {
     esac
   done
 }
-
 if [[ $1 == menu ]]; then
   menu
 fi
-
-#######
-#setup#
-#######
-
 function setup() {
-
-if [ -f "$MOD/update-binary" ]; then
-  rm "$MOD/update-binary"
-fi
-
-if [ -f "$MOD/updater-script" ]; then
-  rm "$MOD/updater-script"
-fi
-
-if [ ! -f "$MOD/system.prop" ]; then
-  touch "$MOD/system.prop"
-  write_file "$MOD/system.prop" "riprog.ai.mode=auto"
-fi
-
-if [ ! -f "$MOD/feature.txt" ]; then
-  touch "$MOD/feature.txt"
-  write_file "$MOD/feature.txt" "# Reboot Required
+  if [ -f "$MOD/update-binary" ]; then
+    rm "$MOD/update-binary"
+  fi
+  if [ -f "$MOD/updater-script" ]; then
+    rm "$MOD/updater-script"
+  fi
+  if [ ! -f "$MOD/system.prop" ]; then
+    touch "$MOD/system.prop"
+    write_file "$MOD/system.prop" "riprog.ai.mode=auto"
+  fi
+  if [ ! -f "$MOD/feature.txt" ]; then
+   touch "$MOD/feature.txt"
+   write_file "$MOD/feature.txt" "# Reboot Required
 # True & False
 
 ###################
@@ -148,12 +136,11 @@ freq=true
 #Governor Control
 gov=true
 
+#GPU boost
+GPUB=true
+
 #Delay in second
 delay=10
-
-##########
-#mode=auto#
-##########
 
 ###################
 
@@ -212,11 +199,10 @@ disablepanic=true
 fstrim=true
 
 ###################"
-fi
-
-if [ ! -f "$MOD/gamelist.txt" ]; then
-  touch "$MOD/gamelist.txt"
-  write_file "$MOD/gamelist.txt" "#Reboot Required
+  fi
+  if [ ! -f "$MOD/gamelist.txt" ]; then
+    touch "$MOD/gamelist.txt"
+    write_file "$MOD/gamelist.txt" "#Reboot Required
 mobile.legends
 com.montoon
 com.miHoYo
@@ -242,387 +228,371 @@ com.kurogame
 com.lilithgame
 com.PiguinSoft
 com.supercell"
-fi
-    
-if [[ ! -f "$MOD/system/bin/RiProG" ]]; then
-  if [[ ! -d "$MOD/system/bin" ]]; then
-    mkdir -p "$MOD/system/bin"
   fi
-  touch "$MOD/system/bin/RiProG"
-  write_file "$MOD/system/bin/RiProG" "su -c $MOD/RiProG menu"
-  if [[ ! -x "$MOD/system/bin/RiProG" ]]; then
-    chmod +x "$MOD/system/bin/RiProG"
-  fi
-fi
-
-}
-
-##############
-#post-fs-data#
-##############
-
-function postfsdata() {
-
- setup
-
- . $MOD/feature.txt
-
- if [[ $Tweak == "true" ]]; then
-    if [[ $debloat == "true" ]]; then
-        if [[ ! -f "$MOD/system/debloated" ]]; then
-          mkdir $MOD/system
-          mkdir $MOD/system/app
-          mkdir $MOD/system/app/Traceur
-          mkdir $MOD/system/app/Traceur/oat
-          mkdir $MOD/system/app/Traceur/oat/arm64
-          mkdir $MOD/system/app/Traceur/oat/x86
-          mkdir $MOD/system/app/Traceur/oat/arm
-          mkdir $MOD/system/bin
-          mkdir $MOD/system/etc
-          mkdir $MOD/system/etc/init
-          mkdir $MOD/system/usr
-          mkdir $MOD/system/usr/share
-          mkdir $MOD/system/usr/share/vim
-          mkdir $MOD/system/usr/share/vim/syntax
-          mkdir $MOD/system/vendor
-          mkdir $MOD/system/vendor/bin
-          mkdir $MOD/system/vendor/bin/hw
-          mkdir $MOD/system/vendor/bin/power
-          mkdir $MOD/system/vendor/bin/power/ddr
-          mkdir $MOD/system/vendor/bin/power/ddr/bm
-          mkdir $MOD/system/vendor/bin/power/ddr/bm/tool
-          mkdir $MOD/system/vendor/etc
-          mkdir $MOD/system/vendor/etc/init
-          touch $MOD/system/app/Traceur/Traceur.apk
-          touch $MOD/system/app/Traceur/oat/arm64/Traceur.odex
-          touch $MOD/system/app/Traceur/oat/arm64/Traceur.vdex
-          touch $MOD/system/app/Traceur/oat/x86/Traceur.odex
-          touch $MOD/system/app/Traceur/oat/x86/Traceur.vdex
-          touch $MOD/system/app/Traceur/oat/arm/Traceur.odex
-          touch $MOD/system/app/Traceur/oat/arm/Traceur.vdex
-          touch $MOD/system/bin/wpdiagd
-          touch $MOD/system/bin/trace.sh
-          touch $MOD/system/bin/emdlogger2
-          touch $MOD/system/bin/DumpSystemInfo
-          touch $MOD/system/bin/subsystem_ramdump
-          touch $MOD/system/bin/traced
-          touch $MOD/system/bin/logwrapper
-          touch $MOD/system/bin/bugreportz
-          touch $MOD/system/bin/nanddump
-          touch $MOD/system/bin/debuggerd64
-          touch $MOD/system/bin/hcidump
-          touch $MOD/system/bin/ylog
-          touch $MOD/system/bin/atrace
-          touch $MOD/system/bin/crash_dump64
-          touch $MOD/system/bin/lastlog.sh
-          touch $MOD/system/bin/crash_dump32
-          touch $MOD/system/bin/outdump
-          touch $MOD/system/bin/tombstoned
-          touch $MOD/system/bin/traced_probes
-          touch $MOD/system/bin/ylogkat
-          touch $MOD/system/bin/emdlogger3
-          touch $MOD/system/bin/svlogd
-          touch $MOD/system/bin/i2cdump
-          touch $MOD/system/bin/logname
-          touch $MOD/system/bin/emdlogger5
-          touch $MOD/system/bin/cplog
-          touch $MOD/system/bin/traceroute6
-          touch $MOD/system/bin/ylogctl
-          touch $MOD/system/bin/dumpleases
-          touch $MOD/system/bin/logcat
-          touch $MOD/system/bin/logd
-          touch $MOD/system/bin/memorydumper
-          touch $MOD/system/bin/oatdump
-          touch $MOD/system/bin/dexoptanalyzer
-          touch $MOD/system/bin/hexdump
-          touch $MOD/system/bin/log
-          touch $MOD/system/bin/log_service
-          touch $MOD/system/bin/log_ctr
-          touch $MOD/system/bin/dmesg
-          touch $MOD/system/bin/dataLogDaemon
-          touch $MOD/system/bin/minidumpd
-          touch $MOD/system/bin/dumpstate
-          touch $MOD/system/bin/dexdump
-          touch $MOD/system/bin/debuggerd
-          touch $MOD/system/bin/lpdump
-          touch $MOD/system/bin/aee_dumpstate
-          touch $MOD/system/bin/xlog
-          touch $MOD/system/bin/traceroute
-          touch $MOD/system/bin/tcpdump
-          touch $MOD/system/bin/setlogcons
-          touch $MOD/system/bin/mobile_log_d
-          touch $MOD/system/bin/bugreport
-          touch $MOD/system/bin/ylogbox
-          touch $MOD/system/bin/loggerlauncher
-          touch $MOD/system/bin/diag_socket_log
-          touch $MOD/system/bin/notify_traceur.sh
-          touch $MOD/system/bin/logread
-          touch $MOD/system/bin/logger
-          touch $MOD/system/bin/lpdumpd
-          touch $MOD/system/bin/dmlog
-          touch $MOD/system/bin/emdlogger1
-          touch $MOD/system/bin/ylogdebug.sh
-          touch $MOD/system/bin/klogd
-          touch $MOD/system/bin/dumpkmap
-          touch $MOD/system/bin/mdlogge
-          touch $MOD/system/etc/init/logd.rc
-          touch $MOD/system/etc/init/modemlog_connmgr_service.rc
-          touch $MOD/system/etc/init/ylog.rc
-          touch $MOD/system/etc/init/dataLogDaemon.rc
-          touch $MOD/system/etc/init/lpdumpd.rc
-          touch $MOD/system/etc/init/atrace.rc
-          touch $MOD/system/etc/init/bugreport.rc
-          touch $MOD/system/etc/init/debuggerd64.rc
-          touch $MOD/system/etc/init/emdlogger5.rc
-          touch $MOD/system/etc/init/emdlogger1.rc
-          touch $MOD/system/etc/init/slogmodem.rc
-          touch $MOD/system/etc/init/dumpstate.rc
-          touch $MOD/system/etc/init/tombstoned.rc
-          touch $MOD/system/etc/init/traceur.rc
-          touch $MOD/system/etc/init/emdlogger2.rc
-          touch $MOD/system/etc/init/atrace_userdebug.rc
-          touch $MOD/system/etc/init/log_service.rc
-          touch $MOD/system/etc/init/debuggerd.rc
-          touch $MOD/system/etc/init/mdlogger.rc
-          touch $MOD/system/etc/init/mobile_log_d.rcr
-          touch $MOD/system/usr/share/vim/syntax/logcat.vim
-          touch $MOD/system/vendor/bin/emdlogger2
-          touch $MOD/system/vendor/bin/logwrapper
-          touch $MOD/system/vendor/bin/slogmodem_vendor
-          touch $MOD/system/vendor/bin/mlogservice
-          touch $MOD/system/vendor/bin/i2cdump
-          touch $MOD/system/vendor/bin/logname
-          touch $MOD/system/vendor/bin/emdlogger5
-          touch $MOD/system/vendor/bin/yloglitectl
-          touch $MOD/system/vendor/bin/systemDebuggerd
-          touch $MOD/system/vendor/bin/mrdump_tool
-          touch $MOD/system/vendor/bin/yloglitekat
-          touch $MOD/system/vendor/bin/cplogctl
-          touch $MOD/system/vendor/bin/memorydumper
-          touch $MOD/system/vendor/bin/log
-          touch $MOD/system/vendor/bin/aee_dumpstatev
-          touch $MOD/system/vendor/bin/stp_dump3
-          touch $MOD/system/vendor/bin/hw/vendor.sprd.hardware.cplog_connmgr@1.0-service
-          touch $MOD/system/vendor/bin/hw/vendor.sprd.hardware.log@1.0-service
-          touch $MOD/system/vendor/bin/power/ddr/bm/tool/ddr_bm_log
-          touch $MOD/system/vendor/bin/power/ddr/bm/tool/log_to_csv.sh
-          touch $MOD/system/vendor/bin/aee_dumpstate
-          touch $MOD/system/vendor/bin/muxreport
-          touch $MOD/system/vendor/bin/yloglite
-          touch $MOD/system/vendor/bin/mobile_log_d
-          touch $MOD/system/vendor/bin/flush_slog_modem
-          touch $MOD/system/vendor/bin/dmlog
-          touch $MOD/system/vendor/bin/emdlogger1
-          touch $MOD/system/vendor/bin/mdlogger
-          touch $MOD/system/vendor/etc/ylog.conf.user
-          touch $MOD/system/vendor/etc/ylog.conf.debug
-          touch $MOD/system/vendor/etc/slog_modem.conf
-          touch $MOD/system/vendor/etc/mlogservice.conf
-          touch $MOD/system/vendor/etc/slog_modem_cali.conf
-          touch $MOD/system/vendor/etc/yloglitesource.conf
-          touch $MOD/system/vendor/etc/yloglite.conf
-          touch $MOD/system/vendor/etc/init/vendor.sprd.hardware.log@1.0-service.rc
-          touch $MOD/system/vendor/etc/init/yloglite.rc
-          touch $MOD/system/vendor/etc/init/muxreport.rc
-          touch $MOD/system/vendor/etc/init/mlogservice.rc
-          touch $MOD/system/vendor/etc/init/vendor.sprd.hardware.cplog_connmgr@1.0-service.rc
-          touch $MOD/system/vendor/etc/init/slogmodem_vendor.rc
-          touch $MOD/system/vendor/etc/init/systemDebuggerd.rc
-          touch $MOD/system/vendor/etc/ylogsource.conf
-          touch $MOD/system/vendor/etc/analyzer.py
-          touch $MOD/system/vendor/etc/slog_modem_factory.conf
-          touch $MOD/system/vendor/etc/slog_modem_autotest.conf
-          touch $MOD/system/vendor/etc/slog_modem_autotest.conf
-          touch $MOD/system/debloated
-        fi
-    else
-        if [[ -f "$MOD/system/debloated" ]]; then
-          rm $MOD/system/vendor/etc/slog_modem_autotest.conf
-          rm $MOD/system/vendor/etc/slog_modem_factory.conf
-          rm $MOD/system/vendor/etc/analyzer.py
-          rm $MOD/system/vendor/etc/ylogsource.conf
-          rm $MOD/system/vendor/etc/init/systemDebuggerd.rc
-          rm $MOD/system/vendor/etc/init/slogmodem_vendor.rc
-          rm $MOD/system/vendor/etc/init/vendor.sprd.hardware.cplog_connmgr@1.0-service.rc
-          rm $MOD/system/vendor/etc/init/mlogservice.rc
-          rm $MOD/system/vendor/etc/init/muxreport.rc
-          rm $MOD/system/vendor/etc/init/yloglite.rc
-          rm $MOD/system/vendor/etc/init/vendor.sprd.hardware.log@1.0-service.rc
-          rm $MOD/system/vendor/etc/yloglite.conf
-          rm $MOD/system/vendor/etc/yloglitesource.conf
-          rm $MOD/system/vendor/etc/slog_modem_cali.conf
-          rm $MOD/system/vendor/etc/mlogservice.conf
-          rm $MOD/system/vendor/etc/slog_modem.conf
-          rm $MOD/system/vendor/etc/ylog.conf.debug
-          rm $MOD/system/vendor/etc/ylog.conf.user
-          rm $MOD/system/vendor/bin/mdlogger
-          rm $MOD/system/vendor/bin/emdlogger1
-          rm $MOD/system/vendor/bin/dmlog
-          rm $MOD/system/vendor/bin/flush_slog_modem
-          rm $MOD/system/vendor/bin/mobile_log_d
-          rm $MOD/system/vendor/bin/yloglite
-          rm $MOD/system/vendor/bin/muxreport
-          rm $MOD/system/vendor/bin/aee_dumpstate
-          rm $MOD/system/vendor/bin/power/ddr/bm/tool/log_to_csv.sh
-          rm $MOD/system/vendor/bin/power/ddr/bm/tool/ddr_bm_log
-          rm $MOD/system/vendor/bin/hw/vendor.sprd.hardware.log@1.0-service
-          rm $MOD/system/vendor/bin/hw/vendor.sprd.hardware.cplog_connmgr@1.0-service
-          rm $MOD/system/vendor/bin/stp_dump3
-          rm $MOD/system/vendor/bin/aee_dumpstatev
-          rm $MOD/system/vendor/bin/log
-          rm $MOD/system/vendor/bin/memorydumper
-          rm $MOD/system/vendor/bin/cplogctl
-          rm $MOD/system/vendor/bin/yloglitekat
-          rm $MOD/system/vendor/bin/mrdump_tool
-          rm $MOD/system/vendor/bin/systemDebuggerd
-          rm $MOD/system/vendor/bin/yloglitectl
-          rm $MOD/system/vendor/bin/emdlogger5
-          rm $MOD/system/vendor/bin/logname
-          rm $MOD/system/vendor/bin/i2cdump
-          rm $MOD/system/vendor/bin/mlogservice
-          rm $MOD/system/vendor/bin/slogmodem_vendor
-          rm $MOD/system/vendor/bin/logwrapper
-          rm $MOD/system/vendor/bin/emdlogger2
-          rm $MOD/system/usr/share/vim/syntax/logcat.vim
-          rm $MOD/system/etc/init/mobile_log_d.rcr
-          rm $MOD/system/etc/init/mdlogger.rc
-          rm $MOD/system/etc/init/debuggerd.rc
-          rm $MOD/system/etc/init/log_service.rc
-          rm $MOD/system/etc/init/atrace_userdebug.rc
-          rm $MOD/system/etc/init/emdlogger2.rc
-          rm $MOD/system/etc/init/traceur.rc
-          rm $MOD/system/etc/init/tombstoned.rc
-          rm $MOD/system/etc/init/dumpstate.rc
-          rm $MOD/system/etc/init/slogmodem.rc
-          rm $MOD/system/etc/init/emdlogger1.rc
-          rm $MOD/system/etc/init/emdlogger5.rc
-          rm $MOD/system/etc/init/debuggerd64.rc
-          rm $MOD/system/etc/init/bugreport.rc
-          rm $MOD/system/etc/init/atrace.rc
-          rm $MOD/system/etc/init/lpdumpd.rc
-          rm $MOD/system/etc/init/dataLogDaemon.rc
-          rm $MOD/system/etc/init/ylog.rc
-          rm $MOD/system/etc/init/modemlog_connmgr_service.rc
-          rm $MOD/system/etc/init/logd.rc
-          rm $MOD/system/bin/mdlogge
-          rm $MOD/system/bin/dumpkmap
-          rm $MOD/system/bin/klogd
-          rm $MOD/system/bin/ylogdebug.sh
-          rm $MOD/system/bin/emdlogger1
-          rm $MOD/system/bin/dmlog
-          rm $MOD/system/bin/lpdumpd
-          rm $MOD/system/bin/logger
-          rm $MOD/system/bin/logread
-          rm $MOD/system/bin/notify_traceur.sh
-          rm $MOD/system/bin/diag_socket_log
-          rm $MOD/system/bin/loggerlauncher
-          rm $MOD/system/bin/ylogbox
-          rm $MOD/system/bin/bugreport
-          rm $MOD/system/bin/mobile_log_d
-          rm $MOD/system/bin/setlogcons
-          rm $MOD/system/bin/tcpdump
-          rm $MOD/system/bin/traceroute
-          rm $MOD/system/bin/xlog
-          rm $MOD/system/bin/aee_dumpstate
-          rm $MOD/system/bin/lpdump
-          rm $MOD/system/bin/debuggerd
-          rm $MOD/system/bin/dexdump
-          rm $MOD/system/bin/dumpstate
-          rm $MOD/system/bin/minidumpd
-          rm $MOD/system/bin/dataLogDaemon
-          rm $MOD/system/bin/dmesg
-          rm $MOD/system/bin/log_ctr
-          rm $MOD/system/bin/log_service
-          rm $MOD/system/bin/log
-          rm $MOD/system/bin/hexdump
-          rm $MOD/system/bin/dexoptanalyzer
-          rm $MOD/system/bin/oatdump
-          rm $MOD/system/bin/memorydumper
-          rm $MOD/system/bin/logd
-          rm $MOD/system/bin/logcat
-          rm $MOD/system/bin/dumpleases
-          rm $MOD/system/bin/ylogctl
-          rm $MOD/system/bin/traceroute6
-          rm $MOD/system/bin/cplog
-          rm $MOD/system/bin/emdlogger5
-          rm $MOD/system/bin/logname
-          rm $MOD/system/bin/i2cdump
-          rm $MOD/system/bin/svlogd
-          rm $MOD/system/bin/emdlogger3
-          rm $MOD/system/bin/ylogkat
-          rm $MOD/system/bin/traced_probes
-          rm $MOD/system/bin/tombstoned
-          rm $MOD/system/bin/outdump
-          rm $MOD/system/bin/crash_dump32
-          rm $MOD/system/bin/lastlog.sh
-          rm $MOD/system/bin/crash_dump64
-          rm $MOD/system/bin/atrace
-          rm $MOD/system/bin/ylog
-          rm $MOD/system/bin/hcidump
-          rm $MOD/system/bin/debuggerd64
-          rm $MOD/system/bin/nanddump
-          rm $MOD/system/bin/bugreportz
-          rm $MOD/system/bin/logwrapper
-          rm $MOD/system/bin/traced
-          rm $MOD/system/bin/subsystem_ramdump
-          rm $MOD/system/bin/DumpSystemInfo
-          rm $MOD/system/bin/emdlogger2
-          rm $MOD/system/bin/trace.sh
-          rm $MOD/system/bin/wpdiagd
-          rm $MOD/system/app/Traceur/oat/arm/Traceur.vdex
-          rm $MOD/system/app/Traceur/oat/arm/Traceur.odex
-          rm $MOD/system/app/Traceur/oat/x86/Traceur.vdex
-          rm $MOD/system/app/Traceur/oat/x86/Traceur.odex
-          rm $MOD/system/app/Traceur/oat/arm64/Traceur.vdex
-          rm $MOD/system/app/Traceur/oat/arm64/Traceur.odex
-          rm $MOD/system/app/Traceur/Traceur.apk
-          rm $MOD/system/debloated
-          rmdir $MOD/system/vendor/etc/init
-          rmdir $MOD/system/vendor/etc
-          rmdir $MOD/system/vendor/bin/power/ddr/bm/tool
-          rmdir $MOD/system/vendor/bin/power/ddr/bm
-          rmdir $MOD/system/vendor/bin/power/ddr
-          rmdir $MOD/system/vendor/bin/power
-          rmdir $MOD/system/vendor/bin/hw
-          rmdir $MOD/system/vendor/bin
-          rmdir $MOD/system/vendor
-          rmdir $MOD/system/usr/share/vim/syntax
-          rmdir $MOD/system/usr/share/vim
-          rmdir $MOD/system/usr/share
-          rmdir $MOD/system/usr
-          rmdir $MOD/system/etc/init
-          rmdir $MOD/system/etc
-          rmdir $MOD/system/bin
-          rmdir $MOD/system/app/Traceur/oat/arm
-          rmdir $MOD/system/app/Traceur/oat/x86
-          rmdir $MOD/system/app/Traceur/oat/arm64
-          rmdir $MOD/system/app/Traceur/oat
-          rmdir $MOD/system/app/Traceur
-          rmdir $MOD/system/app
-          rmdir $MOD/system
-        fi
+  if [[ ! -f "$MOD/system/bin/RiProG" ]]; then
+    if [[ ! -d "$MOD/system/bin" ]]; then
+      mkdir -p "$MOD/system/bin"
     fi
-  
+    touch "$MOD/system/bin/RiProG"
+    write_file "$MOD/system/bin/RiProG" "su -c $MOD/RiProG menu"
+    if [[ ! -x "$MOD/system/bin/RiProG" ]]; then
+      chmod +x "$MOD/system/bin/RiProG"
+    fi
+  fi
+}
+function postfsdata() {
+  setup
+  . $MOD/feature.txt
+  if [[ $Tweak == "true" ]]; then
+    if [[ $debloat == "true" ]]; then
+      if [[ ! -f "$MOD/system/debloated" ]]; then
+        mkdir $MOD/system
+        mkdir $MOD/system/app
+        mkdir $MOD/system/app/Traceur
+        mkdir $MOD/system/app/Traceur/oat
+        mkdir $MOD/system/app/Traceur/oat/arm64
+        mkdir $MOD/system/app/Traceur/oat/x86
+        mkdir $MOD/system/app/Traceur/oat/arm
+        mkdir $MOD/system/bin
+        mkdir $MOD/system/etc
+        mkdir $MOD/system/etc/init
+        mkdir $MOD/system/usr
+        mkdir $MOD/system/usr/share
+        mkdir $MOD/system/usr/share/vim
+        mkdir $MOD/system/usr/share/vim/syntax
+        mkdir $MOD/system/vendor
+        mkdir $MOD/system/vendor/bin
+        mkdir $MOD/system/vendor/bin/hw
+        mkdir $MOD/system/vendor/bin/power
+        mkdir $MOD/system/vendor/bin/power/ddr
+        mkdir $MOD/system/vendor/bin/power/ddr/bm
+        mkdir $MOD/system/vendor/bin/power/ddr/bm/tool
+        mkdir $MOD/system/vendor/etc
+        mkdir $MOD/system/vendor/etc/init
+        touch $MOD/system/app/Traceur/Traceur.apk
+        touch $MOD/system/app/Traceur/oat/arm64/Traceur.odex
+        touch $MOD/system/app/Traceur/oat/arm64/Traceur.vdex
+        touch $MOD/system/app/Traceur/oat/x86/Traceur.odex
+        touch $MOD/system/app/Traceur/oat/x86/Traceur.vdex
+        touch $MOD/system/app/Traceur/oat/arm/Traceur.odex
+        touch $MOD/system/app/Traceur/oat/arm/Traceur.vdex
+        touch $MOD/system/bin/wpdiagd
+        touch $MOD/system/bin/trace.sh
+        touch $MOD/system/bin/emdlogger2
+        touch $MOD/system/bin/DumpSystemInfo
+        touch $MOD/system/bin/subsystem_ramdump
+        touch $MOD/system/bin/traced
+        touch $MOD/system/bin/logwrapper
+        touch $MOD/system/bin/bugreportz
+        touch $MOD/system/bin/nanddump
+        touch $MOD/system/bin/debuggerd64
+        touch $MOD/system/bin/hcidump
+        touch $MOD/system/bin/ylog
+        touch $MOD/system/bin/atrace
+        touch $MOD/system/bin/crash_dump64
+        touch $MOD/system/bin/lastlog.sh
+        touch $MOD/system/bin/crash_dump32
+        touch $MOD/system/bin/outdump
+        touch $MOD/system/bin/tombstoned
+        touch $MOD/system/bin/traced_probes
+        touch $MOD/system/bin/ylogkat
+        touch $MOD/system/bin/emdlogger3
+        touch $MOD/system/bin/svlogd
+        touch $MOD/system/bin/i2cdump
+        touch $MOD/system/bin/logname
+        touch $MOD/system/bin/emdlogger5
+        touch $MOD/system/bin/cplog
+        touch $MOD/system/bin/traceroute6
+        touch $MOD/system/bin/ylogctl
+        touch $MOD/system/bin/dumpleases
+        touch $MOD/system/bin/logcat
+        touch $MOD/system/bin/logd
+        touch $MOD/system/bin/memorydumper
+        touch $MOD/system/bin/oatdump
+        touch $MOD/system/bin/dexoptanalyzer
+        touch $MOD/system/bin/hexdump
+        touch $MOD/system/bin/log
+        touch $MOD/system/bin/log_service
+        touch $MOD/system/bin/log_ctr
+        touch $MOD/system/bin/dmesg
+        touch $MOD/system/bin/dataLogDaemon
+        touch $MOD/system/bin/minidumpd
+        touch $MOD/system/bin/dumpstate
+        touch $MOD/system/bin/dexdump
+        touch $MOD/system/bin/debuggerd
+        touch $MOD/system/bin/lpdump
+        touch $MOD/system/bin/aee_dumpstate
+        touch $MOD/system/bin/xlog
+        touch $MOD/system/bin/traceroute
+        touch $MOD/system/bin/tcpdump
+        touch $MOD/system/bin/setlogcons
+        touch $MOD/system/bin/mobile_log_d
+        touch $MOD/system/bin/bugreport
+        touch $MOD/system/bin/ylogbox
+        touch $MOD/system/bin/loggerlauncher
+        touch $MOD/system/bin/diag_socket_log
+        touch $MOD/system/bin/notify_traceur.sh
+        touch $MOD/system/bin/logread
+        touch $MOD/system/bin/logger
+        touch $MOD/system/bin/lpdumpd
+        touch $MOD/system/bin/dmlog
+        touch $MOD/system/bin/emdlogger1
+        touch $MOD/system/bin/ylogdebug.sh
+        touch $MOD/system/bin/klogd
+        touch $MOD/system/bin/dumpkmap
+        touch $MOD/system/bin/mdlogge
+        touch $MOD/system/etc/init/logd.rc
+        touch $MOD/system/etc/init/modemlog_connmgr_service.rc
+        touch $MOD/system/etc/init/ylog.rc
+        touch $MOD/system/etc/init/dataLogDaemon.rc
+        touch $MOD/system/etc/init/lpdumpd.rc
+        touch $MOD/system/etc/init/atrace.rc
+        touch $MOD/system/etc/init/bugreport.rc
+        touch $MOD/system/etc/init/debuggerd64.rc
+        touch $MOD/system/etc/init/emdlogger5.rc
+        touch $MOD/system/etc/init/emdlogger1.rc
+        touch $MOD/system/etc/init/slogmodem.rc
+        touch $MOD/system/etc/init/dumpstate.rc
+        touch $MOD/system/etc/init/tombstoned.rc
+        touch $MOD/system/etc/init/traceur.rc
+        touch $MOD/system/etc/init/emdlogger2.rc
+        touch $MOD/system/etc/init/atrace_userdebug.rc
+        touch $MOD/system/etc/init/log_service.rc
+        touch $MOD/system/etc/init/debuggerd.rc
+        touch $MOD/system/etc/init/mdlogger.rc
+        touch $MOD/system/etc/init/mobile_log_d.rcr
+        touch $MOD/system/usr/share/vim/syntax/logcat.vim
+        touch $MOD/system/vendor/bin/emdlogger2
+        touch $MOD/system/vendor/bin/logwrapper
+        touch $MOD/system/vendor/bin/slogmodem_vendor
+        touch $MOD/system/vendor/bin/mlogservice
+        touch $MOD/system/vendor/bin/i2cdump
+        touch $MOD/system/vendor/bin/logname
+        touch $MOD/system/vendor/bin/emdlogger5
+        touch $MOD/system/vendor/bin/yloglitectl
+        touch $MOD/system/vendor/bin/systemDebuggerd
+        touch $MOD/system/vendor/bin/mrdump_tool
+        touch $MOD/system/vendor/bin/yloglitekat
+        touch $MOD/system/vendor/bin/cplogctl
+        touch $MOD/system/vendor/bin/memorydumper
+        touch $MOD/system/vendor/bin/log
+        touch $MOD/system/vendor/bin/aee_dumpstatev
+        touch $MOD/system/vendor/bin/stp_dump3
+        touch $MOD/system/vendor/bin/hw/vendor.sprd.hardware.cplog_connmgr@1.0-service
+        touch $MOD/system/vendor/bin/hw/vendor.sprd.hardware.log@1.0-service
+        touch $MOD/system/vendor/bin/power/ddr/bm/tool/ddr_bm_log
+        touch $MOD/system/vendor/bin/power/ddr/bm/tool/log_to_csv.sh
+        touch $MOD/system/vendor/bin/aee_dumpstate
+        touch $MOD/system/vendor/bin/muxreport
+        touch $MOD/system/vendor/bin/yloglite
+        touch $MOD/system/vendor/bin/mobile_log_d
+        touch $MOD/system/vendor/bin/flush_slog_modem
+        touch $MOD/system/vendor/bin/dmlog
+        touch $MOD/system/vendor/bin/emdlogger1
+        touch $MOD/system/vendor/bin/mdlogger
+        touch $MOD/system/vendor/etc/ylog.conf.user
+        touch $MOD/system/vendor/etc/ylog.conf.debug
+        touch $MOD/system/vendor/etc/slog_modem.conf
+        touch $MOD/system/vendor/etc/mlogservice.conf
+        touch $MOD/system/vendor/etc/slog_modem_cali.conf
+        touch $MOD/system/vendor/etc/yloglitesource.conf
+        touch $MOD/system/vendor/etc/yloglite.conf
+        touch $MOD/system/vendor/etc/init/vendor.sprd.hardware.log@1.0-service.rc
+        touch $MOD/system/vendor/etc/init/yloglite.rc
+        touch $MOD/system/vendor/etc/init/muxreport.rc
+        touch $MOD/system/vendor/etc/init/mlogservice.rc
+        touch $MOD/system/vendor/etc/init/vendor.sprd.hardware.cplog_connmgr@1.0-service.rc
+        touch $MOD/system/vendor/etc/init/slogmodem_vendor.rc
+        touch $MOD/system/vendor/etc/init/systemDebuggerd.rc
+        touch $MOD/system/vendor/etc/ylogsource.conf
+        touch $MOD/system/vendor/etc/analyzer.py
+        touch $MOD/system/vendor/etc/slog_modem_factory.conf
+        touch $MOD/system/vendor/etc/slog_modem_autotest.conf
+        touch $MOD/system/vendor/etc/slog_modem_autotest.conf
+        touch $MOD/system/debloated
+      fi
+    else
+      if [[ -f "$MOD/system/debloated" ]]; then
+        rm $MOD/system/vendor/etc/slog_modem_autotest.conf
+        rm $MOD/system/vendor/etc/slog_modem_factory.conf
+        rm $MOD/system/vendor/etc/analyzer.py
+        rm $MOD/system/vendor/etc/ylogsource.conf
+        rm $MOD/system/vendor/etc/init/systemDebuggerd.rc
+        rm $MOD/system/vendor/etc/init/slogmodem_vendor.rc
+        rm $MOD/system/vendor/etc/init/vendor.sprd.hardware.cplog_connmgr@1.0-service.rc
+        rm $MOD/system/vendor/etc/init/mlogservice.rc
+        rm $MOD/system/vendor/etc/init/muxreport.rc
+        rm $MOD/system/vendor/etc/init/yloglite.rc
+        rm $MOD/system/vendor/etc/init/vendor.sprd.hardware.log@1.0-service.rc
+        rm $MOD/system/vendor/etc/yloglite.conf
+        rm $MOD/system/vendor/etc/yloglitesource.conf
+        rm $MOD/system/vendor/etc/slog_modem_cali.conf
+        rm $MOD/system/vendor/etc/mlogservice.conf
+        rm $MOD/system/vendor/etc/slog_modem.conf
+        rm $MOD/system/vendor/etc/ylog.conf.debug
+        rm $MOD/system/vendor/etc/ylog.conf.user
+        rm $MOD/system/vendor/bin/mdlogger
+        rm $MOD/system/vendor/bin/emdlogger1
+        rm $MOD/system/vendor/bin/dmlog
+        rm $MOD/system/vendor/bin/flush_slog_modem
+        rm $MOD/system/vendor/bin/mobile_log_d
+        rm $MOD/system/vendor/bin/yloglite
+        rm $MOD/system/vendor/bin/muxreport
+        rm $MOD/system/vendor/bin/aee_dumpstate
+        rm $MOD/system/vendor/bin/power/ddr/bm/tool/log_to_csv.sh
+        rm $MOD/system/vendor/bin/power/ddr/bm/tool/ddr_bm_log
+        rm $MOD/system/vendor/bin/hw/vendor.sprd.hardware.log@1.0-service
+        rm $MOD/system/vendor/bin/hw/vendor.sprd.hardware.cplog_connmgr@1.0-service
+        rm $MOD/system/vendor/bin/stp_dump3
+        rm $MOD/system/vendor/bin/aee_dumpstatev
+        rm $MOD/system/vendor/bin/log
+        rm $MOD/system/vendor/bin/memorydumper
+        rm $MOD/system/vendor/bin/cplogctl
+        rm $MOD/system/vendor/bin/yloglitekat
+        rm $MOD/system/vendor/bin/mrdump_tool
+        rm $MOD/system/vendor/bin/systemDebuggerd
+        rm $MOD/system/vendor/bin/yloglitectl
+        rm $MOD/system/vendor/bin/emdlogger5
+        rm $MOD/system/vendor/bin/logname
+        rm $MOD/system/vendor/bin/i2cdump
+        rm $MOD/system/vendor/bin/mlogservice
+        rm $MOD/system/vendor/bin/slogmodem_vendor
+        rm $MOD/system/vendor/bin/logwrapper
+        rm $MOD/system/vendor/bin/emdlogger2
+        rm $MOD/system/usr/share/vim/syntax/logcat.vim
+        rm $MOD/system/etc/init/mobile_log_d.rcr
+        rm $MOD/system/etc/init/mdlogger.rc
+        rm $MOD/system/etc/init/debuggerd.rc
+        rm $MOD/system/etc/init/log_service.rc
+        rm $MOD/system/etc/init/atrace_userdebug.rc
+        rm $MOD/system/etc/init/emdlogger2.rc
+        rm $MOD/system/etc/init/traceur.rc
+        rm $MOD/system/etc/init/tombstoned.rc
+        rm $MOD/system/etc/init/dumpstate.rc
+        rm $MOD/system/etc/init/slogmodem.rc
+        rm $MOD/system/etc/init/emdlogger1.rc
+        rm $MOD/system/etc/init/emdlogger5.rc
+        rm $MOD/system/etc/init/debuggerd64.rc
+        rm $MOD/system/etc/init/bugreport.rc
+        rm $MOD/system/etc/init/atrace.rc
+        rm $MOD/system/etc/init/lpdumpd.rc
+        rm $MOD/system/etc/init/dataLogDaemon.rc
+        rm $MOD/system/etc/init/ylog.rc
+        rm $MOD/system/etc/init/modemlog_connmgr_service.rc
+        rm $MOD/system/etc/init/logd.rc
+        rm $MOD/system/bin/mdlogge
+        rm $MOD/system/bin/dumpkmap
+        rm $MOD/system/bin/klogd
+        rm $MOD/system/bin/ylogdebug.sh
+        rm $MOD/system/bin/emdlogger1
+        rm $MOD/system/bin/dmlog
+        rm $MOD/system/bin/lpdumpd
+        rm $MOD/system/bin/logger
+        rm $MOD/system/bin/logread
+        rm $MOD/system/bin/notify_traceur.sh
+        rm $MOD/system/bin/diag_socket_log
+        rm $MOD/system/bin/loggerlauncher
+        rm $MOD/system/bin/ylogbox
+        rm $MOD/system/bin/bugreport
+        rm $MOD/system/bin/mobile_log_d
+        rm $MOD/system/bin/setlogcons
+        rm $MOD/system/bin/tcpdump
+        rm $MOD/system/bin/traceroute
+        rm $MOD/system/bin/xlog
+        rm $MOD/system/bin/aee_dumpstate
+        rm $MOD/system/bin/lpdump
+        rm $MOD/system/bin/debuggerd
+        rm $MOD/system/bin/dexdump
+        rm $MOD/system/bin/dumpstate
+        rm $MOD/system/bin/minidumpd
+        rm $MOD/system/bin/dataLogDaemon
+        rm $MOD/system/bin/dmesg
+        rm $MOD/system/bin/log_ctr
+        rm $MOD/system/bin/log_service
+        rm $MOD/system/bin/log
+        rm $MOD/system/bin/hexdump
+        rm $MOD/system/bin/dexoptanalyzer
+        rm $MOD/system/bin/oatdump
+        rm $MOD/system/bin/memorydumper
+        rm $MOD/system/bin/logd
+        rm $MOD/system/bin/logcat
+        rm $MOD/system/bin/dumpleases
+        rm $MOD/system/bin/ylogctl
+        rm $MOD/system/bin/traceroute6
+        rm $MOD/system/bin/cplog
+        rm $MOD/system/bin/emdlogger5
+        rm $MOD/system/bin/logname
+        rm $MOD/system/bin/i2cdump
+        rm $MOD/system/bin/svlogd
+        rm $MOD/system/bin/emdlogger3
+        rm $MOD/system/bin/ylogkat
+        rm $MOD/system/bin/traced_probes
+        rm $MOD/system/bin/tombstoned
+        rm $MOD/system/bin/outdump
+        rm $MOD/system/bin/crash_dump32
+        rm $MOD/system/bin/lastlog.sh
+        rm $MOD/system/bin/crash_dump64
+        rm $MOD/system/bin/atrace
+        rm $MOD/system/bin/ylog
+        rm $MOD/system/bin/hcidump
+        rm $MOD/system/bin/debuggerd64
+        rm $MOD/system/bin/nanddump
+        rm $MOD/system/bin/bugreportz
+        rm $MOD/system/bin/logwrapper
+        rm $MOD/system/bin/traced
+        rm $MOD/system/bin/subsystem_ramdump
+        rm $MOD/system/bin/DumpSystemInfo
+        rm $MOD/system/bin/emdlogger2
+        rm $MOD/system/bin/trace.sh
+        rm $MOD/system/bin/wpdiagd
+        rm $MOD/system/app/Traceur/oat/arm/Traceur.vdex
+        rm $MOD/system/app/Traceur/oat/arm/Traceur.odex
+        rm $MOD/system/app/Traceur/oat/x86/Traceur.vdex
+        rm $MOD/system/app/Traceur/oat/x86/Traceur.odex
+        rm $MOD/system/app/Traceur/oat/arm64/Traceur.vdex
+        rm $MOD/system/app/Traceur/oat/arm64/Traceur.odex
+        rm $MOD/system/app/Traceur/Traceur.apk
+        rm $MOD/system/debloated
+        rmdir $MOD/system/vendor/etc/init
+        rmdir $MOD/system/vendor/etc
+        rmdir $MOD/system/vendor/bin/power/ddr/bm/tool
+        rmdir $MOD/system/vendor/bin/power/ddr/bm
+        rmdir $MOD/system/vendor/bin/power/ddr
+        rmdir $MOD/system/vendor/bin/power
+        rmdir $MOD/system/vendor/bin/hw
+        rmdir $MOD/system/vendor/bin
+        rmdir $MOD/system/vendor
+        rmdir $MOD/system/usr/share/vim/syntax
+        rmdir $MOD/system/usr/share/vim
+        rmdir $MOD/system/usr/share
+        rmdir $MOD/system/usr
+        rmdir $MOD/system/etc/init
+        rmdir $MOD/system/etc
+        rmdir $MOD/system/bin
+        rmdir $MOD/system/app/Traceur/oat/arm
+        rmdir $MOD/system/app/Traceur/oat/x86
+        rmdir $MOD/system/app/Traceur/oat/arm64
+        rmdir $MOD/system/app/Traceur/oat
+        rmdir $MOD/system/app/Traceur
+        rmdir $MOD/system/app
+        rmdir $MOD/system
+      fi
+    fi
     if [[ $dalvikasjit == "true" ]]; then
       set_prop dalvik.vm.execution-mode int:jit
     fi
-
     if [[ $purgeassets == "true" ]]; then
       set_prop persist.sys.purgeable_assets 1
     fi
-
     if [[ $skiagl == "true" ]]; then
       set_prop debug.hwui.renderer skiagl
     fi
-
     if [[ $zygotepeforking == "true" ]]; then
       set_prop persist.device_config.runtime_native.usap_pool_enabled true
     fi
-  
     if [[ $fusepasstrough == "true" ]]; then
       set_prop persist.sys.fuse.passthrough.enable true
     fi
-
     if [[ $faststreaming == "true" ]]; then
       set_prop media.stagefright.enable-player true
       set_prop media.stagefright.enable-meta true
@@ -631,7 +601,6 @@ function postfsdata() {
       set_prop media.stagefright.enable-rtsp true
       set_prop media.stagefright.enable-record false
     fi
-
     if [[ $mediacodex == "true" ]]; then
       set_prop ro.media.dec.aud.flac.enabled 1
       set_prop ro.media.dec.aud.wma.enabled 1
@@ -649,7 +618,6 @@ function postfsdata() {
       set_prop ro.media.enc.aud.mp3.enabled 1
       set_prop ro.media.enc.vid.mp4.enabled 1
     fi
-
     if [[ $smoothgui == "true" ]]; then
       set_prop sys.use_fifo_ui 1
       set_prop windows.mgr.max_event_per_sec 180
@@ -660,7 +628,6 @@ function postfsdata() {
       set_prop persist.sys.pcsync.enable 0
       set_prop persist.sys.scrollingcache 3
     fi
-    
     if [[ $networktweak == "true" ]]; then
       set_prop net.tcp.buffersize.default "6144,87380,110208,6144,16384,110208"
       set_prop net.tcp.buffersize.wifi "262144,524288,1048576,262144,524288,1048576"
@@ -692,7 +659,6 @@ function postfsdata() {
       set_prop persist.cust.tel.eons 1
       set_prop persist.cust.tel.adapt 1
     fi
-     
     if [[ $clearaudio == "true" ]]; then
       set_prop persist.audio.fluence.mode endfire
       set_prop persist.audio.vr.enable true
@@ -700,7 +666,6 @@ function postfsdata() {
       set_prop af.resampler.quality 255
       set_prop mpq.audio.decode true
     fi
-    
     if [[ $disableloganddebug == "true" ]]; then
       set_prop log.resolves 0
       set_prop log.pm4 0
@@ -810,10 +775,9 @@ function postfsdata() {
       set_prop vidc.debug.level 0
       set_prop video.disable.ubwc 1
       set_prop wifi.interface wlan0
-   fi
- fi
+    fi
+  fi
 }
-
 if [[ "$1" == "postfsdata" ]]; then
   if [[ "$2" == "debug" ]]; then
     set -x
@@ -822,18 +786,13 @@ if [[ "$1" == "postfsdata" ]]; then
     postfsdata > /dev/null 2>&1 
   fi
 fi
-
-
-
-####
-#AI#
-####
-
-function set_cpu() {
+function cpu_tools() {
   for cpu in /sys/devices/system/cpu/cpufreq/policy*; do
     if [[ $1 == "governor" ]]; then
       if [[ ! $2 == auto ]]; then
         write_file "$cpu/scaling_governor" "$2"
+      elif [[ $(read_file $cpu/scaling_available_governors | grep -o schedplus) == "walt" ]]; then
+        write_file "$cpu/scaling_governor" "walt"
       elif [[ $(read_file $cpu/scaling_available_governors | grep -o schedplus) == "schedplus" ]]; then
         write_file "$cpu/scaling_governor" "schedplus"
       elif [[ $(read_file $cpu/scaling_available_governors | grep -o schedutil) == "schedutil" ]]; then
@@ -860,142 +819,311 @@ function set_cpu() {
     fi
   done
 }
-
+function gpu_tools() {
+  gpu_dir=$(find /sys/devices /sys/class/misc -name "kgsl-3d0" -o -name "*.mali" -o -name "*.gpu" -type d | head -1)
+  gpu_model=$(echo "$gpu_dir" | grep -q "kgsl-3d0" && echo adreno || echo mali)
+  if [[ $1 = boost ]]; then
+    if [[ "$gpu_model" == "adreno" ]]; then
+      if [[ -z $(get_prop gpu.min.pl) ]]; then
+        gpu_min_pl=$(($(cat "${gpu_dir}num_pwrlevels") - 1))
+        set_prop gpu.min.pl $gpu_min_pl
+      else
+        gpu_min_pl=$(get_prop gpu_min pl)
+      fi
+      write_file "${gpu_dir}throttling" "0"
+      write_file "${gpu_dir}thermal_pwrlevel" "0"
+      write_file "${gpu_dir}devfreq/adrenoboost" "0"
+      write_file "${gpu_dir}bus_split" "0"
+      write_file "${gpu_dir}min_pwrlevel" "0"
+      write_file "${gpu_dir}force_no_nap" "1"
+      write_file "${gpu_dir}force_bus_on" "1"
+      write_file "${gpu_dir}force_clk_on" "1"
+      write_file "${gpu_dir}force_rail_on" "1"
+      write_file "${gpu_dir}popp" "0"
+      write_file "${gpu_dir}pwrnap" "0"
+      write_file "/sys/kernel/debug/sde_rotator0/clk_always_on" "1"
+      if [[ -d "/sys/module/simple_gpu_algorithm/" ]]; then
+      write_file "/sys/module/simple_gpu_algorithm/parameters/simple_gpu_activate" "0"
+      fi
+    fi
+    if [[ "$gpu_model" == "mali" ]]; then
+      write_file "${gpu_dir}dvfs" "0"
+      write_file "${gpu_dir}highspeed_load" "76"
+      write_file "${gpu_dir}highspeed_delay" "0"
+      write_file "${gpu_dir}power_policy" "always_on"
+      write_file "${gpu_dir}cl_boost_disable" "0"
+      write_file "${gpu_dir}tmu" "0"
+    fi
+    if [[ -d "/sys/module/ged/" ]]; then
+      write_file "/sys/module/ged/parameters/ged_boost_enable" "1"
+      write_file "/sys/module/ged/parameters/boost_gpu_enable" "1"
+      write_file "/sys/module/ged/parameters/boost_extra" "1"
+      write_file "/sys/module/ged/parameters/enable_cpu_boost" "1"
+      write_file "/sys/module/ged/parameters/enable_gpu_boost" "1"
+      write_file "/sys/module/ged/parameters/enable_game_self_frc_detect" "1"
+      write_file "/sys/module/ged/parameters/ged_force_mdp_enable" "1"
+      write_file "/sys/module/ged/parameters/ged_log_perf_trace_enable" "0"
+      write_file "/sys/module/ged/parameters/ged_log_trace_enable" "0"
+      write_file "/sys/module/ged/parameters/ged_monitor_3D_fence_debug" "0"
+      write_file "/sys/module/ged/parameters/ged_monitor_3D_fence_disable" "1"
+      write_file "/sys/module/ged/parameters/ged_monitor_3D_fence_systrace" "0"
+      write_file "/sys/module/ged/parameters/ged_smart_boost" "0"
+      write_file "/sys/module/ged/parameters/gpu_debug_enable" "0"
+      write_file "/sys/module/ged/parameters/gpu_dvfs_enable" "0"
+      write_file "/sys/module/ged/parameters/gx_3D_benchmark_on" "1"
+      write_file "/sys/module/ged/parameters/gx_force_cpu_boost" "1"
+      write_file "/sys/module/ged/parameters/enable_gpu_boost" "1"
+      write_file "/sys/module/ged/parameters/enable_game_self_frc_detect" "1"
+      write_file "/sys/module/ged/parameters/ged_force_mdp_enable" "1"
+      write_file "/sys/module/ged/parameters/ged_log_perf_trace_enable" "0"
+      write_file "/sys/module/ged/parameters/ged_log_trace_enable" "0"
+      write_file "/sys/module/ged/parameters/ged_monitor_3D_fence_debug" "0"
+      write_file "/sys/module/ged/parameters/ged_monitor_3D_fence_disable" "1"
+      write_file "/sys/module/ged/parameters/ged_monitor_3D_fence_systrace" "0"
+      write_file "/sys/module/ged/parameters/ged_smart_boost" "0"
+      write_file "/sys/module/ged/parameters/gpu_debug_enable" "0"
+      write_file "/sys/module/ged/parameters/gpu_dvfs_enable" "0"
+      write_file "/sys/module/ged/parameters/gx_3D_benchmark_on" "1"
+      write_file "/sys/module/ged/parameters/gx_force_cpu_boost" "1"
+      write_file "/sys/module/ged/parameters/gx_frc_mode" "1"
+      write_file "/sys/module/ged/parameters/gx_game_mode" "1"
+      write_file "/sys/module/ged/parameters/is_GED_KPI_enabled" "1"
+      write_file "/sys/module/ged/parameters/boost_amp" "1"
+      write_file "/sys/module/ged/parameters/gx_boost_on" "1"
+      write_file "/sys/module/ged/parameters/gpu_idle" "0"
+      write_file "/sys/module/ged/parameters/gpu_cust_boost_freq" "0"
+    fi
+    if [[ -d "/sys/module/ged/" ]]; then
+      write_file "/proc/gpufreq/gpufreq_opp_stress_test" "1"
+      write_file "/proc/gpufreq/gpufreq_input_boost" "0"
+      write_file "/proc/gpufreq/gpufreq_limited_thermal_ignore" "1"
+      write_file "/proc/gpufreq/gpufreq_limited_oc_ignore" "1"
+      write_file "/proc/gpufreq/gpufreq_limited_low_batt_volume_ignore" "1"
+      write_file "/proc/gpufreq/gpufreq_limited_low_batt_volt_ignore" "1"
+    fi
+    if [[ -d "/sys/kernel/ged/" ]]; then
+      write_file "/sys/kernel/ged/hal/dcs_mode" "0"
+    fi
+    if [[ -d "/proc/mali/" ]]; then
+      write_file "/proc/mali/dvfs_enable" "0"
+      write_file "/proc/mali/always_on" "1"
+    fi
+  fi
+  if [[ $1 = unboost ]]; then
+    if [[ "$gpu_model" == "adreno" ]]; then
+      if [[ -z $(get_prop gpu.min.pl) ]]; then
+        gpu_min_pl=$(($(cat "${gpu_dir}num_pwrlevels") - 1))
+        set_prop gpu.min.pl $gpu_min_pl
+      else
+      gpu_min_pl=$(get_prop gpu_min pl)
+      fi
+      write_file "${gpu_dir}throttling" "0"
+      write_file "${gpu_dir}thermal_pwrlevel" "0"
+      write_file "${gpu_dir}devfreq/adrenoboost" "0"
+      write_file "${gpu_dir}bus_split" "1"
+      write_file "${gpu_dir}min_pwrlevel" "$gpu_min_pl"
+      write_file "${gpu_dir}force_no_nap" "0"
+      write_file "${gpu_dir}force_bus_on" "0"
+      write_file "${gpu_dir}force_clk_on" "0"
+      write_file "${gpu_dir}force_rail_on" "0"
+      write_file "${gpu_dir}popp" "0"
+      write_file "${gpu_dir}pwrnap" "1"
+      write_file "/sys/kernel/debug/sde_rotator0/clk_always_on" "0"
+      fi
+    if [[ "$gpu_model" == "mali" ]]; then
+      write_file "${gpu_dir}dvfs" "1"
+      write_file "${gpu_dir}highspeed_load" "79"
+      write_file "${gpu_dir}highspeed_delay" "0"
+      write_file "${gpu_dir}power_policy" "coarse_demand"
+      write_file "${gpu_dir}tmu" "1"
+    fi
+    if [[ -d "/sys/module/ged/" ]]; then
+      write_file "/sys/module/ged/parameters/ged_boost_enable" "0"
+      write_file "/sys/module/ged/parameters/boost_gpu_enable" "0"
+      write_file "/sys/module/ged/parameters/boost_extra" "0"
+      write_file "/sys/module/ged/parameters/enable_cpu_boost" "0"
+      write_file "/sys/module/ged/parameters/enable_gpu_boost" "0"
+      write_file "/sys/module/ged/parameters/enable_game_self_frc_detect" "0"
+      write_file "/sys/module/ged/parameters/ged_force_mdp_enable" "0"
+      write_file "/sys/module/ged/parameters/ged_log_perf_trace_enable" "0"
+      write_file "/sys/module/ged/parameters/ged_log_trace_enable" "0"
+      write_file "/sys/module/ged/parameters/ged_monitor_3D_fence_debug" "0"
+      write_file "/sys/module/ged/parameters/ged_monitor_3D_fence_disable" "1"
+      write_file "/sys/module/ged/parameters/ged_monitor_3D_fence_systrace" "0"
+      write_file "/sys/module/ged/parameters/ged_smart_boost" "1"
+      write_file "/sys/module/ged/parameters/gpu_debug_enable" "0"
+      write_file "/sys/module/ged/parameters/gpu_dvfs_enable" "1"
+      write_file "/sys/module/ged/parameters/gx_3D_benchmark_on" "0"
+      write_file "/sys/module/ged/parameters/gx_force_cpu_boost" "0"
+      write_file "/sys/module/ged/parameters/gx_frc_mode" "0"
+      write_file "/sys/module/ged/parameters/gx_game_mode" "0"
+      write_file "/sys/module/ged/parameters/is_GED_KPI_enabled" "1"
+      write_file "/sys/module/ged/parameters/boost_amp" "0"
+      write_file "/sys/module/ged/parameters/gx_boost_on" "0"
+      write_file "/sys/module/ged/parameters/gpu_idle" "100"
+      write_file "/sys/module/ged/parameters/gpu_cust_boost_freq" "0"
+    fi
+    if [[ -d "/proc/gpufreq/" ]]; then
+      write_file "/proc/gpufreq/gpufreq_opp_stress_test" "0"
+      write_file "/proc/gpufreq/gpufreq_opp_freq" "0"
+      write_file "/proc/gpufreq/gpufreq_input_boost" "0"
+      write_file "/proc/gpufreq/gpufreq_limited_thermal_ignore" "0"
+      write_file "/proc/gpufreq/gpufreq_limited_oc_ignore" "0"
+      write_file "/proc/gpufreq/gpufreq_limited_low_batt_volume_ignore" "0"
+      write_file "/proc/gpufreq/gpufreq_limited_low_batt_volt_ignore" "0"
+    fi
+    if [[ -d "/proc/mali/" ]];then
+      write_file "/proc/mali/dvfs_enable" "1"
+      write_file "/proc/mali/always_on" "0"
+    fi
+  fi
+}
 function show_notification() {
   su -lp 2000 -c "cmd notification post -S bigtext -t '$1' 'Tag' '$2'"
 }
-
 function daily_mode() {
-    if [[ $lmk == "true" ]]; then
-        write_file /sys/module/lowmemorykiller/parameters/minfree 2560,5120,7680,8960,10240,12800
+  if [[ $lmk == "true" ]]; then
+    write_file /sys/module/lowmemorykiller/parameters/minfree 2560,5120,7680,8960,10240,12800
+  fi
+  if [[ $freq == "true" ]]; then
+    set_cpu frequency default
+  fi
+  if [[ $gov == "true" ]]; then
+    set_cpu governor auto
+  fi
+  if  [[ $GPUB == "true" ]]; then
+  gpu_tools  unboost
+  fi
+  if [[ $notification == "true" ]]; then
+    if [[ $mode_set == "auto" ]]; then
+      show_notification "RiProG AI: ( Daily Mode )"
+    else
+      show_notification "RiProG AI: ( Daily Mode )" Manual
     fi
-    if [[ $freq == "true" ]]; then
-        set_cpu frequency default
-    fi
-    if [[ $gov == "true" ]]; then
-        set_cpu governor auto
-    fi
-    if [[ $notification == "true" ]]; then
-        if [[ $force == "auto" ]]; then
-            show_notification "RiProG AI: ( Daily Mode )"
-        else
-            show_notification "RiProG AI: ( Daily Mode )" Manual
-        fi
-    fi
+  fi
 }
-
 function sleep_mode() {
-    if [[ $lmk == "true" ]]; then
-        write_file /sys/module/lowmemorykiller/parameters/minfree 2560,5120,7680,8960,10240,12800
+  if [[ $lmk == "true" ]]; then
+    write_file /sys/module/lowmemorykiller/parameters/minfree 2560,5120,7680,8960,10240,12800
+  fi
+  if [[ $freq == "true" ]]; then
+    set_cpu frequency default
+    set_cpu frequency min
+  fi
+  if [[ $gov == "true" ]]; then
+    set_cpu governor powersave
+  fi
+  if  [[ $GPUB == "true" ]]; then
+  gpu_tools unboost
+  fi
+  if [[ $notification == "true" ]]; then
+    if [[ $mode_set == "auto" ]]; then
+      show_notification "RiProG AI: ( Sleep Mode )"
+    else
+    show_notification "RiProG AI: ( Sleep Mode )" Manual
     fi
-    if [[ $freq == "true" ]]; then
-        set_cpu frequency default
-        set_cpu frequency min
-    fi
-    if [[ $gov == "true" ]]; then
-        set_cpu governor powersave
-    fi
-
-    if [[ $notification == "true" ]]; then
-        if [[ $force == "auto" ]]; then
-            show_notification "RiProG AI: ( Sleep Mode )"
-        else
-            show_notification "RiProG AI: ( Sleep Mode )" Manual
-        fi
-    fi
+  fi
 }
-
 function game_mode() {
+  game=$(pm list package | cut -f 2 -d ":" | grep "$window" | head -1)
   if [[ $lmk == "true" ]]; then
     write_file /sys/module/lowmemorykiller/parameters/minfree 2560,5120,11520,25600,35840,38400
   fi
-  
   if [[ $freq == true ]]; then
     set_cpu frequency reset
     set_cpu frequency max
   fi
-  
   if [[ $gov == "true" ]]; then
     set_cpu governor performance
   fi
+  if  [[ $GPUB == "true" ]]; then
+  gpu_tools boost
+  fi
   if [[ $notification == "true" ]]; then
-    if [[ $force == "auto" ]]; then
-      game=$(pm list package | cut -f 2 -d ":" | grep "$window")
+    if [[ $mode_set == "auto" ]]; then
       show_notification "RiProG AI: ( Game Mode )" "$game" 
     else
       show_notification "RiProG AI: ( Game Mode )" Manual
     fi
   fi
 }
-
 function AI() {
-    set_prop riprog.ai.apply unset
-game_list_filter="grep -o -e gamelist.app.add"
-while IFS= read -r gamelist || [[ -n "$gamelist" ]]; do
-filter=$(echo "$gamelist" | awk '!/ /')
-[[ ! "$filter" == "" ]] && {
-game_list_filter+=" -e "$filter
-}
-done < "$MOD/gamelist.txt"
-    while true; do
-        force=$(get_prop riprog.ai.mode)
-        mode_apply=$(get_prop riprog.ai.apply)
-        if [[ $force == "auto" ]]
-        then
-            window=$(dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' | $game_list_filter | tail -1)
-            interactive=$(dumpsys input_method | grep mInteractive)
-            if [[ "$window" ]]
-            then
-                if [[ ! $mode_apply == "game" ]]
-                then
-                    game_mode && set_prop riprog.ai.apply game
-                fi
-            elif [[ $interactive == *mInteractive=false* ]]
-            then
-                if [[ ! $mode_apply == "sleep" ]]
-                then
-                    sleep_mode && set_prop riprog.ai.apply sleep
-                fi
-            else
-                if [[ ! $mode_apply == "daily" ]]
-                then
-                    daily_mode && set_prop riprog.ai.apply daily
-                fi
-            fi
-        else
-            if [[ $force == "game" ]]
-            then
-                if [[ ! $mode_apply == "game" ]]
-                then
-                    game_mode && set_prop riprog.ai.apply game
-                fi
-            elif [[ $force == "sleep" ]]
-            then
-                if [[ ! $mode_apply == "sleep" ]]
-                then
-                    sleep_mode && set_prop riprog.ai.apply sleep
-                fi
-            elif [[ $force == "daily" ]]
-            then
-                if [[ ! $mode_apply == "daily" ]]
-                then
-                    daily_mode && set_prop riprog.ai.apply daily
-                fi
-            fi
+  set_prop riprog.ai.apply unset
+  game_list_filter="grep -o -e gamelist.app.add"
+  while IFS= read -r gamelist || [[ -n "$gamelist" ]]; do
+    filter=$(echo "$gamelist" | awk '!/ /')
+    if [[ -n "$filter" ]]; then
+      game_list_filter+=" -e "$filter
+    fi
+    done < "$MOD/gamelist.txt"
+  while true; do
+    mode_set=$(get_prop riprog.ai.mode)
+    mode_apply=$(get_prop riprog.ai.apply)
+    if [[ $mode_set == "auto" ]]; then
+      window=$(dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' | $game_list_filter | tail -1)
+      interactive=$(dumpsys input_method | grep mInteractive)
+      if [[ "$window" ]]; then
+        if [[ ! $mode_apply == "game" ]]; then
+          game_mode
+          set_prop riprog.ai.apply game
         fi
-        sleep "$delay"
-    done
+      elif [[ $interactive == *mInteractive=false* ]]; then
+        if [[ ! $mode_apply == "sleep" ]]; then
+          sleep_mode
+          set_prop riprog.ai.apply sleep
+        fi
+      else
+        if [[ ! $mode_apply == "daily" ]]; then
+          daily_mode
+          set_prop riprog.ai.apply daily
+        fi
+      fi
+    else
+      if [[ $mode_set == "game" ]]; then
+        if [[ ! $mode_apply == "game" ]]; then
+          game_mode
+          set_prop riprog.ai.apply game
+        fi
+      elif [[ $mode_set == "sleep" ]]; then
+        if [[ ! $mode_apply == "sleep" ]]; then
+        sleep_mode
+        set_prop riprog.ai.apply sleep
+        fi
+      elif [[ $mode_set == "daily" ]];  then
+        if [[ ! $mode_apply == "daily" ]]; then
+          daily_mode
+          set_prop riprog.ai.apply daily
+        fi
+      fi
+    fi
+    sleep "$delay"
+  done
 }
-
-#########
-#service#
-#########
-
 function service() {
-
- . $MOD/feature.txt
-
-if [[ $Tweak == "true" ]]; then
+  . $MOD/feature.txt
+  boot_wait
+  if [[ $Tweak == "true" ]]; then
+    if [[ $VM = true ]]; then
+      write_file /proc/sys/vm/drop_caches 1
+      write_file /proc/sys/vm/dirty_background_ratio 11
+      write_file /proc/sys/vm/dirty_expire_centisecs 400
+      write_file /proc/sys/vm/page-cluster 0
+      write_file /proc/sys/vm/dirty_ratio 20
+      write_file /proc/sys/vm/laptop_mode 0
+      write_file /proc/sys/vm/block_dump 0
+      write_file /proc/sys/vm/compact_memory 1
+      write_file /proc/sys/vm/dirty_writeback_centisecs 3000
+      write_file /proc/sys/vm/oom_dump_tasks 0
+      write_file /proc/sys/vm/oom_kill_allocating_task 0
+      write_file /proc/sys/vm/stat_interval 1103
+      write_file /proc/sys/vm/panic_on_oom 0
+      write_file /proc/sys/vm/swappiness 30
+      write_file /proc/sys/vm/vfs_cache_pressure 94
+      write_file /proc/sys/vm/overcommit_ratio 50
+      write_file /proc/sys/vm/extra_free_kbytes 24300
+      write_file /proc/sys/kernel/random/read_wakeup_threshold 64
+      write_file /proc/sys/kernel/random/write_wakeup_threshold 128
+    fi
     if [[ $disablepanic = true ]]; then
       write_file "/proc/sys/kernel/printk" "0 0 0 0"
       write_file "/proc/sys/kernel/panic" "0"
@@ -1040,10 +1168,10 @@ if [[ $Tweak == "true" ]]; then
       fstrim /data
       fstrim /cache
     fi
-fi
-    if [[ $AI == "true" ]]; then
-       AI
-    fi
+  fi
+  if [[ $AI == "true" ]]; then
+    AI
+  fi
 }
 
 if [[ $1 == "service" ]]; then

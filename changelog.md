@@ -38,3 +38,8 @@ More info in GITHUB
 - Added VM Enhancement
 - More eficiency
 - Some bugs may have been fixed
+- New installer template
+
+3.6 Stable
+- Fixed cpu governor control
+- Fixed cpu frequency control

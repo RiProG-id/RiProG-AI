@@ -986,13 +986,13 @@ function daily_mode() {
     write_file /sys/module/lowmemorykiller/parameters/minfree 2560,5120,7680,8960,10240,12800
   fi
   if [[ $freq == "true" ]]; then
-    set_cpu frequency default
+    cpu_tools frequency default
   fi
   if [[ $gov == "true" ]]; then
-    set_cpu governor auto
+    cpu_tools governor auto
   fi
   if  [[ $GPUB == "true" ]]; then
-  gpu_tools  unboost
+    gpu_tools  unboost
   fi
   if [[ $notification == "true" ]]; then
     if [[ $mode_set == "auto" ]]; then
@@ -1007,14 +1007,14 @@ function sleep_mode() {
     write_file /sys/module/lowmemorykiller/parameters/minfree 2560,5120,7680,8960,10240,12800
   fi
   if [[ $freq == "true" ]]; then
-    set_cpu frequency default
-    set_cpu frequency min
+    cpu_tools frequency default
+    cpu_tools frequency min
   fi
   if [[ $gov == "true" ]]; then
-    set_cpu governor powersave
+    cpu_tools governor powersave
   fi
   if  [[ $GPUB == "true" ]]; then
-  gpu_tools unboost
+    gpu_tools unboost
   fi
   if [[ $notification == "true" ]]; then
     if [[ $mode_set == "auto" ]]; then
@@ -1030,14 +1030,14 @@ function game_mode() {
     write_file /sys/module/lowmemorykiller/parameters/minfree 2560,5120,11520,25600,35840,38400
   fi
   if [[ $freq == true ]]; then
-    set_cpu frequency reset
-    set_cpu frequency max
+    cpu_tools frequency reset
+    cpu_tools frequency max
   fi
   if [[ $gov == "true" ]]; then
-    set_cpu governor performance
+    cpu_tools governor performance
   fi
   if  [[ $GPUB == "true" ]]; then
-  gpu_tools boost
+    gpu_tools boost
   fi
   if [[ $notification == "true" ]]; then
     if [[ $mode_set == "auto" ]]; then

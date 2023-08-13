@@ -18,9 +18,8 @@ Description based on the latest stable version <br />
 9. Virtual Memory Optimization
 10. Tuning I/O Storage
 11. HWUI Cache Optimizer
-12. Smart CPU
-13. Smart GPU
-14. Smart Activity Killer
+12. Smart CPU Optimisation
+12. Smart GPU Optimisation
 15. Smart Low Memory Killer
 
 ## Changelog

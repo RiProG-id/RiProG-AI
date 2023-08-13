@@ -109,6 +109,5 @@ for prop in "${properties[@]}"; do
   resetprop -n "${prop%=*}" "${prop#*=}"
 done
 
-cmd activity kill-all
 
-AI
+AI > /dev/null 2>&1 

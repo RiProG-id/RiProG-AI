@@ -23,9 +23,10 @@ Description based on the latest stable version <br />
 15. Smart Low Memory Killer
 
 ## Changelog
-### Version 4.0
+Version 4.0 <br />
 - Remake module
 - Support KSU
 - Add log in Android Folder
 
+## Support Dev
 https://saweria.co/RiProG

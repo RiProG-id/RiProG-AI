@@ -1,6 +1,6 @@
 {
-    "version": "3.6 Stable",
-    "versionCode": "36",
-    "zipUrl": "https://github.com/RiProG-id/RiProG-AI/releases/download/36/RiProG.AI.3.6.Stable.zip",
+    "version": "4.0 Beta",
+    "versionCode": "4.0",
+    "zipUrl": "https://github.com/RiProG-id/RiProG-AI/releases/download/40/RiProG.AI.4.0.Beta.zip",
     "changelog": "https://github.com/RiProG-id/RiProG-AI/raw/main/README.md"
 }

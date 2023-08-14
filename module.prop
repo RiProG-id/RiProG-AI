@@ -1,7 +1,7 @@
 id=RiProG
 name=RiProG AI
-version=3.6 Stable
-versionCode=36
+version=4.0 Beta
+versionCode=40
 author=RiProG
 description=Improve the android experience with some tweaks combined | Automaticaly adapt mode | More info in GITHUB
 updateJson=https://raw.githubusercontent.com/RiProG-id/RiProG-AI/main/update.json

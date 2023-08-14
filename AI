@@ -41,7 +41,6 @@ while true; do
 
     if [[ "$window" ]]; then
       if [[ ! $mode_apply == "game" ]]; then
-        game_mode
         resetprop -n riprog.ai.apply game
         date >> /data/media/0/Android/AI.log
 
@@ -67,7 +66,6 @@ write_file_lock "/sys/class/kgsl/kgsl-3d0/throttling" "0"
 
     elif [[ $interactive == *mInteractive=false* ]]; then
       if [[ ! $mode_apply == "sleep" ]]; then
-          sleep_mode
           resetprop -n riprog.ai.apply sleep
           date >> /data/media/0/Android/AI.log
 
@@ -94,7 +92,6 @@ write_file_lock "/sys/class/kgsl/kgsl-3d0/throttling" "1"
 
     else
       if [[ ! $mode_apply == "daily" ]]; then
-          daily_mode
           resetprop -n riprog.ai.apply daily
           date >> /data/media/0/Android/AI.log
 
@@ -119,7 +116,6 @@ write_file_lock "/sys/class/kgsl/kgsl-3d0/throttling" "1"
           echo "" >> /data/media/0/Android/AI.log
         fi
     fi
-
 
   sleep 5
 done

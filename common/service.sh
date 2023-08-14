@@ -42,7 +42,11 @@ write_file_lock "/sys/module/printk/parameters/pid" "N"
 write_file_lock "/sys/module/printk/parameters/time" "N"
 write_file_lock "/sys/kernel/printk_mode/printk_mode" "0"
 
-find /sys/ -name debug_mask -o -name debug_level -o -name edac_mc_log_ce -o -name edac_mc_log_ue -o -name enable_event_log -o -name log_ecn_error -o -name snapshot_crashdumper | while IFS= read -r log; do
+find /sys/ -name "*log*" -o -name debug_mask -o -name debug_level -o -name edac_mc_log_ce -o -name edac_mc_log_ue -o -name enable_event_log -o -name log_ecn_error -o -name snapshot_crashdumper | while IFS= read -r log; do
+wr
+write_file_lock "$log" "0"
+done
+find /sys/kernel/debug/kgsl/kgsl-3d0/ -name '*log*' | while IFS= read -r log; do
 write_file_lock "$log" "0"
 done
 
@@ -83,31 +87,21 @@ write_file_lock "/proc/sys/vm/extra_free_kbytes" "24300"
 write_file_lock "/proc/sys/kernel/random/read_wakeup_threshold" "64"
 write_file_lock "/proc/sys/kernel/random/write_wakeup_threshold" "128"
 
-find /sys/kernel/debug/kgsl/kgsl-3d0/ -name '*log*' | while IFS= read -r log; do
-write_file_lock "$log" "0"
-done
+resetprop -n "debug.sf.disable_backpressure" "1"
+resetprop -n "debug.sf.latch_unsignaled" "1"
+resetprop -n "debug.sf.enable_hwc_vds" "0"
+resetprop -n "debug.sf.early_phase_offset_ns" "500000"
+resetprop -n "debug.sf.early_app_phase_offset_ns" "500000"
+resetprop -n "debug.sf.early_gl_phase_offset_ns" "3000000"
+resetprop -n "debug.sf.early_gl_app_phase_offset_ns" "15000000"
+resetprop -n "debug.sf.high_fps_early_phase_offset_ns" "6100000"
+resetprop -n "debug.sf.high_fps_early_gl_phase_offset_ns" "650000"
+resetprop -n "debug.sf.high_fps_late_app_phase_offset_ns" "100000"
+resetprop -n "debug.sf.phase_offset_threshold_for_next_vsync_ns" "6100000"
+resetprop -n "debug.sf.showupdates" "0"
+resetprop -n "debug.sf.showcpu" "0"
+resetprop -n "debug.sf.showbackground" "0"
+resetprop -n "debug.sf.showfps" "0"
+resetprop -n "debug.sf.hw" "1"
 
-properties=(
-  "debug.sf.disable_backpressure=1"
-  "debug.sf.latch_unsignaled=1"
-  "debug.sf.enable_hwc_vds=0"
-  "debug.sf.early_phase_offset_ns=500000"
-  "debug.sf.early_app_phase_offset_ns=500000"
-  "debug.sf.early_gl_phase_offset_ns=3000000"
-  "debug.sf.early_gl_app_phase_offset_ns=15000000"
-  "debug.sf.high_fps_early_phase_offset_ns=6100000"
-  "debug.sf.high_fps_early_gl_phase_offset_ns=650000"
- "debug.sf.high_fps_late_app_phase_offset_ns=100000"
-  "debug.sf.phase_offset_threshold_for_next_vsync_ns=6100000"
-  "debug.sf.showupdates=0"
-  "debug.sf.showcpu=0"
-  "debug.sf.showbackground=0"
-  "debug.sf.showfps=0"
-  "debug.sf.hw=1"
-)
-for prop in "${properties[@]}"; do
-  resetprop -n "${prop%=*}" "${prop#*=}"
-done
-
-
-AI > /dev/null 2>&1 
+AI > /dev/null 2>&1 &

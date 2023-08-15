@@ -31,5 +31,8 @@ Version 4.1 <br />
 - Implemented a smart game list installer.
 - Fixed all error scripts in the program.
 
+Version 4.2 <br />
+- Fixed error in max frequency
+
 ## Support Dev
 https://saweria.co/RiProG

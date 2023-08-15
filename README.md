@@ -1,5 +1,6 @@
 # RiProG-AI
 
+ALL IN ONE Magisk Module <br />
 Enhance the Android experience with a combination of tweaks <br />
 Automatically adapt mode <br />
 RiProG Open Source @RiOpSo | Telegram <br />
@@ -23,10 +24,12 @@ Description based on the latest stable version <br />
 15. Smart Low Memory Killer
 
 ## Changelog
-Version 4.0 <br />
-- Remake module
-- Support KSU
-- Add log in Android Folder
+
+Version 4.1 <br />
+- Fixed the issue causing the app to be stuck in daily mode.
+- Added a new game to the database.
+- Implemented a smart game list installer.
+- Fixed all error scripts in the program.
 
 ## Support Dev
 https://saweria.co/RiProG

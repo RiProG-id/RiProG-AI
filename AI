@@ -1,3 +1,5 @@
+#!/bin/sh
+
 check_file() {
   if [[ -f "$1" ]]; then
     return 0

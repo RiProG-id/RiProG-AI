@@ -26,6 +26,7 @@ com.miHoYo.GenshinImpact
 com.miHoYo.bh3global
 com.miHoYo.bh3oversea
 com.miHoYo.bh3oversea_vn
+com.HoYoverse.hkrpgoversea
 com.mobile.legends
 com.netease.frxyna
 com.netease.racerna
@@ -53,3 +54,4 @@ net.wargaming.wot.blitz
 org.mm.jr
 org.vita3k.emulator
 skyline.emu
+com.carxtech.sr

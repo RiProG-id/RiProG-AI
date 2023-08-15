@@ -1,3 +1,5 @@
+#!/bin/sh
+
 resetprop -n "persist.sys.fuse.passthrough.enable" "true"
 resetprop -n "ro.hwui.texture_cache_size" "128"
 resetprop -n "ro.hwui.layer_cache_size" "64"

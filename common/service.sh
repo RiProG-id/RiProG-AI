@@ -1,3 +1,5 @@
+#!/bin/sh
+
 check_file() {
   if [[ -f "$1" ]]; then
     return 0
@@ -104,4 +106,4 @@ resetprop -n "debug.sf.showbackground" "0"
 resetprop -n "debug.sf.showfps" "0"
 resetprop -n "debug.sf.hw" "1"
 
-AI > /dev/null 2>&1 &
+AI > /dev/null 2>&1

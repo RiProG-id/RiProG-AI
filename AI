@@ -103,8 +103,7 @@ write_file_lock "/sys/class/kgsl/kgsl-3d0/throttling" "1"
           min_freq=$(read_file_unlock "$cpu/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
           max_freq=$(read_file_unlock "$cpu/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
           write_file_lock "$cpu/cpufreq/scaling_min_freq" "$min_freq"
-          write_file_lock "$cpu/cpufreq/scaling_max_freq" "$maz
-x_freq"
+          write_file_lock "$cpu/cpufreq/scaling_max_freq" "$max_freq"
         done
 
         min_freq=$(read_file_unlock "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)

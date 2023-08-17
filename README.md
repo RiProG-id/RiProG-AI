@@ -17,22 +17,23 @@ Description based on the latest stable version <br />
 7. Modifying Scheduler Features
 8. SurfaceFlinger Improvement
 9. Virtual Memory Optimization
-10. Tuning I/O Storage
-11. HWUI Cache Optimizer
-12. Smart CPU Optimisation
-12. Smart GPU Optimisation
+10. Smooth GUI
+11. Smart I/O Storage
+12. HWUI Cache Optimizer
+13. Smart CPU Optimisation
+14. Smart GPU Optimisation
 15. Smart Low Memory Killer
 
 ## Changelog
 
-Version 4.1 <br />
-- Fixed the issue causing the app to be stuck in daily mode.
-- Added a new game to the database.
-- Implemented a smart game list installer.
-- Fixed all error scripts in the program.
-
-Version 4.2 <br />
-- Fixed error in max frequency
+Version 4.3 <br />
+- Fixed code errors
+- Added new game to the database
+- Resolved keyboard issue
+- Implemented new AI algorithm
+- Smooth GUI for better experience
+- Implemented smart IO scheduler
+- Improved CPU optimization
 
 ## Support Dev
 https://saweria.co/RiProG

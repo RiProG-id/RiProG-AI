@@ -1,122 +1,233 @@
 #!/bin/sh
 
-check_file() {
-  if [[ -f "$1" ]]; then
-    return 0
-  else
-    return 1
-  fi
-}
+MODDIR=/data/adb/modules/RiProG
+LOGFILE=/data/media/0/Android/AI.log
+CPUDIR=/sys/devices/system/cpu
+GPUDIR=/sys/kernel/gpu
+KGSLDIR=/sys/class/kgsl
 
-read_file_unlock() {
-  if check_file "$1"; then
-    chmod 444 "$1"
+MODE=/data/adb/modules/RiProG/mode.txt
+
+read_file() {
+  if [ -f "$1" ]; then
+    if [ ! -r "$1" ]; then
+      chmod +r "$1"
+    fi
     cat "$1"
   fi
 }
 
-write_file_lock() {
-  if check_file "$1"; then
-    chmod 666 "$1"
+write_file() {
+  if [ -f "$1" ]; then
+    if [ ! -w "$1" ]; then
+      chmod +w "$1"
+    fi
     echo "$2" > "$1"
-    chmod 444 "$1"
   fi
 }
 
-resetprop -n riprog.ai.apply unset
+if [ -d "$CPUDIR/cpu0" ]; then
+  min_freq_0=$(read_file "$CPUDIR/cpu0/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
+  max_freq_0=$(read_file "$CPUDIR/cpu0/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
+fi
+if [ -d "$CPUDIR/cpu1" ]; then
+  min_freq_1=$(read_file "$CPUDIR/cpu1/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
+  max_freq_1=$(read_file "$CPUDIR/cpu1/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
+fi
+if [ -d "$CPUDIR/cpu2" ]; then
+  min_freq_2=$(read_file "$CPUDIR/cpu2/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
+  max_freq_2=$(read_file "$CPUDIR/cpu2/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
+fi
+if [ -d "$CPUDIR/cpu3" ]; then
+  min_freq_3=$(read_file "$CPUDIR/cpu3/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
+  max_freq_3=$(read_file "$CPUDIR/cpu3/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
+fi
+if [ -d "$CPUDIR/cpu4" ]; then
+  min_freq_4=$(read_file "$CPUDIR/cpu4/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
+  max_freq_4=$(read_file "$CPUDIR/cpu4/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
+fi
+if [ -d "$CPUDIR/cpu5" ]; then
+  min_freq_5=$(read_file "$CPUDIR/cpu5/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
+  max_freq_5=$(read_file "$CPUDIR/cpu5/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
+fi
+if [ -d "$CPUDIR/cpu6" ]; then
+  min_freq_6=$(read_file "$CPUDIR/cpu6/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
+  max_freq_6=$(read_file "$CPUDIR/cpu6/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
+fi
+if [ -d "$CPUDIR/cpu7" ]; then
+  min_freq_7=$(read_file "$CPUDIR/cpu7/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
+  max_freq_7=$(read_file "$CPUDIR/cpu7/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
+fi
 
-game_list_filter="grep -o -e gamelist.app.add"
+min_clock_gpu=$(read_file "$KGSLDIR/gpu_freq_table" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
+max_clock_gpu=$(read_file "$KGSLDIR/gpu_freq_table" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 
-while IFS= read -r gamelist || [[ -n "$gamelist" ]]; do
-  filter=$(echo "$gamelist" | awk '!/ /')
-  if [[ -n "$filter" ]]; then
-    game_list_filter+=" -e "$filter
-  fi
-done < "/data/adb/modules/RiProG/gamelist.txt"
+min_clock_kgsl=$(read_file "$KGSLDIR/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
+max_clock_kgsl=$(read_file "$KGSLDIR/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 
-> /data/media/0/Android/AI.log
+
+game_list_filter=$(awk '!/ / {print "-e", $0}' "$MODDIR/gamelist.txt")
+
+printf "" > "$LOGFILE"
+
+echo "unset" > $MODE 
 
 while true; do
-  mode_apply=$(resetprop riprog.ai.apply)
-  window=$(dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' | $game_list_filter | tail -1)
-  interactive=$(dumpsys input_method | grep mInteractive)
+  mode_apply=$(cat $MODE)
+  
+  sleep 2
 
-    if [[ "$window" ]]; then
-      if [[ ! $mode_apply == "game" ]]; then
-        resetprop -n riprog.ai.apply game
-        date >> /data/media/0/Android/AI.log
+ window=$(dumpsys window)
+ gamestart=$(echo "$window" | grep -E 'mCurrentFocus|mFocusedApp' | grep "$game_list_filter")
+ screenoff=$(echo "$window" | grep mScreen | grep false)
 
-        write_file_lock "/sys/module/lowmemorykiller/parameters/minfree" "2560,4096,8192,12288,16384,20480"
+  sleep 2
 
-        find /sys/devices/system/cpu -maxdepth 1 -name 'cpu?' | while IFS= read -r cpu; do
-          min_freq=$(read_file_unlock "$cpu/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
-          max_freq=$(read_file_unlock "$cpu/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
-          write_file_lock "$cpu/cpufreq/scaling_min_freq" "$max_freq"
-          write_file_lock "$cpu/cpufreq/scaling_max_freq" "$max_freq"
-        done
+    if [ "$gamestart" ]; then
+      if [ ! "$mode_apply" = "game" ]; then
 
-        min_freq=$(read_file_unlock "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
-        max_freq=$(read_file_unlock "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
-        write_file_lock "/sys/class/kgsl/kgsl-3d0/min_clock_mhz" "$max_freq"
-        write_file_lock "/sys/class/kgsl/kgsl-3d0/max_clock_mhz" "$max_freq"
+        sleep 2
 
-write_file_lock "/sys/class/kgsl/kgsl-3d0/throttling" "0"
+        printf "game" > $MODE
+        date >> $LOGFILE
 
-        echo "RiProG AI: Game Mode" >> /data/media/0/Android/AI.log
-        echo "" >> /data/media/0/Android/AI.log
+        sleep 2
+         
+        write_file "/sys/module/lowmemorykiller/parameters/minfree" "2560,4096,8192,12288,16384,20480"
+
+        for queue in /sys/block/mmcblk*/queue; do
+          write_file "$queue/add_random" "0"
+          write_file "$queue/iostats" "0"
+          write_file "$queue/read_ahead_kb" "256"
+          write_file "$queue/nr_requests" "128"
+       done
+
+        write_file "$CPUDIR/cpu0/cpufreq/scaling_min_freq" "$max_freq_0"
+        write_file "$CPUDIR/cpu0/cpufreq/scaling_max_freq" "$max_freq_0"
+        write_file "$CPUDIR/cpu1/cpufreq/scaling_min_freq" "$max_freq_1"
+        write_file "$CPUDIR/cpu1/cpufreq/scaling_max_freq" "$max_freq_1"
+        write_file "$CPUDIR/cpu2/cpufreq/scaling_min_freq" "$max_freq_2"
+        write_file "$CPUDIR/cpu2/cpufreq/scaling_max_freq" "$max_freq_2"
+        write_file "$CPUDIR/cpu3/cpufreq/scaling_min_freq" "$max_freq_3"
+        write_file "$CPUDIR/cpu3/cpufreq/scaling_max_freq" "$max_freq_3"
+        write_file "$CPUDIR/cpu4/cpufreq/scaling_min_freq" "$max_freq_4"
+        write_file "$CPUDIR/cpu4/cpufreq/scaling_max_freq" "$max_freq_4"
+        write_file "$CPUDIR/cpu5/cpufreq/scaling_min_freq" "$max_freq_5"
+        write_file "$CPUDIR/cpu5/cpufreq/scaling_max_freq" "$max_freq_5"
+        write_file "$CPUDIR/cpu6/cpufreq/scaling_min_freq" "$max_freq_6"
+        write_file "$CPUDIR/cpu6/cpufreq/scaling_max_freq" "$max_freq_6"
+        write_file "$CPUDIR/cpu7/cpufreq/scaling_min_freq" "$max_freq_7"
+        write_file "$CPUDIR/cpu7/cpufreq/scaling_max_freq" "$max_freq_7"
+
+        write_file "$GPUDIR/gpu_min_clock" "$max_clock_gpu"
+        write_file "$GPUDIR/gpu_max_clock" "$max_clock_gpu"
+
+        write_file "$KGSLDIR/kgsl-3d0/min_clock_mhz" "$max_clock_kgsl"
+        write_file "$KGSLDIR/kgsl-3d0/max_clock_mhz" "$max_clock_kgsl"
+
+        write_file "$KGSLDIR/kgsl-3d0/throttling" "0"
+
+        echo "RiProG AI: Game Mode" >> $LOGFILE
+        echo "" >> $LOGFILE
       fi
 
-    elif [[ $interactive == *mInteractive=false* ]]; then
-      if [[ ! $mode_apply == "sleep" ]]; then
-          resetprop -n riprog.ai.apply sleep
-          date >> /data/media/0/Android/AI.log
+    elif [ "$screenoff" ]; then
+      if [ ! "$mode_apply" = "sleep" ]; then
 
-        write_file_lock "/sys/module/lowmemorykiller/parameters/minfree" "128,256,1024,2048,4096,8192"
+        sleep 2
 
-        find /sys/devices/system/cpu -maxdepth 1 -name 'cpu?' | while IFS= read -r cpu; do
-          min_freq=$(read_file_unlock "$cpu/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
-          max_freq=$(read_file_unlock "$cpu/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
-          write_file_lock "$cpu/cpufreq/scaling_min_freq" "$min_freq"
-          write_file_lock "$cpu/cpufreq/scaling_max_freq" "$min_freq"
-        done
+        printf "sleep" > $MODE
+        date >> $LOGFILE
 
-        min_freq=$(read_file_unlock "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
-        max_freq=$(read_file_unlock "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
-        write_file_lock "/sys/class/kgsl/kgsl-3d0/min_clock_mhz" "$min_freq"
-        write_file_lock "/sys/class/kgsl/kgsl-3d0/max_clock_mhz" "$min_freq"
+        sleep 2
 
-write_file_lock "/sys/class/kgsl/kgsl-3d0/throttling" "1"
+        write_file "/sys/module/lowmemorykiller/parameters/minfree" "128,256,1024,2048,4096,8192"
 
-          echo "RiProG AI: Sleep Mode" >> /data/media/0/Android/AI.log
-          echo "" >> /data/media/0/Android/AI.log
+       for queue in /sys/block/mmcblk*/queue; do
+          write_file "$queue/add_random" "0"
+          write_file "$queue/iostats" "0"
+          write_file "$queue/read_ahead_kb" "64"
+          write_file "$queue/nr_requests" "16"
+       done
+
+        write_file "$CPUDIR/cpu0/cpufreq/scaling_min_freq" "$min_freq_0"
+        write_file "$CPUDIR/cpu0/cpufreq/scaling_max_freq" "$min_freq_0"
+        write_file "$CPUDIR/cpu1/cpufreq/scaling_min_freq" "$min_freq_1"
+        write_file "$CPUDIR/cpu1/cpufreq/scaling_max_freq" "$min_freq_1"
+        write_file "$CPUDIR/cpu2/cpufreq/scaling_min_freq" "$min_freq_2"
+        write_file "$CPUDIR/cpu2/cpufreq/scaling_max_freq" "$min_freq_2"
+        write_file "$CPUDIR/cpu3/cpufreq/scaling_min_freq" "$min_freq_3"
+        write_file "$CPUDIR/cpu3/cpufreq/scaling_max_freq" "$min_freq_3"
+        write_file "$CPUDIR/cpu4/cpufreq/scaling_min_freq" "$min_freq_4"
+        write_file "$CPUDIR/cpu4/cpufreq/scaling_max_freq" "$min_freq_4"
+        write_file "$CPUDIR/cpu5/cpufreq/scaling_min_freq" "$min_freq_5"
+        write_file "$CPUDIR/cpu5/cpufreq/scaling_max_freq" "$min_freq_5"
+        write_file "$CPUDIR/cpu6/cpufreq/scaling_min_freq" "$min_freq_6"
+        write_file "$CPUDIR/cpu6/cpufreq/scaling_max_freq" "$min_freq_6"
+        write_file "$CPUDIR/cpu7/cpufreq/scaling_min_freq" "$min_freq_7"
+        write_file "$CPUDIR/cpu7/cpufreq/scaling_max_freq" "$min_freq_7"
+  
+        write_file "$GPUDIR/gpu_min_clock" "$max_clock_gpu"
+        write_file "$GPUDIR/gpu_max_clock" "$max_clock_gpu"
+        
+        write_file "$KGSLDIR/kgsl-3d0/min_clock_mhz" "$min_clock_kgsl"
+        write_file "$KGSLDIR/kgsl-3d0/max_clock_mhz" "$min_clock_kgsl"
+  
+        write_file "$KGSLDIR/kgsl-3d0/throttling" "1"
+          
+        echo "RiProG AI: Sleep Mode" >> $LOGFILE
+        echo "" >> $LOGFILE
       fi
-
 
     else
-      if [[ ! $mode_apply == "daily" ]]; then
-          resetprop -n riprog.ai.apply daily
-          date >> /data/media/0/Android/AI.log
+      if [ ! "$mode_apply" = "daily" ]; then
 
-        write_file_lock "/sys/module/lowmemorykiller/parameters/minfree" "2560,5120,7680,8960,10240,12800"
+        sleep 2
 
-        find /sys/devices/system/cpu -maxdepth 1 -name 'cpu?' | while IFS= read -r cpu; do
-          min_freq=$(read_file_unlock "$cpu/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
-          max_freq=$(read_file_unlock "$cpu/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
-          write_file_lock "$cpu/cpufreq/scaling_min_freq" "$min_freq"
-          write_file_lock "$cpu/cpufreq/scaling_max_freq" "$max_freq"
-        done
+        printf "daily" > $MODE
+        date >> $LOGFILE
 
-        min_freq=$(read_file_unlock "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
-        max_freq=$(read_file_unlock "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
-        write_file_lock "/sys/class/kgsl/kgsl-3d0/min_clock_mhz" "$min_freq"
-        write_file_lock "/sys/class/kgsl/kgsl-3d0/max_clock_mhz" "$max_freq"
+        sleep 2
 
-write_file_lock "/sys/class/kgsl/kgsl-3d0/throttling" "1"
+        write_file "/sys/module/lowmemorykiller/parameters/minfree" "2560,5120,7680,8960,10240,12800"
 
-          echo "RiProG AI: Daily Mode" >> /data/media/0/Android/AI.log
-          echo "" >> /data/media/0/Android/AI.log
-        fi
+       for queue in /sys/block/mmcblk*/queue; do
+          write_file "$queue/add_random" "0"
+          write_file "$queue/iostats" "0"
+          write_file "$queue/read_ahead_kb" "128"
+          write_file "$queue/nr_requests" "32"
+       done
+
+        write_file "$CPUDIR/cpu0/cpufreq/scaling_min_freq" "$min_freq_0"
+        write_file "$CPUDIR/cpu0/cpufreq/scaling_max_freq" "$max_freq_0"
+        write_file "$CPUDIR/cpu1/cpufreq/scaling_min_freq" "$min_freq_1"
+        write_file "$CPUDIR/cpu1/cpufreq/scaling_max_freq" "$max_freq_1"
+        write_file "$CPUDIR/cpu2/cpufreq/scaling_min_freq" "$min_freq_2"
+        write_file "$CPUDIR/cpu2/cpufreq/scaling_max_freq" "$max_freq_2"
+        write_file "$CPUDIR/cpu3/cpufreq/scaling_min_freq" "$min_freq_3"
+        write_file "$CPUDIR/cpu3/cpufreq/scaling_max_freq" "$max_freq_3"
+        write_file "$CPUDIR/cpu4/cpufreq/scaling_min_freq" "$min_freq_4"
+        write_file "$CPUDIR/cpu4/cpufreq/scaling_max_freq" "$max_freq_4"
+        write_file "$CPUDIR/cpu5/cpufreq/scaling_min_freq" "$min_freq_5"
+        write_file "$CPUDIR/cpu5/cpufreq/scaling_max_freq" "$max_freq_5"
+        write_file "$CPUDIR/cpu6/cpufreq/scaling_min_freq" "$min_freq_6"
+        write_file "$CPUDIR/cpu6/cpufreq/scaling_max_freq" "$max_freq_6"
+        write_file "$CPUDIR/cpu7/cpufreq/scaling_min_freq" "$min_freq_7"
+        write_file "$CPUDIR/cpu7/cpufreq/scaling_max_freq" "$max_freq_7"
+
+        write_file "$GPUDIR/gpu_min_clock" "$min_clock_gpu"
+        write_file "$GPUDIR/gpu_max_clock" "$max_clock_gpu"
+          
+        write_file "$KGSLDIR/kgsl-3d0/min_clock_mhz" "$min_clock_kgsl"
+        write_file "$KGSLDIR/kgsl-3d0/max_clock_mhz" "$max_clock_kgsl"
+
+        write_file "$KGSLDIR/kgsl-3d0/throttling" "1"
+
+        echo "RiProG AI: Daily Mode" >> $LOGFILE
+        echo "" >> $LOGFILE
+      fi
     fi
 
-  sleep 5
+  sleep 2
+
 done

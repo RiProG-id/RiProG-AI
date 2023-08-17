@@ -55,3 +55,5 @@ org.mm.jr
 org.vita3k.emulator
 skyline.emu
 com.carxtech.sr
+com.miraclegames.farlight84
+com.proximabeta.mf.uamo

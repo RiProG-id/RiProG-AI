@@ -26,7 +26,7 @@ Description based on the latest stable version <br />
 
 ## Changelog
 
-Version 4.3 <br />
+Version 4.4 <br />
 - Added new game to the database
 - Resolved extensive game listing issue
 - Improved RAM efficiency

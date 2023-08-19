@@ -27,13 +27,13 @@ Description based on the latest stable version <br />
 ## Changelog
 
 Version 4.3 <br />
-- Fixed code errors
 - Added new game to the database
-- Resolved keyboard issue
-- Implemented new AI algorithm
-- Smooth GUI for better experience
-- Implemented smart IO scheduler
-- Improved CPU optimization
+- Resolved extensive game listing issue
+- Improved RAM efficiency
+- Decreased app latency
+- Optimized virtual memory
+- Enhanced scheduling feature
+- Reduced mode switching delay
 
 ## Support Dev
 https://saweria.co/RiProG

@@ -57,3 +57,5 @@ skyline.emu
 com.carxtech.sr
 com.miraclegames.farlight84
 com.proximabeta.mf.uamo
+jp.konami.pesam
+com.ea.gp.fifamobile

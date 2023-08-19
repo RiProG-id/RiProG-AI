@@ -1,7 +1,7 @@
 id=RiProG
 name=RiProG AI
-version=4.3 Stable
-versionCode=43
+version=4.4 Stable
+versionCode=44
 author=RiProG
 description=Elevate your Android with automatic adaptive tweak
 updateJson=https://raw.githubusercontent.com/RiProG-id/RiProG-AI/main/update.json

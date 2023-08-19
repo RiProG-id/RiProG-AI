@@ -75,27 +75,28 @@ echo "unset" > $MODE
 while true; do
   mode_apply=$(cat $MODE)
   
-  sleep 2
+  sleep 1
 
  window=$(dumpsys window)
- gamestart=$(echo "$window" | grep -E 'mCurrentFocus|mFocusedApp' | grep "$game_list_filter")
+ gamestart=$(echo "$window" | grep -E 'mCurrentFocus|mFocusedApp' | grep -e "$game_list_filter" -e com.example.gamelist)
  screenoff=$(echo "$window" | grep mScreen | grep false)
 
-  sleep 2
+  sleep 1
 
     if [ "$gamestart" ]; then
       if [ ! "$mode_apply" = "game" ]; then
 
-        sleep 2
+        sleep 1
 
         printf "game" > $MODE
         date >> $LOGFILE
 
-        sleep 2
+        sleep 1
          
         write_file "/sys/module/lowmemorykiller/parameters/minfree" "2560,4096,8192,12288,16384,20480"
 
         for queue in /sys/block/mmcblk*/queue; do
+          write "$queue/scheduler" "none"
           write_file "$queue/add_random" "0"
           write_file "$queue/iostats" "0"
           write_file "$queue/read_ahead_kb" "256"
@@ -134,16 +135,17 @@ while true; do
     elif [ "$screenoff" ]; then
       if [ ! "$mode_apply" = "sleep" ]; then
 
-        sleep 2
+        sleep 1
 
         printf "sleep" > $MODE
         date >> $LOGFILE
 
-        sleep 2
+        sleep 1
 
         write_file "/sys/module/lowmemorykiller/parameters/minfree" "128,256,1024,2048,4096,8192"
 
        for queue in /sys/block/mmcblk*/queue; do
+          write "$queue/scheduler" "none"
           write_file "$queue/add_random" "0"
           write_file "$queue/iostats" "0"
           write_file "$queue/read_ahead_kb" "64"
@@ -182,16 +184,17 @@ while true; do
     else
       if [ ! "$mode_apply" = "daily" ]; then
 
-        sleep 2
+        sleep 1
 
         printf "daily" > $MODE
         date >> $LOGFILE
 
-        sleep 2
+        sleep 1
 
         write_file "/sys/module/lowmemorykiller/parameters/minfree" "2560,5120,7680,8960,10240,12800"
 
        for queue in /sys/block/mmcblk*/queue; do
+          write "$queue/scheduler" "none"
           write_file "$queue/add_random" "0"
           write_file "$queue/iostats" "0"
           write_file "$queue/read_ahead_kb" "128"
@@ -228,6 +231,6 @@ while true; do
       fi
     fi
 
-  sleep 2
+  sleep 1
 
 done

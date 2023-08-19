@@ -18,8 +18,8 @@ Description based on the latest stable version <br />
 8. SurfaceFlinger Improvement
 9. Virtual Memory Optimization
 10. Smooth GUI
-11. Smart I/O Storage
-12. HWUI Cache Optimizer
+11. HWUI Cache Optimizer
+12. Smart I/O Storage
 13. Smart CPU Optimisation
 14. Smart GPU Optimisation
 15. Smart Low Memory Killer

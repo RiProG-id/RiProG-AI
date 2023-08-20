@@ -19,11 +19,4 @@ resetprop -n "iorapd.perfetto.enable" "false"
 resetprop -n "iorapd.readahead.enable" "false"
 resetprop -n "persist.device_config.runtime_native_boot.iorap_readahead_enable" "false"
 
-resetprop -n "persist.sys.lgospd.enable" "0"
-resetprop -n "persist.sys.pcsync.enable" "0"
-resetprop -n "persist.sys.scrollingcache" "2"
-resetprop -n "ro.max.fling_velocity" "20000"
-resetprop -n "ro.min.fling_velocity" "8000"
-resetprop -n "ro.min_pointer_dur" "8"
-resetprop -n "sys.use_fifo_ui" "1"
-resetprop -n "windowsmgr.max_event_per_sec" "200"
+resetprop -n persist.sys.purgeable_assets 1

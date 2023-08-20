@@ -44,36 +44,48 @@ wr
 write_file "$logdebug" "0"
 done
 
-write_file "/sys/kernel/debug/sched_features" "NO_GENTLE_FAIR_SLEEPERS"
-write_file "/sys/kernel/debug/sched_features" "NO_HRTICK"
-write_file "/sys/kernel/debug/sched_features" "NO_DOUBLE_TICK"
-write_file "/sys/kernel/debug/sched_features" "NO_RT_RUNTIME_SHARE"
-write_file "/sys/kernel/debug/sched_features" "NEXT_BUDDY"
-write_file "/sys/kernel/debug/sched_features" "NO_TTWU_QUEUE"
-write_file "/sys/kernel/debug/sched_features" "UTIL_EST"
-write_file "/sys/kernel/debug/sched_features" "ARCH_CAPACITY"
-write_file "/sys/kernel/debug/sched_features" "ARCH_POWER"
-write_file "/sys/kernel/debug/sched_features" "ENERGY_AWARE"
+write_file "/proc/sys/kernel/sched_tunable_scaling" "1"
 
-write_file "/proc/sys/kernel/sched_tunable_scaling" "0"
+echo "NO_GENTLE_FAIR_SLEEPERS:1" > /sys/kernel/debug/sched_features
+echo "START_DEBIT:1" > /sys/kernel/debug/sched_features
+echo "NEXT_BUDDY:1" > /sys/kernel/debug/sched_features
+echo "LAST_BUDDY:1" > /sys/kernel/debug/sched_features
+echo "STRICT_SKIP_BUDDY:1" > /sys/kernel/debug/sched_features
+echo "CACHE_HOT_BUDDY:1" > /sys/kernel/debug/sched_features
+echo "WAKEUP_PREEMPTION:1" > /sys/kernel/debug/sched_features
+echo "NO_HRTICK:1" > /sys/kernel/debug/sched_features
+echo "NO_DOUBLE_TICK:1" > /sys/kernel/debug/sched_features
+echo "LB_BIAS:1" > /sys/kernel/debug/sched_features
+echo "NONTASK_CAPACITY:1" > /sys/kernel/debug/sched_features
+echo "NO_TTWU_QUEUE:1" > /sys/kernel/debug/sched_features
+echo "NO_SIS_AVG_CPU:1" > /sys/kernel/debug/sched_features
+echo "RT_PUSH_IPI:1" > /sys/kernel/debug/sched_features
+echo "NO_FORCE_SD_OVERLAP:1" > /sys/kernel/debug/sched_features
+echo "NO_RT_RUNTIME_SHARE:1" > /sys/kernel/debug/sched_features
+echo "NO_LB_MIN:1" > /sys/kernel/debug/sched_features
+echo "ATTACH_AGE_LOAD:1" > /sys/kernel/debug/sched_features
+echo "ENERGY_AWARE:1" > /sys/kernel/debug/sched_features
+echo "NO_MIN_CAPACITY_CAPPING:1" > /sys/kernel/debug/sched_features
+echo "NO_FBT_STRICT_ORDER:1" > /sys/kernel/debug/sched_features
+echo "EAS_USE_NEED_IDLE:1" > /sys/kernel/debug/sched_features
 
 write_file "/proc/sys/vm/drop_caches" "3"
-write_file "/proc/sys/vm/dirty_background_ratio" "10"
-write_file "/proc/sys/vm/dirty_expire_centisecs" "3000"
+write_file "/proc/sys/vm/dirty_background_ratio" "20"
+write_file "/proc/sys/vm/dirty_expire_centisecs" "1000"
 write_file "/proc/sys/vm/page-cluster" "0"
-write_file "/proc/sys/vm/dirty_ratio" "30"
-write_file "/proc/sys/vm/laptop_mode" "5"
-write_file "/proc/sys/vm/block_dump" "0"
-write_file "/proc/sys/vm/compact_memory" "1"
-write_file "/proc/sys/vm/dirty_writeback_centisecs" "3000"
-write_file "/proc/sys/vm/oom_dump_tasks" "0"
-write_file "/proc/sys/vm/oom_kill_allocating_task" "1"
-write_file "/proc/sys/vm/stat_interval" "10"
-write_file "/proc/sys/vm/panic_on_oom" "1"
-write_file "/proc/sys/vm/swappiness" "100"
-write_file "/proc/sys/vm/vfs_cache_pressure" "100"
-write_file "/proc/sys/vm/overcommit_ratio" "50"
-write_file "/proc/sys/vm/extra_free_kbytes" "20480"
+write_file "/proc/sys/vm/dirty_ratio" "10"
+write_file "/proc/sys/vm/laptop_mode" "0"
+write_file "/proc/sys/vm/block_dump" "1"
+write_file "/proc/sys/vm/compact_memory" "0"
+write_file "/proc/sys/vm/dirty_writeback_centisecs" "5000"
+write_file "/proc/sys/vm/oom_dump_tasks" "1"
+write_file "/proc/sys/vm/oom_kill_allocating_task" "0"
+write_file "/proc/sys/vm/stat_interval" "60"
+write_file "/proc/sys/vm/panic_on_oom" "0"
+write_file "/proc/sys/vm/swappiness" "20"
+write_file "/proc/sys/vm/vfs_cache_pressure" "50"
+write_file "/proc/sys/vm/overcommit_ratio" "80"
+write_file "/proc/sys/vm/extra_free_kbytes" "10240"
 write_file "/proc/sys/kernel/random/read_wakeup_threshold" "64"
 write_file "/proc/sys/kernel/random/write_wakeup_threshold" "128"
 

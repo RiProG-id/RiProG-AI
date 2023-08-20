@@ -17,23 +17,22 @@ Description based on the latest stable version <br />
 7. Modifying Scheduler Features
 8. SurfaceFlinger Improvement
 9. Virtual Memory Optimization
-10. Smooth GUI
-11. HWUI Cache Optimizer
-12. Smart I/O Storage
-13. Smart CPU Optimisation
-14. Smart GPU Optimisation
-15. Smart Low Memory Killer
+10. HWUI Cache Optimizer
+11. Smart I/O Storage
+12. Smart CPU Optimisation
+13. Smart GPU Optimisation
+14. Smart Low Memory Killer
 
 ## Changelog
 
-Version 4.4 <br />
-- Added new game to the database
-- Resolved extensive game listing issue
-- Improved RAM efficiency
-- Decreased app latency
-- Optimized virtual memory
-- Enhanced scheduling feature
-- Reduced mode switching delay
+Version 4.5 <br />
+- Fixed inactive game mode issue
+- Improved VM parameter settings
+- Fixed task scheduling
+- Introduced smarter low memory app termination settings.
+- Fixed lag when changing modes
+- Removed UI tweaks to fix lag
+- Several other fixes.
 
 ## Support Dev
 https://saweria.co/RiProG

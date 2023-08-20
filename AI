@@ -65,8 +65,7 @@ max_clock_gpu=$(read_file "$KGSLDIR/gpu_freq_table" | tr " " "\n" | sort -n | se
 min_clock_kgsl=$(read_file "$KGSLDIR/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
 max_clock_kgsl=$(read_file "$KGSLDIR/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 
-
-game_list_filter=$(awk '!/ / {print "-e", $0}' "$MODDIR/gamelist.txt")
+game_list_filter=$(awk '!/^[[:space:]]*$/ && !/^#/ && !(/[[:alnum:]]+[[:space:]]+[[:alnum:]]+[[:space:]]+[[:alnum:]]+/) {sub("-e ", ""); printf "-e %s ", $0}' "$MODDIR/gamelist.txt")
 
 printf "" > "$LOGFILE"
 
@@ -78,7 +77,7 @@ while true; do
   sleep 1
 
  window=$(dumpsys window)
- gamestart=$(echo "$window" | grep -E 'mCurrentFocus|mFocusedApp' | grep -e "$game_list_filter" -e com.example.gamelist)
+ gamestart=$(echo "$window" | grep -E 'mCurrentFocus|mFocusedApp' | grep $game_list_filter -e com.example.gamelist)
  screenoff=$(echo "$window" | grep mScreen | grep false)
 
   sleep 1
@@ -93,7 +92,7 @@ while true; do
 
         sleep 1
          
-        write_file "/sys/module/lowmemorykiller/parameters/minfree" "2560,4096,8192,12288,16384,20480"
+        write_file "/sys/module/lowmemorykiller/parameters/minfree" "5120,6144,7168,8192,9216,10240"
 
         for queue in /sys/block/mmcblk*/queue; do
           write "$queue/scheduler" "none"
@@ -142,7 +141,7 @@ while true; do
 
         sleep 1
 
-        write_file "/sys/module/lowmemorykiller/parameters/minfree" "128,256,1024,2048,4096,8192"
+        write_file "/sys/module/lowmemorykiller/parameters/minfree" "1024,2048,3072,4096,5120,6144"
 
        for queue in /sys/block/mmcblk*/queue; do
           write "$queue/scheduler" "none"
@@ -191,7 +190,7 @@ while true; do
 
         sleep 1
 
-        write_file "/sys/module/lowmemorykiller/parameters/minfree" "2560,5120,7680,8960,10240,12800"
+        write_file "/sys/module/lowmemorykiller/parameters/minfree" "4096,5120,6144,7168,8192,9216"
 
        for queue in /sys/block/mmcblk*/queue; do
           write "$queue/scheduler" "none"

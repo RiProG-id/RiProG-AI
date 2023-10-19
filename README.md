@@ -1,6 +1,6 @@
 # RiProG-AI
 
-[![RiProG-AI Banner](https://raw.githubusercontent.com/RiProG-id/RiProG-AI/main/photo_6138575681777416147_y.jpg)]
+[![RiProG-AI Banner](https://raw.githubusercontent.com/RiProG-id/RiProG-AI/main/banner.jpg)]
 
 **ALL IN ONE Magisk Module**
 Enhance the Android experience with a combination of tweaks

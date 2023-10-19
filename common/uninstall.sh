@@ -1,3 +1,3 @@
 #!/bin/sh
 
-rm /data/media/0/Android/AI.log
+rm /storage/emulated/0/Android/AI.log

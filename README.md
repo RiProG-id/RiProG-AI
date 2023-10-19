@@ -5,7 +5,7 @@
 **ALL IN ONE Magisk Module**
 Enhance the Android experience with a combination of tweaks
 Automatically adapt mode
-Description based on the latest stable version
+Description based on the latest version
 
 **RiProG Open Source** | [Channel](https://t.me/RiOpSo) [Discussion](https://t.me/RiOpSoDisc)
 
@@ -25,17 +25,21 @@ Description based on the latest stable version
 12. Smart CPU Optimization
 13. Smart GPU Optimization
 14. Smart Low Memory Killer
+16. Smart Throttling Mitigation
 
 ## Changelog
 
-**Version 4.5**
-- Fixed inactive game mode issue
-- Improved VM parameter settings
-- Fixed task scheduling
-- Introduced smarter low memory app termination settings.
-- Fixed lag when changing modes
-- Removed UI tweaks to fix lag
-- Several other fixes.
+**Version 5.0**
+
+- Fixed broken code.
+- Reworked some properties.
+- Improved I/O Scheduler.
+- Resolved lag issues when changing modes.
+- Introduced Smart Throttling Mitigation.
+- Implemented a new detection algorithm.
+- Fixed AI log not updating.
+- Limited CPU to 1GHz in sleep mode.
+- Various other bug fixes and improvements.
 
 ## Support Dev
 

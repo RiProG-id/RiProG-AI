@@ -81,8 +81,6 @@ while true; do
   if [ "$gamestart" ]; then
     if [ ! "$mode_apply" = game ]; then
       sleep 1
-      date >>/storage/emulated/0/Android/AI.log
-      sleep 1
       write_file /sys/module/lowmemorykiller/parameters/minfree 5120,6144,7168,8192,9216,10240
       sleep 1
       for queue in /sys/block/mmcblk*/queue; do
@@ -118,6 +116,7 @@ while true; do
         write_file "$throttling" "0"
       done
       sleep 1
+      date >>/storage/emulated/0/Android/AI.log
       echo "RiProG AI: Game Mode" >>/storage/emulated/0/Android/AI.log
       echo "" >>/storage/emulated/0/Android/AI.log
       printf game >/dev/RiProG/AI/mode
@@ -125,8 +124,6 @@ while true; do
     fi
   elif [ "$screenoff" ]; then
     if [ ! "$mode_apply" = sleep ]; then
-      sleep 1
-      date >>/storage/emulated/0/Android/AI.log
       sleep 1
       write_file /sys/module/lowmemorykiller/parameters/minfree 1024,2048,3072,4096,5120,6144
       sleep 1
@@ -163,6 +160,7 @@ while true; do
         write_file "$throttling" "1"
       done
       sleep 1
+      date >>/storage/emulated/0/Android/AI.log
       echo "RiProG AI: Sleep Mode" >>/storage/emulated/0/Android/AI.log
       echo "" >>/storage/emulated/0/Android/AI.log
       printf sleep >/dev/RiProG/AI/mode
@@ -170,8 +168,6 @@ while true; do
     fi
   else
     if [ ! "$mode_apply" = daily ]; then
-      sleep 1
-      date >>/storage/emulated/0/Android/AI.log
       sleep 1
       write_file /sys/module/lowmemorykiller/parameters/minfree 4096,5120,6144,7168,8192,9216
       sleep 1
@@ -208,6 +204,7 @@ while true; do
         write_file "$throttling" "1"
       done
       sleep 1
+      date >>/storage/emulated/0/Android/AI.log
       echo "RiProG AI: Daily Mode" >>/storage/emulated/0/Android/AI.log
       echo "" >>/storage/emulated/0/Android/AI.log
       printf daily >/dev/RiProG/AI/mode

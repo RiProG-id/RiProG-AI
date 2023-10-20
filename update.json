@@ -1,6 +1,6 @@
 {
-    "version": "5.0",
-    "versionCode": "50",
-    "zipUrl": "https://github.com/RiProG-id/RiProG-AI/releases/download/50/RiProG.AI.5.0.zip",
-    "changelog": "https://github.com/RiProG-id/RiProG-AI/raw/main/README.md"
+    "version": "5.1",
+    "versionCode": "51",
+    "zipUrl": "https://github.com/RiProG-id/RiProG-AI/releases/download/51/RiProG.AI.5.1.zip",
+    "changelog": "https://github.com/RiProG-id/RiProG-AI/raw/main/changelog.md"
 }

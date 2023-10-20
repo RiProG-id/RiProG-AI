@@ -16,40 +16,48 @@ write_file() {
   fi
 }
 if [ -d /sys/devices/system/cpu/cpu0 ]; then
+  min_freq_0_500mhz=$(read_file "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
   min_freq_0_1ghz=$(read_file "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 1000000' | head -n 1)
   max_freq_0=$(read_file "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 fi
 if [ -d /sys/devices/system/cpu/cpu1 ]; then
+  min_freq_1_500mhz=$(read_file "/sys/devices/system/cpu/cpu1/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
   min_freq_1_1ghz=$(read_file "/sys/devices/system/cpu/cpu1/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 1000000' | head -n 1)
   max_freq_1=$(read_file "/sys/devices/system/cpu/cpu1/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 fi
 if [ -d /sys/devices/system/cpu/cpu2 ]; then
+  min_freq_2_500mhz=$(read_file "/sys/devices/system/cpu/cpu2/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
   min_freq_2_1ghz=$(read_file "/sys/devices/system/cpu/cpu2/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 1000000' | head -n 1)
   max_freq_2=$(read_file "/sys/devices/system/cpu/cpu2/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 fi
 if [ -d /sys/devices/system/cpu/cpu3 ]; then
+  min_freq_3_500mhz=$(read_file "/sys/devices/system/cpu/cpu3/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
   min_freq_3_1ghz=$(read_file "/sys/devices/system/cpu/cpu3/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 1000000' | head -n 1)
   max_freq_3=$(read_file "/sys/devices/system/cpu/cpu3/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 fi
 if [ -d /sys/devices/system/cpu/cpu4 ]; then
+  min_freq_4_500mhz=$(read_file "/sys/devices/system/cpu/cpu4/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
   min_freq_4_1ghz=$(read_file "/sys/devices/system/cpu/cpu4/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 1000000' | head -n 1)
   max_freq_4=$(read_file "/sys/devices/system/cpu/cpu4/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 fi
 if [ -d /sys/devices/system/cpu/cpu5 ]; then
+  min_freq_5_500mhz=$(read_file "/sys/devices/system/cpu/cpu5/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
   min_freq_5_1ghz=$(read_file "/sys/devices/system/cpu/cpu5/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 1000000' | head -n 1)
   max_freq_5=$(read_file "/sys/devices/system/cpu/cpu5/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 fi
 if [ -d /sys/devices/system/cpu/cpu6 ]; then
+  min_freq_6_500mhz=$(read_file "/sys/devices/system/cpu/cpu6/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
   min_freq_6_1ghz=$(read_file "/sys/devices/system/cpu/cpu6/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 1000000' | head -n 1)
   max_freq_6=$(read_file "/sys/devices/system/cpu/cpu6/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 fi
 if [ -d /sys/devices/system/cpu/cpu7 ]; then
+  min_freq_7_500mhz=$(read_file "/sys/devices/system/cpu/cpu7/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
   min_freq_7_1ghz=$(read_file "/sys/devices/system/cpu/cpu7/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 1000000' | head -n 1)
   max_freq_7=$(read_file "/sys/devices/system/cpu/cpu7/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 fi
-min_clock_gpu=$(read_file "/sys/kernel/gpu/gpu_freq_table" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
+min_clock_gpu=$(read_file "/sys/kernel/gpu/gpu_freq_table" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
 max_clock_gpu=$(read_file "/sys/kernel/gpu/gpu_freq_table" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
-min_clock_kgsl=$(read_file "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
+min_clock_kgsl=$(read_file "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
 max_clock_kgsl=$(read_file "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 game_list_filter="com.example.gamelist1|com.example.gamelist2$(awk '!/^[[:space:]]*$/ && !/^#/ && !(/[[:alnum:]]+[[:space:]]+[[:alnum:]]+[[:space:]]+[[:alnum:]]+/) {sub("-e ", ""); printf "|%s", $0}' "/data/adb/modules/RiProG/gamelist.txt")"
 printf "" >/storage/emulated/0/Android/AI.log
@@ -62,7 +70,7 @@ while true; do
   screenoff=$(echo "$window" | grep mScreen | grep false)
   sleep 1
   if [ "$gamestart" ]; then
-    if [ ! "$mode_apply" = "game" ]; then
+    if [ ! "$mode_apply" = game ]; then
       sleep 1
       date >>/storage/emulated/0/Android/AI.log
       sleep 1
@@ -102,7 +110,7 @@ while true; do
       resetprop -n riprog.ai.mode.apply game
     fi
   elif [ "$screenoff" ]; then
-    if [ ! "$mode_apply" = "sleep" ]; then
+    if [ ! "$mode_apply" = sleep ]; then
       sleep 1
       date >>/storage/emulated/0/Android/AI.log
       sleep 1
@@ -114,23 +122,23 @@ while true; do
         write_file "$queue"/read_ahead_kb 64
         write_file "$queue"/nr_requests 16
       done
-      write_file /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq "$min_freq_0_1ghz"
-      write_file /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq "$min_freq_0_1ghz"
-      write_file /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq "$min_freq_1_1ghz"
-      write_file /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq "$min_freq_1_1ghz"
-      write_file /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq "$min_freq_2_1ghz"
-      write_file /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq "$min_freq_2_1ghz"
-      write_file /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq "$min_freq_3_1ghz"
-      write_file /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq "$min_freq_3_1ghz"
-      write_file /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq "$min_freq_4_1ghz"
-      write_file /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq "$min_freq_4_1ghz"
-      write_file /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq "$min_freq_5_1ghz"
-      write_file /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq "$min_freq_5_1ghz"
-      write_file /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq "$min_freq_6_1ghz"
-      write_file /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq "$min_freq_6_1ghz"
-      write_file /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq "$min_freq_7_1ghz"
-      write_file /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq "$min_freq_7_1ghz"
-      write_file /sys/kernel/gpu/gpu_min_clock "$max_clock_gpu"
+      write_file /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq "$min_freq_0_500mhz"
+      write_file /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq "$min_freq_0_500mhz"
+      write_file /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq "$min_freq_1_500mhz"
+      write_file /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq "$min_freq_1_500mhz"
+      write_file /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq "$min_freq_2_500mhz"
+      write_file /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq "$min_freq_2_500mhz"
+      write_file /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq "$min_freq_3_500mhz"
+      write_file /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq "$min_freq_3_500mhz"
+      write_file /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq "$min_freq_4_500mhz"
+      write_file /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq "$min_freq_4_500mhz"
+      write_file /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq "$min_freq_5_500mhz"
+      write_file /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq "$min_freq_5_500mhz"
+      write_file /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq "$min_freq_6_500mhz"
+      write_file /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq "$min_freq_6_500mhz"
+      write_file /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq "$min_freq_7_500mhz"
+      write_file /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq "$min_freq_7_500mhz"
+      write_file /sys/kernel/gpu/gpu_min_clock "$min_clock_gpu"
       write_file /sys/kernel/gpu/gpu_max_clock "$max_clock_gpu"
       write_file /sys/class/kgsl/kgsl-3d0/min_clock_mhz "$min_clock_kgsl"
       write_file /sys/class/kgsl/kgsl-3d0/max_clock_mhz "$min_clock_kgsl"
@@ -142,7 +150,7 @@ while true; do
       resetprop -n riprog.ai.mode.apply sleep
     fi
   else
-    if [ ! "$mode_apply" = "daily" ]; then
+    if [ ! "$mode_apply" = daily ]; then
       sleep 1
       date >>/storage/emulated/0/Android/AI.log
       sleep 1

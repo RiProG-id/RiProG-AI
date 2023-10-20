@@ -46,7 +46,7 @@ Enhance the Android experience with a combination of tweaks that automatically a
 - Added Media Codex Acceleration
 - Added Prevent streaming buffering
 - Reduced cpu frequency in sleep mode
-- Increased minimum cpufrequency in daily mode
+- Increased minimum cpu frequency in daily mode
 
 ## Support the Developer
 

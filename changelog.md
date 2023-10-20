@@ -1,14 +1,12 @@
-# RiProG-AI
+# RiProG AI
 
-[![RiProG-AI Banner](https://raw.githubusercontent.com/RiProG-id/RiProG-AI/main/banner.jpg)]
+![RiProG AI Banner](https://raw.githubusercontent.com/RiProG-id/RiProG-AI/main/banner.jpg)
 
 **ALL IN ONE Magisk Module**
-Enhance the Android experience with a combination of tweaks
-Automatically adapt mode
-Description based on the latest version
 
-**RiProG Open Source** | [Channel](https://t.me/RiOpSo) [Discussion](https://t.me/RiOpSoDisc)
+Enhance the Android experience with a combination of tweaks. This module automatically adapts mode and provides a description based on the latest version.
 
+**RiProG Open Source** | [Channel](https://t.me/RiOpSo) | [Discussion](https://t.me/RiOpSoDisc)
 
 ## Changelog
 
@@ -26,8 +24,8 @@ Description based on the latest version
 
 **Version 5.1**
 
-- Fixed unstable GPU
-- Added Media Codec Acceleration
-- Added Prevent streaming buffering
-- Reduced CPU sleep mode frequency
-- Increased minimum frequency lock in daily mode
+- Fixed unstable GPU.
+- Added Media Codec Acceleration.
+- Added Prevent streaming buffering.
+- Reduced CPU sleep mode frequency.
+- Increased minimum frequency lock in daily mode.

@@ -25,7 +25,7 @@ Enhance the Android experience with a combination of tweaks. This module automat
 **Version 5.1**
 
 - Fixed unstable GPU.
-- Added Media Codec Acceleration.
+- Added Media Codex Acceleration.
 - Added Prevent streaming buffering.
 - Reduced CPU sleep mode frequency.
 - Increased minimum frequency lock in daily mode.

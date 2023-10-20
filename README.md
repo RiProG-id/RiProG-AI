@@ -28,7 +28,7 @@ Enhance the Android experience with a combination of tweaks that automatically a
 
 ## Changelog
 
-  **Version 5.0**
+**Version 5.0**
 
 - Fixed broken code.
 - Reworked some properties.
@@ -40,13 +40,13 @@ Enhance the Android experience with a combination of tweaks that automatically a
 - Limited CPU to 1GHz in sleep mode.
 - Various other bug fixes and improvements.
 
-  **Version 5.1**
+**Version 5.1**
 
-- Fixed unstable GPU.
-- Added Media Codex Acceleration.
-- Added Prevent streaming buffering.
-- Reduced CPU sleep mode frequency.
-- Increased minimum frequency lock in daily mode.
+- Fixed unstable GPU
+- Added Media Codex Acceleration
+- Added Prevent streaming buffering
+- Reduced cpu frequency in sleep mode
+- Increased minimum cpufrequency in daily mode
 
 ## Support the Developer
 

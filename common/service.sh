@@ -15,9 +15,11 @@ write_file() {
     echo "$2" >"$1"
   fi
 }
+sleep 1
 while [ -z "$(resetprop sys.boot_completed)" ]; do
   sleep 5
 done
+sleep 1
 write_file /proc/sys/kernel/panic "0"
 write_file /proc/sys/kernel/panic_on_oops "0"
 write_file /proc/sys/kernel/panic_on_rcu_stall "0"
@@ -33,32 +35,35 @@ write_file /sys/module/printk/parameters/ignore_loglevel "Y"
 write_file /sys/module/printk/parameters/pid "N"
 write_file /sys/module/printk/parameters/time "N"
 write_file /sys/kernel/printk_mode/printk_mode "0"
+sleep 1
 find /sys/ -name "*log*" -o -name "*debug*" | while IFS= read -r logdebug; do
   write_file "$logdebug" "0"
 done
+sleep 1
 write_file /proc/sys/kernel/sched_tunable_scaling "1"
-echo NO_GENTLE_FAIR_SLEEPERS:1 >/sys/kernel/debug/sched_features
-echo START_DEBIT:1 >/sys/kernel/debug/sched_features
-echo NEXT_BUDDY:1 >/sys/kernel/debug/sched_features
-echo LAST_BUDDY:1 >/sys/kernel/debug/sched_features
-echo STRICT_SKIP_BUDDY:1 >/sys/kernel/debug/sched_features
-echo CACHE_HOT_BUDDY:1 >/sys/kernel/debug/sched_features
-echo WAKEUP_PREEMPTION:1 >/sys/kernel/debug/sched_features
-echo NO_HRTICK:1 >/sys/kernel/debug/sched_features
-echo NO_DOUBLE_TICK:1 >/sys/kernel/debug/sched_features
-echo LB_BIAS:1 >/sys/kernel/debug/sched_features
-echo NONTASK_CAPACITY:1 >/sys/kernel/debug/sched_features
-echo NO_TTWU_QUEUE:1 >/sys/kernel/debug/sched_features
-echo NO_SIS_AVG_CPU:1 >/sys/kernel/debug/sched_features
-echo RT_PUSH_IPI:1 >/sys/kernel/debug/sched_features
-echo NO_FORCE_SD_OVERLAP:1 >/sys/kernel/debug/sched_features
-echo NO_RT_RUNTIME_SHARE:1 >/sys/kernel/debug/sched_features
-echo NO_LB_MIN:1 >/sys/kernel/debug/sched_features
-echo ATTACH_AGE_LOAD:1 >/sys/kernel/debug/sched_features
-echo ENERGY_AWARE:1 >/sys/kernel/debug/sched_features
-echo NO_MIN_CAPACITY_CAPPING:1 >/sys/kernel/debug/sched_features
-echo NO_FBT_STRICT_ORDER:1 >/sys/kernel/debug/sched_features
-echo EAS_USE_NEED_IDLE:1 >/sys/kernel/debug/sched_features
+write_file NO_GENTLE_FAIR_SLEEPERS:1 >/sys/kernel/debug/sched_features
+write_file START_DEBIT:1 >/sys/kernel/debug/sched_features
+write_file NEXT_BUDDY:1 >/sys/kernel/debug/sched_features
+write_file LAST_BUDDY:1 >/sys/kernel/debug/sched_features
+write_file STRICT_SKIP_BUDDY:1 >/sys/kernel/debug/sched_features
+write_file CACHE_HOT_BUDDY:1 >/sys/kernel/debug/sched_features
+write_file WAKEUP_PREEMPTION:1 >/sys/kernel/debug/sched_features
+write_file NO_HRTICK:1 >/sys/kernel/debug/sched_features
+write_file NO_DOUBLE_TICK:1 >/sys/kernel/debug/sched_features
+write_file LB_BIAS:1 >/sys/kernel/debug/sched_features
+write_file NONTASK_CAPACITY:1 >/sys/kernel/debug/sched_features
+write_file NO_TTWU_QUEUE:1 >/sys/kernel/debug/sched_features
+write_file NO_SIS_AVG_CPU:1 >/sys/kernel/debug/sched_features
+write_file RT_PUSH_IPI:1 >/sys/kernel/debug/sched_features
+write_file NO_FORCE_SD_OVERLAP:1 >/sys/kernel/debug/sched_features
+write_file NO_RT_RUNTIME_SHARE:1 >/sys/kernel/debug/sched_features
+write_file NO_LB_MIN:1 >/sys/kernel/debug/sched_features
+write_file ATTACH_AGE_LOAD:1 >/sys/kernel/debug/sched_features
+write_file ENERGY_AWARE:1 >/sys/kernel/debug/sched_features
+write_file NO_MIN_CAPACITY_CAPPING:1 >/sys/kernel/debug/sched_features
+write_file NO_FBT_STRICT_ORDER:1 >/sys/kernel/debug/sched_features
+write_file EAS_USE_NEED_IDLE:1 >/sys/kernel/debug/sched_features
+sleep 1
 write_file /proc/sys/vm/drop_caches "3"
 write_file /proc/sys/vm/dirty_background_ratio "20"
 write_file /proc/sys/vm/dirty_expire_centisecs "1000"
@@ -78,6 +83,7 @@ write_file /proc/sys/vm/overcommit_ratio "80"
 write_file /proc/sys/vm/extra_free_kbytes "10240"
 write_file /proc/sys/kernel/random/read_wakeup_threshold "64"
 write_file /proc/sys/kernel/random/write_wakeup_threshold "128"
+sleep 1
 android_properties="
 debug.sf.disable_backpressure=1
 debug.sf.latch_unsignaled=1
@@ -94,11 +100,12 @@ debug.sf.showupdates=0
 debug.sf.showcpu=0
 debug.sf.showbackground=0
 debug.sf.showfps=0
-debug.sf.hw=1
+debug.sf.hw=0
 "
 echo "$android_properties" | while IFS= read -r prop; do
   prop_name="${prop%%=*}"
   prop_value="${prop#*=}"
   resetprop -n "$prop_name" "$prop_value"
 done
+sleep 1
 nohup AI >/dev/null 2>&1 &

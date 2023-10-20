@@ -18,7 +18,6 @@ iorapd.perfetto.enable=false
 iorapd.readahead.enable=false
 persist.device_config.runtime_native_boot.iorap_readahead_enable=false
 persist.sys.purgeable_assets=1
-video.accelerate.hw=1
 ro.media.dec.aud.flac.enabled=1
 ro.media.dec.aud.wma.enabled=1
 ro.media.dec.vid.avi.enabled=1
@@ -44,5 +43,5 @@ media.stagefright.enable-record=false
 echo "$android_properties" | while IFS= read -r prop; do
     prop_name="${prop%%=*}"
     prop_value="${prop#*=}"
-    resetprop -n "$prop_name" "$prop_value"
+    setprop"$prop_name" "$prop_value"
 done

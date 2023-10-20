@@ -29,3 +29,11 @@ Enhance the Android experience with a combination of tweaks. This module automat
 - Added Prevent streaming buffering
 - Reduced cpu frequency in sleep mode
 - Increased minimum cpu frequency in daily mode
+
+**Version 5.2**
+
+- Code runs alternately
+- Remove video hardware acceleration
+- Disable surfaceflinger hardware
+- Make changes to the code's behavior
+- Several bug fixes

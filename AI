@@ -15,6 +15,7 @@ write_file() {
     echo "$2" >"$1"
   fi
 }
+sleep 1
 if [ -d /sys/devices/system/cpu/cpu0 ]; then
   min_freq_0_500mhz=$(read_file "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
   min_freq_0_1ghz=$(read_file "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 1000000' | head -n 1)
@@ -55,18 +56,26 @@ if [ -d /sys/devices/system/cpu/cpu7 ]; then
   min_freq_7_1ghz=$(read_file "/sys/devices/system/cpu/cpu7/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 1000000' | head -n 1)
   max_freq_7=$(read_file "/sys/devices/system/cpu/cpu7/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 fi
+sleep 1
 min_clock_gpu=$(read_file "/sys/kernel/gpu/gpu_freq_table" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
 max_clock_gpu=$(read_file "/sys/kernel/gpu/gpu_freq_table" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 min_clock_kgsl=$(read_file "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
 max_clock_kgsl=$(read_file "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
+sleep 1
 game_list_filter="com.example.gamelist1|com.example.gamelist2$(awk '!/^[[:space:]]*$/ && !/^#/ && !(/[[:alnum:]]+[[:space:]]+[[:alnum:]]+[[:space:]]+[[:alnum:]]+/) {sub("-e ", ""); printf "|%s", $0}' "/data/adb/modules/RiProG/gamelist.txt")"
+sleep 1
 printf "" >/storage/emulated/0/Android/AI.log
-resetprop -n riprog.ai.mode.apply unset
+sleep 1
+mkdir -p /dev/RiProG/AI
+printf unset >/dev/RiProG/AI/mode
+sleep 1
 while true; do
-  mode_apply=$(resetprop riprog.ai.mode.apply)
+  mode_apply=$(cat /dev/RiProG/AI/mode)
   sleep 1
   window=$(dumpsys window)
+  sleep 1
   gamestart=$(echo "$window" | grep -E 'mCurrentFocus|mFocusedApp' | grep -Eo "$game_list_filter")
+  sleep 1
   screenoff=$(echo "$window" | grep mScreen | grep false)
   sleep 1
   if [ "$gamestart" ]; then
@@ -75,6 +84,7 @@ while true; do
       date >>/storage/emulated/0/Android/AI.log
       sleep 1
       write_file /sys/module/lowmemorykiller/parameters/minfree 5120,6144,7168,8192,9216,10240
+      sleep 1
       for queue in /sys/block/mmcblk*/queue; do
         write_file "$queue"/scheduler none
         write_file "$queue"/add_random 0
@@ -82,6 +92,7 @@ while true; do
         write_file "$queue"/read_ahead_kb 256
         write_file "$queue"/nr_requests 128
       done
+      sleep 1
       write_file /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq "$max_freq_0"
       write_file /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq "$max_freq_0"
       write_file /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq "$max_freq_1"
@@ -102,12 +113,15 @@ while true; do
       write_file /sys/kernel/gpu/gpu_max_clock "$max_clock_gpu"
       write_file /sys/class/kgsl/kgsl-3d0/min_clock_mhz "$max_clock_kgsl"
       write_file /sys/class/kgsl/kgsl-3d0/max_clock_mhz "$max_clock_kgsl"
+      sleep 1
       find /sys/ -name "*throttling*" | while IFS= read -r throttling; do
         write_file "$throttling" "0"
       done
+      sleep 1
       echo "RiProG AI: Game Mode" >>/storage/emulated/0/Android/AI.log
       echo "" >>/storage/emulated/0/Android/AI.log
-      resetprop -n riprog.ai.mode.apply game
+      printf game >/dev/RiProG/AI/mode
+      sleep 1
     fi
   elif [ "$screenoff" ]; then
     if [ ! "$mode_apply" = sleep ]; then
@@ -115,6 +129,7 @@ while true; do
       date >>/storage/emulated/0/Android/AI.log
       sleep 1
       write_file /sys/module/lowmemorykiller/parameters/minfree 1024,2048,3072,4096,5120,6144
+      sleep 1
       for queue in /sys/block/mmcblk*/queue; do
         write_file "$queue"/scheduler none
         write_file "$queue"/add_random 0
@@ -122,6 +137,7 @@ while true; do
         write_file "$queue"/read_ahead_kb 64
         write_file "$queue"/nr_requests 16
       done
+      sleep 1
       write_file /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq "$min_freq_0_500mhz"
       write_file /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq "$min_freq_0_500mhz"
       write_file /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq "$min_freq_1_500mhz"
@@ -142,12 +158,15 @@ while true; do
       write_file /sys/kernel/gpu/gpu_max_clock "$max_clock_gpu"
       write_file /sys/class/kgsl/kgsl-3d0/min_clock_mhz "$min_clock_kgsl"
       write_file /sys/class/kgsl/kgsl-3d0/max_clock_mhz "$min_clock_kgsl"
+      sleep 1
       find /sys/ -name "*throttling*" | while IFS= read -r throttling; do
         write_file "$throttling" "1"
       done
+      sleep 1
       echo "RiProG AI: Sleep Mode" >>/storage/emulated/0/Android/AI.log
       echo "" >>/storage/emulated/0/Android/AI.log
-      resetprop -n riprog.ai.mode.apply sleep
+      printf sleep >/dev/RiProG/AI/mode
+      sleep 1
     fi
   else
     if [ ! "$mode_apply" = daily ]; then
@@ -155,6 +174,7 @@ while true; do
       date >>/storage/emulated/0/Android/AI.log
       sleep 1
       write_file /sys/module/lowmemorykiller/parameters/minfree 4096,5120,6144,7168,8192,9216
+      sleep 1
       for queue in /sys/block/mmcblk*/queue; do
         write_file "$queue"/scheduler none
         write_file "$queue"/add_random 0
@@ -162,6 +182,7 @@ while true; do
         write_file "$queue"/read_ahead_kb 128
         write_file "$queue"/nr_requests 32
       done
+      sleep 1
       write_file /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq "$min_freq_0_1ghz"
       write_file /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq "$max_freq_0"
       write_file /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq "$min_freq_1_1ghz"
@@ -182,12 +203,15 @@ while true; do
       write_file /sys/kernel/gpu/gpu_max_clock "$max_clock_gpu"
       write_file /sys/class/kgsl/kgsl-3d0/min_clock_mhz "$min_clock_kgsl"
       write_file /sys/class/kgsl/kgsl-3d0/max_clock_mhz "$max_clock_kgsl"
+      sleep 1
       find /sys/ -name "*throttling*" | while IFS= read -r throttling; do
         write_file "$throttling" "1"
       done
+      sleep 1
       echo "RiProG AI: Daily Mode" >>/storage/emulated/0/Android/AI.log
       echo "" >>/storage/emulated/0/Android/AI.log
-      resetprop -n riprog.ai.mode.apply daily
+      printf daily >/dev/RiProG/AI/mode
+      sleep 1
     fi
   fi
   sleep 1

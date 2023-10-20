@@ -1,31 +1,30 @@
 # RiProG-AI
 
-[![RiProG-AI Banner](https://raw.githubusercontent.com/RiProG-id/RiProG-AI/main/banner.jpg)]
+![RiProG-AI Banner](https://raw.githubusercontent.com/RiProG-id/RiProG-AI/main/banner.jpg)
 
 **ALL IN ONE Magisk Module**
-Enhance the Android experience with a combination of tweaks
-Automatically adapt mode
-Description based on the latest version
 
-**RiProG Open Source** | [Channel](https://t.me/RiOpSo) [Discussion](https://t.me/RiOpSoDisc)
+Enhance the Android experience with a combination of tweaks that automatically adapt mode and provide a description based on the latest version.
 
-## Features
+**RiProG Open Source** | [Channel](https://t.me/RiOpSo) | [Discussion](https://t.me/RiOpSoDisc)
 
-1. Disable Kernel Panic
-2. Disable printk
-3. Disable Various Debugger
-4. Disable Various Log
-5. Fuse Passthrough
-6. Low Memory Consumption
-7. Modifying Scheduler Features
-8. SurfaceFlinger Improvement
-9. Virtual Memory Optimization
-10. HWUI Cache Optimizer
-11. Smart I/O Storage
-12. Smart CPU Optimization
-13. Smart GPU Optimization
-14. Smart Low Memory Killer
-16. Smart Throttling Mitigation
+## Key Features
+
+- Disable Kernel Panic
+- Disable printk
+- Disable Various Debugger
+- Disable Various Log
+- Fuse Passthrough
+- Low Memory Consumption
+- Modifying Scheduler Features
+- SurfaceFlinger Improvement
+- Virtual Memory Optimization
+- HWUI Cache Optimizer
+- Smart I/O Storage
+- Smart CPU Optimization
+- Smart GPU Optimization
+- Smart Low Memory Killer
+- Smart Throttling Mitigation
 
 ## Changelog
 
@@ -41,7 +40,7 @@ Description based on the latest version
 - Limited CPU to 1GHz in sleep mode.
 - Various other bug fixes and improvements.
 
-## Support Dev
+## Support the Developer
 
 If you appreciate the work done on RiProG-AI, consider supporting the developer:
 

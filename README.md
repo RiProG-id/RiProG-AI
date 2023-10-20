@@ -28,7 +28,7 @@ Enhance the Android experience with a combination of tweaks that automatically a
 
 ## Changelog
 
-**Version 5.0**
+  **Version 5.0**
 
 - Fixed broken code.
 - Reworked some properties.

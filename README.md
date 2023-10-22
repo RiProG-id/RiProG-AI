@@ -37,7 +37,7 @@ Enhance the Android experience with a combination of tweaks that automatically a
 - Introduced Smart Throttling Mitigation.
 - Implemented a new detection algorithm.
 - Fixed AI log not updating.
-- Limited CPU to 1GHz in sleep mode.
+- Limited CPU in sleep mode.
 - Various other bug fixes and improvements.
 
 **Version 5.1**

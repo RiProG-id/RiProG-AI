@@ -61,9 +61,15 @@ Enhance the Android experience with a combination of tweaks that automatically a
 - Various bug fixes
 - High GPU usage fixes
 - Overheating issues fixes
-- Errors in some code fixes
+- errors in some code fixes
 - Improved efficiency of AI log
 - Update the game list filter detector
+
+**Version 5.4**
+
+- Cpufreq calculation errors fixes
+- Gamelist reader errors fixes
+- Sleep mode errors fixes
 
 ## Support the Developer
 

@@ -108,4 +108,4 @@ echo "$android_properties" | while IFS= read -r prop; do
   resetprop -n "$prop_name" "$prop_value"
 done
 sleep 1
-nohup AI >/dev/null 2>&1 &
+AI >/dev/null 2>&1

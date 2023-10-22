@@ -52,3 +52,4 @@ Enhance the Android experience with a combination of tweaks. This module automat
 - Cpufreq calculation errors fixes
 - Gamelist reader errors fixes
 - Sleep mode errors fixes
+- Module runs without using nohup in the background

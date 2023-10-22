@@ -37,3 +37,12 @@ Enhance the Android experience with a combination of tweaks. This module automat
 - Disable surfaceflinger hardware
 - Make changes to the code's behavior
 - Several bug fixes
+
+**Version 5.3**
+
+- Various bug fixes
+- High GPU usage fixes
+- Overheating issues fixes
+- errors in some code fixes
+- Improved efficiency of AI log
+- Update the game list filter detector

@@ -56,6 +56,15 @@ Enhance the Android experience with a combination of tweaks that automatically a
 - Make changes to the code's behavior
 - Several bug fixes
 
+**Version 5.3**
+
+- Various bug fixes
+- High GPU usage fixes
+- Overheating issues fixes
+- errors in some code fixes
+- Improved efficiency of AI log
+- Update the game list filter detector
+
 ## Support the Developer
 
 If you appreciate the work done on RiProG-AI, consider supporting the developer:

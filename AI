@@ -15,6 +15,7 @@ write_file() {
     echo "$2" >"$1"
   fi
 }
+
 sleep 1
 if [ -d /sys/devices/system/cpu/cpu0 ]; then
   min_freq_0_500mhz=$(read_file "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
@@ -57,12 +58,18 @@ if [ -d /sys/devices/system/cpu/cpu7 ]; then
   max_freq_7=$(read_file "/sys/devices/system/cpu/cpu7/cpufreq/scaling_available_frequencies" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 fi
 sleep 1
-min_clock_gpu=$(read_file "/sys/kernel/gpu/gpu_freq_table" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
+min_clock_gpu=$(read_file "/sys/kernel/gpu/gpu_freq_table" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
 max_clock_gpu=$(read_file "/sys/kernel/gpu/gpu_freq_table" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
-min_clock_kgsl=$(read_file "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 5000000' | head -n 1)
+min_clock_kgsl=$(read_file "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
 max_clock_kgsl=$(read_file "/sys/class/kgsl/kgsl-3d0/freq_table_mhz" | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 sleep 1
-game_list_filter="com.example.gamelist1|com.example.gamelist2$(awk '!/^[[:space:]]*$/ && !/^#/ && !(/[[:alnum:]]+[[:space:]]+[[:alnum:]]+[[:space:]]+[[:alnum:]]+/) {sub("-e ", ""); printf "|%s", $0}' "/data/adb/modules/RiProG/gamelist.txt")"
+custom_filter="
+!/^[[:space:]]*$/ && !/^#/ && !(/[[:alnum:]]+[[:space:]]+[[:alnum:]]+[[:space:]]+[[:alnum:]]+/) {
+    sub(\"-e \", \"\")
+    printf \"|%s\", \$0
+}
+"
+game_list_filter="com.example.gamelist1|com.example.gamelist2$(awk "${custom_filter}" "/data/adb/modules/RiProG/gamelist.txt")"
 sleep 1
 printf "" >/storage/emulated/0/Android/AI.log
 sleep 1
@@ -116,9 +123,11 @@ while true; do
         write_file "$throttling" "0"
       done
       sleep 1
-      date >>/storage/emulated/0/Android/AI.log
-      echo "RiProG AI: Game Mode" >>/storage/emulated/0/Android/AI.log
-      echo "" >>/storage/emulated/0/Android/AI.log
+      {
+      date
+      echo "RiProG AI: Game Mode"
+      echo ""
+      } >>/storage/emulated/0/Android/AI.log
       printf game >/dev/RiProG/AI/mode
       sleep 1
     fi
@@ -154,15 +163,17 @@ while true; do
       write_file /sys/kernel/gpu/gpu_min_clock "$min_clock_gpu"
       write_file /sys/kernel/gpu/gpu_max_clock "$max_clock_gpu"
       write_file /sys/class/kgsl/kgsl-3d0/min_clock_mhz "$min_clock_kgsl"
-      write_file /sys/class/kgsl/kgsl-3d0/max_clock_mhz "$min_clock_kgsl"
+      write_file /sys/class/kgsl/kgsl-3d0/max_clock_mhz "$max_clock_kgsl"
       sleep 1
       find /sys/ -name "*throttling*" | while IFS= read -r throttling; do
         write_file "$throttling" "1"
       done
       sleep 1
-      date >>/storage/emulated/0/Android/AI.log
-      echo "RiProG AI: Sleep Mode" >>/storage/emulated/0/Android/AI.log
-      echo "" >>/storage/emulated/0/Android/AI.log
+      {
+      date
+      echo
+      echo ""
+      } >>/storage/emulated/0/Android/AI.log
       printf sleep >/dev/RiProG/AI/mode
       sleep 1
     fi
@@ -204,9 +215,11 @@ while true; do
         write_file "$throttling" "1"
       done
       sleep 1
-      date >>/storage/emulated/0/Android/AI.log
-      echo "RiProG AI: Daily Mode" >>/storage/emulated/0/Android/AI.log
-      echo "" >>/storage/emulated/0/Android/AI.log
+      {
+      date 
+      echo "RiProG AI: Daily Mode"
+      echo ""
+      } >>/storage/emulated/0/Android/AI.log
       printf daily >/dev/RiProG/AI/mode
       sleep 1
     fi

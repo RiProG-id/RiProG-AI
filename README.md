@@ -61,7 +61,7 @@ Enhance the Android experience with a combination of tweaks that automatically a
 - Various bug fixes
 - High GPU usage fixes
 - Overheating issues fixes
-- errors in some code fixes
+- Errors in some code fixes
 - Improved efficiency of AI log
 - Update the game list filter detector
 

@@ -70,6 +70,7 @@ Enhance the Android experience with a combination of tweaks that automatically a
 - Cpufreq calculation errors fixes
 - Gamelist reader errors fixes
 - Sleep mode errors fixes
+- Module runs without using nohup in the background
 
 ## Support the Developer
 

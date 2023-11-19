@@ -13,6 +13,8 @@ ui_print "*    RiProG Open Source @ RiOpSo   *"
 ui_print "************************************"
 ui_print "*      Muhammad Rizki @ RiProG     *"
 ui_print "************************************"
+i_print "*      Modification @ ZxyonQiy     *"
+ui_print "************************************"
 ui_print ""
 sleep 2
 ui_print "- Extracting module files"

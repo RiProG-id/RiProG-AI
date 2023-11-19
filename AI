@@ -13,6 +13,7 @@ write_file() {
       chmod +w "$1"
     fi
     echo "$2" >"$1"
+   chmod 444 "$1"
   fi
 }
 sleep 1
@@ -36,6 +37,7 @@ if [ -d /sys/devices/system/cpu/cpu3 ]; then
   min_freq_3_1ghz=$(read_file /sys/devices/system/cpu/cpu3/cpufreq/scaling_available_frequencies | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 1000000' | head -n 1)
   max_freq_3=$(read_file /sys/devices/system/cpu/cpu3/cpufreq/scaling_available_frequencies | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
 fi
+sleep 1
 if [ -d /sys/devices/system/cpu/cpu4 ]; then
   min_freq_4_500mhz=$(read_file /sys/devices/system/cpu/cpu4/cpufreq/scaling_available_frequencies | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 500000' | head -n 1)
   min_freq_4_1ghz=$(read_file /sys/devices/system/cpu/cpu4/cpufreq/scaling_available_frequencies | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 1000000' | head -n 1)
@@ -55,6 +57,12 @@ if [ -d /sys/devices/system/cpu/cpu7 ]; then
   min_freq_7_500mhz=$(read_file /sys/devices/system/cpu/cpu7/cpufreq/scaling_available_frequencies | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 500000' | head -n 1)
   min_freq_7_1ghz=$(read_file /sys/devices/system/cpu/cpu7/cpufreq/scaling_available_frequencies | tr " " "\n" | sort -n | sed '/^$/d' | awk '$1 > 1000000' | head -n 1)
   max_freq_7=$(read_file /sys/devices/system/cpu/cpu7/cpufreq/scaling_available_frequencies | tr " " "\n" | sort -n | sed '/^$/d' | tail -n 1)
+fi
+sleep 1
+if [ -d /proc/gpufreq ]; then
+  gpu_zero=$(read_file /proc/gpufreq/gpufreq_opp_dump | grep -E 'freq = [0-9]+' | grep -oE '[0-9]+' | sort -n | tail -n 1)
+  gpu_one=$(read_file /proc/gpufreq/gpufreq_opp_dump | grep -E 'freq = [0-50]+' | grep -oE '[0-50]+' | sort -n | tail -n 1)
+  gpu_two=$(read_file /proc/gpufreq/gpufreq_opp_dump | grep -E 'freq = [0-9]+' | grep -oE '[0-9]+' | sort -n | head -n 1)
 fi
 sleep 1
 min_clock_gpu=$(read_file /sys/kernel/gpu/gpu_freq_table | tr " " "\n" | sort -n | sed '/^$/d' | head -n 1)
@@ -107,13 +115,14 @@ while true; do
       write_file /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq "$max_freq_6"
       write_file /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq "$max_freq_7"
       write_file /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq "$max_freq_7"
+      write_file /proc/gpufreq/gpufreq_opp_freq "$gpu_zero"
       write_file /sys/kernel/gpu/gpu_min_clock "$max_clock_gpu"
       write_file /sys/kernel/gpu/gpu_max_clock "$max_clock_gpu"
       write_file /sys/class/kgsl/kgsl-3d0/min_clock_mhz "$max_clock_kgsl"
       write_file /sys/class/kgsl/kgsl-3d0/max_clock_mhz "$max_clock_kgsl"
       sleep 1
-      find /sys/ -name "*throttling*" | while IFS= read -r throttling; do
-        write_file "$throttling" "0"
+      find /sys/ -name "*throttling*" -type f | while IFS= read -r disable; do
+        write_file "$disable" "0"
       done
       sleep 1
       {
@@ -153,13 +162,14 @@ while true; do
       write_file /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq "$min_freq_6_500mhz"
       write_file /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq "$min_freq_7_500mhz"
       write_file /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq "$min_freq_7_500mhz"
+      write_file /proc/gpufreq/gpufreq_opp_freq "$gpu_two"
       write_file /sys/kernel/gpu/gpu_min_clock "$min_clock_gpu"
       write_file /sys/kernel/gpu/gpu_max_clock "$max_clock_gpu"
       write_file /sys/class/kgsl/kgsl-3d0/min_clock_mhz "$min_clock_kgsl"
       write_file /sys/class/kgsl/kgsl-3d0/max_clock_mhz "$max_clock_kgsl"
       sleep 1
-      find /sys/ -name "*throttling*" | while IFS= read -r throttling; do
-        write_file "$throttling" "1"
+      find /sys/ -name "*throttling*" -type f | while IFS= read -r enable; do
+        write_file "$enable" "1"
       done
       sleep 1
       {
@@ -199,13 +209,14 @@ while true; do
       write_file /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq "$max_freq_6"
       write_file /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq "$min_freq_7_1ghz"
       write_file /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq "$max_freq_7"
+      write_file /proc/gpufreq/gpufreq_opp_freq "$gpu_one"
       write_file /sys/kernel/gpu/gpu_min_clock "$min_clock_gpu"
       write_file /sys/kernel/gpu/gpu_max_clock "$max_clock_gpu"
       write_file /sys/class/kgsl/kgsl-3d0/min_clock_mhz "$min_clock_kgsl"
       write_file /sys/class/kgsl/kgsl-3d0/max_clock_mhz "$max_clock_kgsl"
       sleep 1
-      find /sys/ -name "*throttling*" | while IFS= read -r throttling; do
-        write_file "$throttling" "1"
+      find /sys/ -name "*throttling*" -type f | while IFS= read -r enable; do
+        write_file "$enable" "1"
       done
       sleep 1
       {
